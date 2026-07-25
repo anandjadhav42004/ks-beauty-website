@@ -129,7 +129,7 @@ export default function InstagramSection() {
           className="text-center"
         >
           <a
-            href="https://instagram.com/ksbeauty_toronto"
+            href="https://www.instagram.com/ks_beauty6ix?igsh=b3R0YTk3MGoxM3Jn"
             target="_blank"
             rel="noopener noreferrer"
             data-testid="instagram-follow-button"

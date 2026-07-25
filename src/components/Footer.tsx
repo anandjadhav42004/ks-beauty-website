@@ -70,7 +70,7 @@ export default function Footer() {
             </p>
             <div className="flex gap-3">
               <a
-                href="https://instagram.com/ksbeauty_toronto"
+                href="https://www.instagram.com/ks_beauty6ix?igsh=b3R0YTk3MGoxM3Jn"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
@@ -172,7 +172,7 @@ export default function Footer() {
               <Instagram size={15} style={{ color: "#B8935A", marginTop: "3px", flexShrink: 0 }} />
               <div>
                 <p style={{ fontFamily: "var(--app-font-sans)", fontSize: "11px", color: "rgba(251, 246, 238, 0.4)", margin: 0, textTransform: "uppercase" }}>Instagram</p>
-                <a href="https://instagram.com/ksbeauty_toronto" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "var(--app-font-sans)", fontSize: "14px", color: "#FBF6EE", textDecoration: "none" }}>
+                <a href="https://www.instagram.com/ks_beauty6ix?igsh=b3R0YTk3MGoxM3Jn" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "var(--app-font-sans)", fontSize: "14px", color: "#FBF6EE", textDecoration: "none" }}>
                   @ksbeauty_toronto
                 </a>
               </div>

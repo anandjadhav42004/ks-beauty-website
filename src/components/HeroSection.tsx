@@ -104,7 +104,7 @@ export default function HeroSection() {
       >
         <div style={{ width: "1px", height: "40px", background: "rgba(184, 147, 90, 0.4)" }} />
         {[
-          { icon: Instagram, label: "Instagram", href: "https://instagram.com/ksbeauty_toronto" },
+          { icon: Instagram, label: "Instagram", href: "https://www.instagram.com/ks_beauty6ix?igsh=b3R0YTk3MGoxM3Jn" },
           { icon: Facebook, label: "Facebook", href: "#" },
           { icon: Share2, label: "Share", href: "#" },
         ].map((item) => (
