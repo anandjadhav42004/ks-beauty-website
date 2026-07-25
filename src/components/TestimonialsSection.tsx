@@ -7,7 +7,7 @@ const testimonials = [
     name: "Priya M.",
     role: "Bride · Mississauga",
     review:
-      "Komal made my wedding morning the most peaceful part of the entire day. I was expecting to feel rushed, but she arrived early, set up beautifully, and had me looking exactly how I imagined. My lehenga look was absolutely flawless — even after 12 hours.",
+      "Krishna made my wedding morning the most peaceful part of the entire day. I was expecting to feel rushed, but she arrived early, set up beautifully, and had me looking exactly how I imagined. My lehenga look was absolutely flawless — even after 12 hours.",
     rating: 5,
     initial: "PM",
     image: "/images/gallery/bridal-1.jpg",
@@ -17,7 +17,7 @@ const testimonials = [
     name: "Anjali K.",
     role: "Bride · Ajax",
     review:
-      "I've never felt so beautiful in my life. Komal understood my South Asian features so perfectly — the contouring, the eye makeup for my almond shape, the way she draped my dupatta. My whole family was in awe. Booked for my sister's wedding immediately after.",
+      "I've never felt so beautiful in my life. Krishna understood my South Asian features so perfectly — the contouring, the eye makeup for my almond shape, the way she draped my dupatta. My whole family was in awe. Booked for my sister's wedding immediately after.",
     rating: 5,
     initial: "AK",
     image: "/images/gallery/bridal-2.jpg",
@@ -27,7 +27,7 @@ const testimonials = [
     name: "Sarah L.",
     role: "Bride · Toronto",
     review:
-      "From my trial to my wedding day, Komal was absolutely exceptional. She listened to every detail, matched my vision perfectly, and made the whole experience feel luxurious rather than stressful. Worth every penny and so much more.",
+      "From my trial to my wedding day, Krishna was absolutely exceptional. She listened to every detail, matched my vision perfectly, and made the whole experience feel luxurious rather than stressful. Worth every penny and so much more.",
     rating: 5,
     initial: "SL",
     image: "/images/gallery/soft-glam-1.jpg",

@@ -62,7 +62,7 @@ export default function AboutSection() {
               >
                 <ImageWithFallback
                   src="/images/about/founder-portrait.jpg"
-                  alt="Komal S. in black blazer holding makeup palette reflected in studio mirror — KS Beauty founder"
+                  alt="Krishna S. in black blazer holding makeup palette reflected in studio mirror — KS Beauty founder"
                   loading="lazy"
                   style={{
                     position: "absolute",
@@ -200,7 +200,7 @@ export default function AboutSection() {
                 marginBottom: "24px",
               }}
             >
-              I'm Komal — your{" "}
+              I'm Krishna — your{" "}
               <span style={{ color: "#7A2E38", fontStyle: "italic" }}>
                 dedicated
               </span>{" "}
@@ -294,7 +294,7 @@ export default function AboutSection() {
                   textTransform: "uppercase",
                 }}
               >
-                — Komal S., Founder
+                — Krishna S., Founder
               </footer>
             </blockquote>
           </motion.div>
