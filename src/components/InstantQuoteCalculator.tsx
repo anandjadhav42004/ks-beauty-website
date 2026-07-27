@@ -249,7 +249,7 @@ export default function InstantQuoteCalculator() {
   const handleNext = () => {
     if (validateStep(currentStep)) {
       setCurrentStep((prev) => Math.min(prev + 1, 6));
-      window.scrollTo({ top: document.getElementById("quote-calculator")?.offsetTop || 0, behavior: "smooth" });
+      // NOTE: Removed window.scrollTo so viewport stays smoothly in place!
     }
   };
 
@@ -379,7 +379,7 @@ export default function InstantQuoteCalculator() {
               className="h-full bg-gradient-to-r from-[#B8935A] via-[#d4af72] to-[#B8935A] rounded-full"
               initial={{ width: "16.66%" }}
               animate={{ width: `${(currentStep / 6) * 100}%` }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
             />
           </div>
 
@@ -397,7 +397,7 @@ export default function InstantQuoteCalculator() {
                     if (isCompleted) setCurrentStep(st.number);
                   }}
                   disabled={!isCompleted}
-                  className={`flex flex-col items-center gap-1.5 p-2 rounded-xl text-xs transition-all ${
+                  className={`flex flex-col items-center gap-1.5 p-2 rounded-xl text-xs transition-colors duration-200 ${
                     isActive
                       ? "bg-[#B8935A] text-[#1F3329] font-bold shadow-md"
                       : isCompleted
@@ -406,7 +406,7 @@ export default function InstantQuoteCalculator() {
                   }`}
                 >
                   <span
-                    className={`w-6 h-6 rounded-full flex items-center justify-center text-xs ${
+                    className={`w-6 h-6 rounded-full flex items-center justify-center text-xs transition-colors duration-200 ${
                       isActive
                         ? "bg-[#1F3329] text-[#B8935A] font-bold"
                         : isCompleted
@@ -429,10 +429,10 @@ export default function InstantQuoteCalculator() {
             {!isSubmitted ? (
               <motion.div
                 key={currentStep}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.35, ease: "easeOut" }}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
               >
                 {/* STEP 1: EVENT DETAILS */}
                 {currentStep === 1 && (
@@ -559,9 +559,9 @@ export default function InstantQuoteCalculator() {
                               onClick={() =>
                                 setFormData((prev) => ({ ...prev, region: r.id }))
                               }
-                              className={`p-4 rounded-xl border-2 text-left flex flex-col justify-between transition-all ${
+                              className={`p-4 rounded-xl border-2 text-left flex flex-col justify-between transition-all duration-200 ease-out ${
                                 selected
-                                  ? "border-[#B8935A] bg-[#1F3329] text-[#FBF6EE] shadow-lg scale-[1.02]"
+                                  ? "border-[#B8935A] bg-[#1F3329] text-[#FBF6EE] shadow-md"
                                   : "border-[#1F3329]/15 bg-white text-[#1F3329] hover:border-[#B8935A]/60 hover:bg-[#FBF6EE]"
                               }`}
                             >
@@ -570,7 +570,7 @@ export default function InstantQuoteCalculator() {
                                 {selected && <CheckCircle2 size={18} className="text-[#B8935A]" />}
                               </div>
                               <span
-                                className={`text-xs font-medium px-2 py-0.5 rounded-full inline-block w-fit ${
+                                className={`text-xs font-medium px-2 py-0.5 rounded-full inline-block w-fit transition-colors ${
                                   selected
                                     ? "bg-[#B8935A] text-[#1F3329] font-bold"
                                     : "bg-[#1F3329]/10 text-[#1F3329]"
@@ -633,9 +633,9 @@ export default function InstantQuoteCalculator() {
                             onClick={() =>
                               setFormData((prev) => ({ ...prev, serviceType: item.type }))
                             }
-                            className={`p-6 rounded-2xl border-2 text-left flex flex-col justify-between transition-all relative ${
+                            className={`p-6 rounded-2xl border-2 text-left flex flex-col justify-between transition-all duration-200 ease-out relative ${
                               selected
-                                ? "border-[#B8935A] bg-[#1F3329] text-[#FBF6EE] shadow-xl ring-2 ring-[#B8935A]/50"
+                                ? "border-[#B8935A] bg-[#1F3329] text-[#FBF6EE] shadow-lg border-2"
                                 : "border-[#1F3329]/15 bg-white text-[#1F3329] hover:border-[#B8935A]/60"
                             }`}
                           >
@@ -712,7 +712,7 @@ export default function InstantQuoteCalculator() {
                                 bothHairMakeup: choice.val,
                               }))
                             }
-                            className={`flex-1 p-3.5 rounded-xl border-2 text-xs sm:text-sm font-bold transition-all ${
+                            className={`flex-1 p-3.5 rounded-xl border-2 text-xs sm:text-sm font-bold transition-all duration-200 ease-out ${
                               formData.bothHairMakeup === choice.val
                                 ? "border-[#B8935A] bg-[#1F3329] text-[#FBF6EE] shadow-md"
                                 : "border-[#1F3329]/20 bg-gray-50 text-[#1F3329] hover:bg-gray-100"
@@ -931,9 +931,9 @@ export default function InstantQuoteCalculator() {
                               onClick={() =>
                                 setFormData((prev) => ({ ...prev, selectedTier: t.tier }))
                               }
-                              className={`rounded-2xl p-5 border-2 cursor-pointer transition-all flex flex-col justify-between relative ${
+                              className={`rounded-2xl p-5 border-2 cursor-pointer transition-all duration-200 ease-out flex flex-col justify-between relative ${
                                 isSelected
-                                  ? "border-[#B8935A] bg-[#1F3329] text-[#FBF6EE] shadow-2xl scale-[1.02]"
+                                  ? "border-[#B8935A] bg-[#1F3329] text-[#FBF6EE] shadow-xl"
                                   : "border-[#1F3329]/15 bg-white text-[#1F3329] hover:border-[#B8935A]/50"
                               }`}
                             >
@@ -966,7 +966,7 @@ export default function InstantQuoteCalculator() {
 
                                 {/* Itemized Breakdown List */}
                                 <div
-                                  className={`text-xs space-y-1.5 p-3 rounded-xl mb-4 border ${
+                                  className={`text-xs space-y-1.5 p-3 rounded-xl mb-4 border transition-colors ${
                                     isSelected
                                       ? "bg-black/20 border-[#B8935A]/30 text-[#FBF6EE]/90"
                                       : "bg-[#FBF6EE] border-[#1F3329]/10 text-[#1F3329]"
@@ -1008,7 +1008,7 @@ export default function InstantQuoteCalculator() {
 
                                 <button
                                   type="button"
-                                  className={`w-full py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition ${
+                                  className={`w-full py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors duration-200 ${
                                     isSelected
                                       ? "bg-[#B8935A] text-[#1F3329] shadow-md"
                                       : "bg-[#1F3329] text-[#FBF6EE] hover:bg-[#B8935A] hover:text-[#1F3329]"
@@ -1042,7 +1042,7 @@ export default function InstantQuoteCalculator() {
                             onClick={() =>
                               setFormData((prev) => ({ ...prev, nextAction: act }))
                             }
-                            className={`p-3 rounded-xl border-2 text-xs font-bold transition-all ${
+                            className={`p-3 rounded-xl border-2 text-xs font-bold transition-all duration-200 ease-out ${
                               formData.nextAction === act
                                 ? "border-[#B8935A] bg-[#1F3329] text-[#FBF6EE]"
                                 : "border-[#1F3329]/15 bg-[#FBF6EE] text-[#1F3329] hover:border-[#B8935A]"
@@ -1196,7 +1196,7 @@ export default function InstantQuoteCalculator() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full py-4 rounded-2xl bg-gradient-to-r from-[#B8935A] via-[#d4af72] to-[#B8935A] text-[#1F3329] font-extrabold text-base uppercase tracking-wider shadow-xl hover:shadow-2xl hover:scale-[1.01] transition-all flex items-center justify-center gap-3 disabled:opacity-50"
+                      className="w-full py-4 rounded-2xl bg-gradient-to-r from-[#B8935A] via-[#d4af72] to-[#B8935A] text-[#1F3329] font-extrabold text-base uppercase tracking-wider shadow-xl hover:shadow-2xl transition-all duration-200 flex items-center justify-center gap-3 disabled:opacity-50"
                     >
                       {isSubmitting ? (
                         <>
@@ -1219,7 +1219,7 @@ export default function InstantQuoteCalculator() {
                     <button
                       type="button"
                       onClick={handleBack}
-                      className="px-5 py-2.5 rounded-xl border border-[#1F3329]/20 text-[#1F3329] font-bold text-sm flex items-center gap-2 hover:bg-[#1F3329]/5 transition"
+                      className="px-5 py-2.5 rounded-xl border border-[#1F3329]/20 text-[#1F3329] font-bold text-sm flex items-center gap-2 hover:bg-[#1F3329]/5 transition-colors duration-200"
                     >
                       <ArrowLeft size={16} />
                       Back
@@ -1232,7 +1232,7 @@ export default function InstantQuoteCalculator() {
                     <button
                       type="button"
                       onClick={handleNext}
-                      className="px-7 py-3 rounded-xl bg-[#1F3329] text-[#FBF6EE] font-extrabold text-sm uppercase tracking-wider flex items-center gap-2.5 hover:bg-[#B8935A] hover:text-[#1F3329] shadow-lg transition-all"
+                      className="px-7 py-3 rounded-xl bg-[#1F3329] text-[#FBF6EE] font-extrabold text-sm uppercase tracking-wider flex items-center gap-2.5 hover:bg-[#B8935A] hover:text-[#1F3329] shadow-lg transition-all duration-200"
                     >
                       Next Step
                       <ArrowRight size={16} />
@@ -1244,8 +1244,9 @@ export default function InstantQuoteCalculator() {
               /* SUCCESS CONFIRMATION VIEW */
               <motion.div
                 key="submitted"
-                initial={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
                 className="text-center py-8 space-y-6"
               >
                 <div className="w-20 h-20 rounded-full bg-[#1F3329] text-[#B8935A] flex items-center justify-center mx-auto shadow-2xl border-2 border-[#B8935A]">
@@ -1324,7 +1325,7 @@ export default function InstantQuoteCalculator() {
                       setIsSubmitted(false);
                       setCurrentStep(1);
                     }}
-                    className="px-6 py-3 rounded-xl border border-[#1F3329]/30 text-[#1F3329] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#1F3329]/10"
+                    className="px-6 py-3 rounded-xl border border-[#1F3329]/30 text-[#1F3329] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#1F3329]/10 transition-colors duration-200"
                   >
                     <RefreshCw size={15} />
                     Calculate Another Quote
@@ -1332,7 +1333,7 @@ export default function InstantQuoteCalculator() {
 
                   <a
                     href="#gallery"
-                    className="px-6 py-3 rounded-xl bg-[#1F3329] text-[#FBF6EE] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#B8935A] hover:text-[#1F3329] transition"
+                    className="px-6 py-3 rounded-xl bg-[#1F3329] text-[#FBF6EE] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#B8935A] hover:text-[#1F3329] transition-colors duration-200"
                   >
                     Explore Bridal Gallery
                     <ArrowRight size={15} />
