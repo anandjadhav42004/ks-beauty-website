@@ -16,6 +16,7 @@ import FinalCTASection from "@/components/FinalCTASection";
 import InstantQuoteCalculator from "@/components/InstantQuoteCalculator";
 import Footer from "@/components/Footer";
 import MobileStickyBar from "@/components/MobileStickyBar";
+import BackToTop from "@/components/BackToTop";
 
 export default function HomePage() {
   return (
@@ -72,8 +73,11 @@ export default function HomePage() {
 
       <Footer />
 
-      {/* 15. Mobile Sticky Bar */}
+      {/* 16. Mobile Sticky Bar */}
       <MobileStickyBar />
+
+      {/* 17. Floating Back To Top */}
+      <BackToTop />
     </>
   );
 }

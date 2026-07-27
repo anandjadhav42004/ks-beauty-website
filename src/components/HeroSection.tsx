@@ -289,7 +289,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, scale: 0.96 }}
             animate={ctaReady ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="flex flex-wrap gap-4 items-center mb-10"
+            className="flex flex-wrap gap-4 items-center mb-6"
           >
             <button
               className="btn-primary ripple-container"
@@ -313,6 +313,37 @@ export default function HeroSection() {
               View Services
               <ArrowRight size={16} className="btn-arrow" />
             </button>
+          </motion.div>
+
+          {/* Quick-Jump Shortcut Chips */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={ctaReady ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.4, delay: 0.15 }}
+            className="flex flex-wrap items-center gap-2 mb-8"
+          >
+            <span className="text-xs font-semibold text-[#8c6b36] uppercase tracking-wider mr-1">
+              Jump To:
+            </span>
+            {[
+              { label: "Services →", target: "#services" },
+              { label: "Pricing →", target: "#pricing" },
+              { label: "Gallery →", target: "#gallery" },
+              { label: "FAQ →", target: "#faq" },
+            ].map((chip) => (
+              <button
+                key={chip.label}
+                onClick={() => document.querySelector(chip.target)?.scrollIntoView({ behavior: "smooth" })}
+                className="px-3.5 py-1.5 rounded-full text-xs font-semibold border transition-all duration-200"
+                style={{
+                  borderColor: "rgba(184, 147, 90, 0.4)",
+                  background: "rgba(251, 246, 238, 0.8)",
+                  color: "#1F3329",
+                }}
+              >
+                {chip.label}
+              </button>
+            ))}
           </motion.div>
 
           {/* Floating Badge */}

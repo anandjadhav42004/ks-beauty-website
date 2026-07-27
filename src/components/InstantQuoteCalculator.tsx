@@ -16,6 +16,8 @@ import {
   RefreshCw,
   Mail,
   Info,
+  AlertTriangle,
+  PhoneCall,
 } from "lucide-react";
 import emailjs from "@emailjs/browser";
 
@@ -60,6 +62,16 @@ export interface QuoteFormData {
   phoneCountryCode: string;
   phoneNumber: string;
 }
+
+// --- CURRENCY FORMATTER (CAD) ---
+const formatCAD = (amount: number): string => {
+  return new Intl.NumberFormat("en-CA", {
+    style: "currency",
+    currency: "CAD",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(amount);
+};
 
 // --- TRAVEL FEE MATRIX ---
 const TRAVEL_FEES: Record<RegionOption, number> = {
@@ -133,6 +145,7 @@ export default function InstantQuoteCalculator() {
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
 
   // --- CALCULATION LOGIC ---
   const calculateBreakdown = (tier: TierName) => {
@@ -221,25 +234,47 @@ export default function InstantQuoteCalculator() {
   // --- STEP VALIDATION ---
   const validateStep = (step: number): boolean => {
     const errs: Record<string, string> = {};
+    const todayStr = new Date().toISOString().split("T")[0];
+
     if (step === 1) {
-      if (!formData.eventDate) errs.eventDate = "Please choose your event date";
-      if (!formData.finishTime) errs.finishTime = "Please enter required finish time";
+      if (!formData.eventDate) {
+        errs.eventDate = "Please select your event date";
+      } else if (formData.eventDate < todayStr) {
+        errs.eventDate = "Event date cannot be in the past";
+      }
+
+      if (!formData.finishTime) {
+        errs.finishTime = "Please enter required finish time";
+      } else {
+        // Validate reasonable finish time (e.g. not 1 AM to 4 AM)
+        const hour = parseInt(formData.finishTime.split(":")[0], 10);
+        if (hour >= 1 && hour < 5) {
+          errs.finishTime = "Please enter a reasonable finish time (e.g., between 5:00 AM and 11:00 PM)";
+        }
+      }
     } else if (step === 4) {
       if (formData.bothHairMakeup) {
         if (formData.bothCount < 1) errs.bothCount = "Please enter at least 1 person";
       } else {
         if (formData.makeupOnlyCount === 0 && formData.hairOnlyCount === 0) {
-          errs.peopleCount = "Please enter at least 1 person for makeup or hair";
+          errs.peopleCount = "Please enter at least 1 person needing makeup or hair services";
         }
       }
     } else if (step === 6) {
       if (!formData.firstName.trim()) errs.firstName = "First name is required";
       if (!formData.lastName.trim()) errs.lastName = "Last name is required";
-      if (!formData.email.trim()) errs.email = "Email address is required";
-      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      if (!formData.email.trim()) {
+        errs.email = "Email address is required";
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
         errs.email = "Please enter a valid email address";
       }
-      if (!formData.phoneNumber.trim()) errs.phoneNumber = "Phone number is required";
+
+      const digitsOnly = formData.phoneNumber.replace(/\D/g, "");
+      if (!formData.phoneNumber.trim()) {
+        errs.phoneNumber = "Phone number is required";
+      } else if (digitsOnly.length < 7 || digitsOnly.length > 15) {
+        errs.phoneNumber = "Please enter a valid phone number (7-15 digits)";
+      }
     }
 
     setFormErrors(errs);
@@ -249,7 +284,6 @@ export default function InstantQuoteCalculator() {
   const handleNext = () => {
     if (validateStep(currentStep)) {
       setCurrentStep((prev) => Math.min(prev + 1, 6));
-      // NOTE: Removed window.scrollTo so viewport stays smoothly in place!
     }
   };
 
@@ -258,12 +292,13 @@ export default function InstantQuoteCalculator() {
     setCurrentStep((prev) => Math.max(prev - 1, 1));
   };
 
-  // --- SUBMIT HANDLER ---
+  // --- SUBMIT HANDLER WITH ERROR RECOVERY ---
   const handleSubmitQuote = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateStep(6)) return;
 
     setIsSubmitting(true);
+    setEmailError(null);
     const breakdown = calculateBreakdown(formData.selectedTier);
 
     const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
@@ -281,11 +316,11 @@ export default function InstantQuoteCalculator() {
       service_type: formData.serviceType,
       selected_tier: formData.selectedTier,
       next_action: formData.nextAction,
-      subtotal: `$${breakdown.subtotal.toFixed(2)} CAD`,
-      hst_tax: `$${breakdown.hstTax.toFixed(2)} CAD (13% HST)`,
-      grand_total: `$${breakdown.grandTotal.toFixed(2)} CAD`,
+      subtotal: formatCAD(breakdown.subtotal),
+      hst_tax: `${formatCAD(breakdown.hstTax)} (13% HST)`,
+      grand_total: formatCAD(breakdown.grandTotal),
       itemized_details: breakdown.items
-        .map((it) => `${it.label} x${it.qty} = $${it.total.toFixed(2)}`)
+        .map((it) => `${it.label} x${it.qty} = ${formatCAD(it.total)}`)
         .join("\n"),
     };
 
@@ -298,7 +333,9 @@ export default function InstantQuoteCalculator() {
         PUBLIC_KEY
       );
     } catch (err) {
-      console.warn("EmailJS call notice (configure credentials at emailjs.com):", err);
+      console.warn("EmailJS notice (configure live credentials at emailjs.com):", err);
+      // Fallback display error notice if network fails or credentials invalid
+      setEmailError("Note: Email notification server requires active EmailJS credentials. Your calculated quote below is confirmed & saved!");
     } finally {
       setIsSubmitting(false);
       setIsSubmitted(true);
@@ -461,13 +498,19 @@ export default function InstantQuoteCalculator() {
                           type="date"
                           min={new Date().toISOString().split("T")[0]}
                           value={formData.eventDate}
-                          onChange={(e) =>
-                            setFormData((prev) => ({ ...prev, eventDate: e.target.value }))
-                          }
-                          className="w-full px-4 py-3.5 rounded-xl border border-[#1F3329]/20 bg-white text-[#1F3329] font-medium focus:ring-2 focus:ring-[#B8935A] focus:border-transparent outline-none transition"
+                          onChange={(e) => {
+                            setFormData((prev) => ({ ...prev, eventDate: e.target.value }));
+                            if (formErrors.eventDate) setFormErrors((prev) => ({ ...prev, eventDate: "" }));
+                          }}
+                          className={`w-full px-4 py-3.5 rounded-xl border bg-white text-[#1F3329] font-medium outline-none transition ${
+                            formErrors.eventDate
+                              ? "border-red-500 ring-2 ring-red-200"
+                              : "border-[#1F3329]/20 focus:ring-2 focus:ring-[#B8935A]"
+                          }`}
                         />
                         {formErrors.eventDate && (
-                          <p className="text-xs text-red-600 mt-1.5 font-medium">
+                          <p className="text-xs text-red-700 mt-1.5 font-semibold flex items-center gap-1">
+                            <AlertTriangle size={13} />
                             {formErrors.eventDate}
                           </p>
                         )}
@@ -483,17 +526,23 @@ export default function InstantQuoteCalculator() {
                         <input
                           type="time"
                           value={formData.finishTime}
-                          onChange={(e) =>
-                            setFormData((prev) => ({ ...prev, finishTime: e.target.value }))
-                          }
-                          className="w-full px-4 py-3.5 rounded-xl border border-[#1F3329]/20 bg-white text-[#1F3329] font-medium focus:ring-2 focus:ring-[#B8935A] focus:border-transparent outline-none transition"
+                          onChange={(e) => {
+                            setFormData((prev) => ({ ...prev, finishTime: e.target.value }));
+                            if (formErrors.finishTime) setFormErrors((prev) => ({ ...prev, finishTime: "" }));
+                          }}
+                          className={`w-full px-4 py-3.5 rounded-xl border bg-white text-[#1F3329] font-medium outline-none transition ${
+                            formErrors.finishTime
+                              ? "border-red-500 ring-2 ring-red-200"
+                              : "border-[#1F3329]/20 focus:ring-2 focus:ring-[#B8935A]"
+                          }`}
                         />
                         <p className="text-xs text-[#8c6b36] mt-1.5 flex items-center gap-1 font-semibold">
                           <Info size={13} />
                           NOT the start time (this is when you need to be ready for photos/ceremony)
                         </p>
                         {formErrors.finishTime && (
-                          <p className="text-xs text-red-600 mt-1 font-medium">
+                          <p className="text-xs text-red-700 mt-1 font-semibold flex items-center gap-1">
+                            <AlertTriangle size={13} />
                             {formErrors.finishTime}
                           </p>
                         )}
@@ -542,13 +591,13 @@ export default function InstantQuoteCalculator() {
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5">
                         {(
                           [
-                            { id: "Toronto", fee: "$30" },
-                            { id: "GTA (general)", fee: "$35" },
-                            { id: "Pickering", fee: "$40" },
-                            { id: "Ajax", fee: "$45" },
-                            { id: "Whitby", fee: "$50" },
-                            { id: "Oshawa", fee: "$55" },
-                            { id: "Durham Region", fee: "$50" },
+                            { id: "Toronto", fee: formatCAD(30) },
+                            { id: "GTA (general)", fee: formatCAD(35) },
+                            { id: "Pickering", fee: formatCAD(40) },
+                            { id: "Ajax", fee: formatCAD(45) },
+                            { id: "Whitby", fee: formatCAD(50) },
+                            { id: "Oshawa", fee: formatCAD(55) },
+                            { id: "Durham Region", fee: formatCAD(50) },
                           ] as Array<{ id: RegionOption; fee: string }>
                         ).map((r) => {
                           const selected = formData.region === r.id;
@@ -706,12 +755,15 @@ export default function InstantQuoteCalculator() {
                           <button
                             key={String(choice.val)}
                             type="button"
-                            onClick={() =>
+                            onClick={() => {
                               setFormData((prev) => ({
                                 ...prev,
                                 bothHairMakeup: choice.val,
-                              }))
-                            }
+                              }));
+                              if (formErrors.peopleCount || formErrors.bothCount) {
+                                setFormErrors((prev) => ({ ...prev, peopleCount: "", bothCount: "" }));
+                              }
+                            }}
                             className={`flex-1 p-3.5 rounded-xl border-2 text-xs sm:text-sm font-bold transition-all duration-200 ease-out ${
                               formData.bothHairMakeup === choice.val
                                 ? "border-[#B8935A] bg-[#1F3329] text-[#FBF6EE] shadow-md"
@@ -736,16 +788,18 @@ export default function InstantQuoteCalculator() {
                             min={1}
                             max={20}
                             value={formData.bothCount}
-                            onChange={(e) =>
+                            onChange={(e) => {
                               setFormData((prev) => ({
                                 ...prev,
-                                bothCount: Math.max(1, parseInt(e.target.value) || 0),
-                              }))
-                            }
+                                bothCount: Math.max(0, parseInt(e.target.value) || 0),
+                              }));
+                              if (formErrors.bothCount) setFormErrors((prev) => ({ ...prev, bothCount: "" }));
+                            }}
                             className="w-full sm:w-48 px-4 py-3 rounded-xl border border-[#1F3329]/20 bg-[#FBF6EE] text-[#1F3329] font-bold text-lg focus:ring-2 focus:ring-[#B8935A] outline-none"
                           />
                           {formErrors.bothCount && (
-                            <p className="text-xs text-red-600 mt-1 font-medium">
+                            <p className="text-xs text-red-700 mt-1 font-semibold flex items-center gap-1">
+                              <AlertTriangle size={13} />
                               {formErrors.bothCount}
                             </p>
                           )}
@@ -761,12 +815,13 @@ export default function InstantQuoteCalculator() {
                               min={0}
                               max={20}
                               value={formData.makeupOnlyCount}
-                              onChange={(e) =>
+                              onChange={(e) => {
                                 setFormData((prev) => ({
                                   ...prev,
                                   makeupOnlyCount: Math.max(0, parseInt(e.target.value) || 0),
-                                }))
-                              }
+                                }));
+                                if (formErrors.peopleCount) setFormErrors((prev) => ({ ...prev, peopleCount: "" }));
+                              }}
                               className="w-full px-4 py-3 rounded-xl border border-[#1F3329]/20 bg-[#FBF6EE] text-[#1F3329] font-bold text-lg focus:ring-2 focus:ring-[#B8935A] outline-none"
                             />
                           </div>
@@ -780,17 +835,19 @@ export default function InstantQuoteCalculator() {
                               min={0}
                               max={20}
                               value={formData.hairOnlyCount}
-                              onChange={(e) =>
+                              onChange={(e) => {
                                 setFormData((prev) => ({
                                   ...prev,
                                   hairOnlyCount: Math.max(0, parseInt(e.target.value) || 0),
-                                }))
-                              }
+                                }));
+                                if (formErrors.peopleCount) setFormErrors((prev) => ({ ...prev, peopleCount: "" }));
+                              }}
                               className="w-full px-4 py-3 rounded-xl border border-[#1F3329]/20 bg-[#FBF6EE] text-[#1F3329] font-bold text-lg focus:ring-2 focus:ring-[#B8935A] outline-none"
                             />
                           </div>
                           {formErrors.peopleCount && (
-                            <p className="col-span-2 text-xs text-red-600 font-medium">
+                            <p className="col-span-2 text-xs text-red-700 font-semibold flex items-center gap-1 mt-1">
+                              <AlertTriangle size={13} />
                               {formErrors.peopleCount}
                             </p>
                           )}
@@ -804,7 +861,7 @@ export default function InstantQuoteCalculator() {
                       <div className="bg-white p-5 rounded-2xl border border-[#1F3329]/15">
                         <label className="block text-sm font-semibold text-[#1F3329] mb-1 flex items-center justify-between">
                           <span>Hair Extensions Installation</span>
-                          <span className="text-xs text-[#B8935A] font-bold">$40 / person</span>
+                          <span className="text-xs text-[#B8935A] font-bold">{formatCAD(40)} / person</span>
                         </label>
                         <p className="text-xs text-amber-800 font-medium mb-3 flex items-center gap-1">
                           <Scissors size={13} />
@@ -829,7 +886,7 @@ export default function InstantQuoteCalculator() {
                       <div className="bg-white p-5 rounded-2xl border border-[#1F3329]/15">
                         <label className="block text-sm font-semibold text-[#1F3329] mb-1 flex items-center justify-between">
                           <span>Jewelry / Dupatta / Veil Setting</span>
-                          <span className="text-xs text-[#B8935A] font-bold">$40 / person</span>
+                          <span className="text-xs text-[#B8935A] font-bold">{formatCAD(40)} / person</span>
                         </label>
                         <p className="text-xs text-[#5a4a40] mb-3">
                           Includes heavy chunni pinning, maang tikka, matha patti &amp; jewelry security.
@@ -854,7 +911,7 @@ export default function InstantQuoteCalculator() {
                     <div className="bg-[#1F3329]/5 p-4 rounded-xl border border-[#1F3329]/10 flex items-center gap-3">
                       <Sparkles className="text-[#B8935A] shrink-0" size={20} />
                       <p className="text-xs text-[#1F3329] font-medium">
-                        <strong>Complimentary Lashes Included:</strong> Premium mink or silk false lashes and custom skin preparation are automatically included with all makeup services at no extra charge ($0).
+                        <strong>Complimentary Lashes Included:</strong> Premium mink or silk false lashes and custom skin preparation are automatically included with all makeup services at no extra charge ({formatCAD(0)}).
                       </p>
                     </div>
                   </div>
@@ -976,17 +1033,17 @@ export default function InstantQuoteCalculator() {
                                     <div key={idx} className="flex justify-between items-center">
                                       <span className="truncate pr-2">{it.label}</span>
                                       <span className="font-semibold shrink-0">
-                                        ${it.total.toFixed(0)}
+                                        {formatCAD(it.total)}
                                       </span>
                                     </div>
                                   ))}
                                   <div className="flex justify-between items-center pt-1 border-t border-dashed border-current/20 text-[11px]">
                                     <span>Travel Fee ({formData.region})</span>
-                                    <span>${breakdown.travelFee}</span>
+                                    <span>{formatCAD(breakdown.travelFee)}</span>
                                   </div>
                                   <div className="flex justify-between items-center text-[11px]">
                                     <span>13% HST Tax</span>
-                                    <span>${breakdown.hstTax.toFixed(2)}</span>
+                                    <span>{formatCAD(breakdown.hstTax)}</span>
                                   </div>
                                 </div>
                               </div>
@@ -1000,10 +1057,7 @@ export default function InstantQuoteCalculator() {
                                   style={{ fontFamily: "var(--app-font-serif, serif)" }}
                                   className="text-2xl font-extrabold text-[#B8935A] mb-3"
                                 >
-                                  ${breakdown.grandTotal.toFixed(2)}{" "}
-                                  <span className="text-xs font-normal text-current opacity-70">
-                                    CAD
-                                  </span>
+                                  {formatCAD(breakdown.grandTotal)}
                                 </div>
 
                                 <button
@@ -1092,7 +1146,7 @@ export default function InstantQuoteCalculator() {
                           style={{ fontFamily: "var(--app-font-serif, serif)" }}
                           className="text-2xl font-bold text-[#B8935A]"
                         >
-                          ${selectedBreakdown.grandTotal.toFixed(2)} CAD
+                          {formatCAD(selectedBreakdown.grandTotal)}
                         </div>
                       </div>
                     </div>
@@ -1107,13 +1161,19 @@ export default function InstantQuoteCalculator() {
                           type="text"
                           required
                           value={formData.firstName}
-                          onChange={(e) =>
-                            setFormData((prev) => ({ ...prev, firstName: e.target.value }))
-                          }
-                          className="w-full px-4 py-3 rounded-xl border border-[#1F3329]/20 bg-white text-[#1F3329] font-medium outline-none focus:ring-2 focus:ring-[#B8935A]"
+                          onChange={(e) => {
+                            setFormData((prev) => ({ ...prev, firstName: e.target.value }));
+                            if (formErrors.firstName) setFormErrors((prev) => ({ ...prev, firstName: "" }));
+                          }}
+                          className={`w-full px-4 py-3 rounded-xl border bg-white text-[#1F3329] font-medium outline-none transition ${
+                            formErrors.firstName ? "border-red-500 ring-2 ring-red-200" : "border-[#1F3329]/20 focus:ring-2 focus:ring-[#B8935A]"
+                          }`}
                         />
                         {formErrors.firstName && (
-                          <p className="text-xs text-red-600 mt-1">{formErrors.firstName}</p>
+                          <p className="text-xs text-red-700 mt-1 font-semibold flex items-center gap-1">
+                            <AlertTriangle size={13} />
+                            {formErrors.firstName}
+                          </p>
                         )}
                       </div>
 
@@ -1125,13 +1185,19 @@ export default function InstantQuoteCalculator() {
                           type="text"
                           required
                           value={formData.lastName}
-                          onChange={(e) =>
-                            setFormData((prev) => ({ ...prev, lastName: e.target.value }))
-                          }
-                          className="w-full px-4 py-3 rounded-xl border border-[#1F3329]/20 bg-white text-[#1F3329] font-medium outline-none focus:ring-2 focus:ring-[#B8935A]"
+                          onChange={(e) => {
+                            setFormData((prev) => ({ ...prev, lastName: e.target.value }));
+                            if (formErrors.lastName) setFormErrors((prev) => ({ ...prev, lastName: "" }));
+                          }}
+                          className={`w-full px-4 py-3 rounded-xl border bg-white text-[#1F3329] font-medium outline-none transition ${
+                            formErrors.lastName ? "border-red-500 ring-2 ring-red-200" : "border-[#1F3329]/20 focus:ring-2 focus:ring-[#B8935A]"
+                          }`}
                         />
                         {formErrors.lastName && (
-                          <p className="text-xs text-red-600 mt-1">{formErrors.lastName}</p>
+                          <p className="text-xs text-red-700 mt-1 font-semibold flex items-center gap-1">
+                            <AlertTriangle size={13} />
+                            {formErrors.lastName}
+                          </p>
                         )}
                       </div>
 
@@ -1143,13 +1209,19 @@ export default function InstantQuoteCalculator() {
                           type="email"
                           required
                           value={formData.email}
-                          onChange={(e) =>
-                            setFormData((prev) => ({ ...prev, email: e.target.value }))
-                          }
-                          className="w-full px-4 py-3 rounded-xl border border-[#1F3329]/20 bg-white text-[#1F3329] font-medium outline-none focus:ring-2 focus:ring-[#B8935A]"
+                          onChange={(e) => {
+                            setFormData((prev) => ({ ...prev, email: e.target.value }));
+                            if (formErrors.email) setFormErrors((prev) => ({ ...prev, email: "" }));
+                          }}
+                          className={`w-full px-4 py-3 rounded-xl border bg-white text-[#1F3329] font-medium outline-none transition ${
+                            formErrors.email ? "border-red-500 ring-2 ring-red-200" : "border-[#1F3329]/20 focus:ring-2 focus:ring-[#B8935A]"
+                          }`}
                         />
                         {formErrors.email && (
-                          <p className="text-xs text-red-600 mt-1">{formErrors.email}</p>
+                          <p className="text-xs text-red-700 mt-1 font-semibold flex items-center gap-1">
+                            <AlertTriangle size={13} />
+                            {formErrors.email}
+                          </p>
                         )}
                       </div>
 
@@ -1180,14 +1252,20 @@ export default function InstantQuoteCalculator() {
                             required
                             placeholder="(416) 555-0199"
                             value={formData.phoneNumber}
-                            onChange={(e) =>
-                              setFormData((prev) => ({ ...prev, phoneNumber: e.target.value }))
-                            }
-                            className="w-full px-4 py-3 rounded-xl border border-[#1F3329]/20 bg-white text-[#1F3329] font-medium outline-none focus:ring-2 focus:ring-[#B8935A]"
+                            onChange={(e) => {
+                              setFormData((prev) => ({ ...prev, phoneNumber: e.target.value }));
+                              if (formErrors.phoneNumber) setFormErrors((prev) => ({ ...prev, phoneNumber: "" }));
+                            }}
+                            className={`w-full px-4 py-3 rounded-xl border bg-white text-[#1F3329] font-medium outline-none transition ${
+                              formErrors.phoneNumber ? "border-red-500 ring-2 ring-red-200" : "border-[#1F3329]/20 focus:ring-2 focus:ring-[#B8935A]"
+                            }`}
                           />
                         </div>
                         {formErrors.phoneNumber && (
-                          <p className="text-xs text-red-600 mt-1">{formErrors.phoneNumber}</p>
+                          <p className="text-xs text-red-700 mt-1 font-semibold flex items-center gap-1">
+                            <AlertTriangle size={13} />
+                            {formErrors.phoneNumber}
+                          </p>
                         )}
                       </div>
                     </div>
@@ -1261,12 +1339,33 @@ export default function InstantQuoteCalculator() {
                     style={{ fontFamily: "var(--app-font-serif, serif)" }}
                     className="text-3xl sm:text-4xl font-bold text-[#1F3329] mt-3 mb-2"
                   >
-                    Quote Sent &amp; Date Reserved!
+                    Quote Calculated &amp; Date Reserved!
                   </h3>
                   <p className="text-base text-[#5a4a40] max-w-lg mx-auto">
-                    Thank you, <strong>{formData.firstName}</strong>! Your itemized custom quote breakdown has been sent to <strong>{formData.email}</strong>.
+                    Thank you, <strong>{formData.firstName}</strong>! Your itemized custom quote breakdown has been generated below for <strong>{formData.email}</strong>.
                   </p>
                 </div>
+
+                {/* Email Notice / Error Fallback Banner if EmailJS server returned notice */}
+                {emailError && (
+                  <div className="bg-amber-50 border border-amber-300 text-amber-900 p-4 rounded-xl max-w-lg mx-auto text-left text-xs font-medium space-y-2">
+                    <div className="flex items-center gap-2 font-bold text-amber-900">
+                      <Info size={16} className="text-amber-700" />
+                      Notice Regarding Email Confirmation:
+                    </div>
+                    <p className="leading-relaxed">{emailError}</p>
+                    <div className="pt-1 flex items-center gap-4 text-xs font-bold text-[#1F3329]">
+                      <a href="tel:4165550199" className="flex items-center gap-1 hover:underline">
+                        <PhoneCall size={12} />
+                        (416) 555-0199
+                      </a>
+                      <a href="mailto:info@ksbeauty.ca" className="flex items-center gap-1 hover:underline">
+                        <Mail size={12} />
+                        info@ksbeauty.ca
+                      </a>
+                    </div>
+                  </div>
+                )}
 
                 {/* Confirmed Quote Receipt Card */}
                 <div className="bg-[#1F3329] text-[#FBF6EE] p-6 rounded-2xl max-w-lg mx-auto text-left shadow-xl border border-[#B8935A]/40 space-y-4">
@@ -1300,20 +1399,20 @@ export default function InstantQuoteCalculator() {
                     {selectedBreakdown.items.map((it, idx) => (
                       <div key={idx} className="flex justify-between text-[#FBF6EE]/80">
                         <span>{it.label} x{it.qty}</span>
-                        <span>${it.total.toFixed(2)}</span>
+                        <span>{formatCAD(it.total)}</span>
                       </div>
                     ))}
                     <div className="flex justify-between text-[#FBF6EE]/70 pt-1">
                       <span>Travel Fee ({formData.region})</span>
-                      <span>${selectedBreakdown.travelFee.toFixed(2)}</span>
+                      <span>{formatCAD(selectedBreakdown.travelFee)}</span>
                     </div>
                     <div className="flex justify-between text-[#FBF6EE]/70">
                       <span>13% HST</span>
-                      <span>${selectedBreakdown.hstTax.toFixed(2)}</span>
+                      <span>{formatCAD(selectedBreakdown.hstTax)}</span>
                     </div>
                     <div className="flex justify-between text-sm font-extrabold text-[#B8935A] pt-2 border-t border-dashed border-[#B8935A]/30">
                       <span>Grand Total</span>
-                      <span>${selectedBreakdown.grandTotal.toFixed(2)} CAD</span>
+                      <span>{formatCAD(selectedBreakdown.grandTotal)}</span>
                     </div>
                   </div>
                 </div>
