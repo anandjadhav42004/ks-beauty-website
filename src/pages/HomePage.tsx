@@ -7,6 +7,7 @@ import CTARibbon from "@/components/CTARibbon";
 import WhyChooseSection from "@/components/WhyChooseSection";
 import AddOnsSection from "@/components/AddOnsSection";
 import GallerySection from "@/components/GallerySection";
+import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import ProcessTimeline from "@/components/ProcessTimeline";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import InstagramSection from "@/components/InstagramSection";
@@ -17,6 +18,7 @@ import InstantQuoteCalculator from "@/components/InstantQuoteCalculator";
 import Footer from "@/components/Footer";
 import MobileStickyBar from "@/components/MobileStickyBar";
 import BackToTop from "@/components/BackToTop";
+import WhatsAppConcierge from "@/components/WhatsAppConcierge";
 
 export default function HomePage() {
   return (
@@ -49,35 +51,41 @@ export default function HomePage() {
         {/* 8. Gallery */}
         <GallerySection />
 
-        {/* 9. Process Timeline */}
+        {/* 9. Interactive Before / After Slider */}
+        <BeforeAfterSlider />
+
+        {/* 10. Process Timeline */}
         <ProcessTimeline />
 
-        {/* 10. Testimonials */}
+        {/* 11. Testimonials */}
         <TestimonialsSection />
 
-        {/* 11. Instagram */}
+        {/* 12. Instagram */}
         <InstagramSection />
 
-        {/* 12. Investment & Packages */}
+        {/* 13. Investment & Packages */}
         <PricingSection />
 
-        {/* 13. FAQ */}
+        {/* 14. FAQ */}
         <FAQSection />
 
-        {/* 14. Final CTA */}
+        {/* 15. Final CTA */}
         <FinalCTASection />
 
-        {/* 15. Instant Quote Calculator */}
+        {/* 16. Instant Quote Calculator */}
         <InstantQuoteCalculator />
       </main>
 
       <Footer />
 
-      {/* 16. Mobile Sticky Bar */}
+      {/* 17. Mobile Sticky Bar */}
       <MobileStickyBar />
 
-      {/* 17. Floating Back To Top */}
+      {/* 18. Floating Back To Top */}
       <BackToTop />
+
+      {/* 19. WhatsApp VIP Concierge */}
+      <WhatsAppConcierge />
     </>
   );
 }

@@ -246,7 +246,6 @@ export default function InstantQuoteCalculator() {
       if (!formData.finishTime) {
         errs.finishTime = "Please enter required finish time";
       } else {
-        // Validate reasonable finish time (e.g. not 1 AM to 4 AM)
         const hour = parseInt(formData.finishTime.split(":")[0], 10);
         if (hour >= 1 && hour < 5) {
           errs.finishTime = "Please enter a reasonable finish time (e.g., between 5:00 AM and 11:00 PM)";
@@ -334,7 +333,6 @@ export default function InstantQuoteCalculator() {
       );
     } catch (err) {
       console.warn("EmailJS notice (configure live credentials at emailjs.com):", err);
-      // Fallback display error notice if network fails or credentials invalid
       setEmailError("Note: Email notification server requires active EmailJS credentials. Your calculated quote below is confirmed & saved!");
     } finally {
       setIsSubmitting(false);
@@ -357,7 +355,7 @@ export default function InstantQuoteCalculator() {
   return (
     <section
       id="contact"
-      className="py-20 lg:py-32 relative overflow-hidden"
+      className="py-16 sm:py-20 lg:py-32 relative overflow-hidden"
       style={{ background: "#1F3329", color: "#FBF6EE" }}
     >
       {/* Background Decorator Gradients */}
@@ -383,41 +381,73 @@ export default function InstantQuoteCalculator() {
         className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10"
       >
         {/* Section Header */}
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#B8935A]/40 bg-[#B8935A]/10 text-[#B8935A] text-xs uppercase tracking-widest font-semibold mb-4">
+        <div className="text-center mb-8 sm:mb-10">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#B8935A]/40 bg-[#B8935A]/10 text-[#B8935A] text-xs uppercase tracking-widest font-semibold mb-3">
             <Sparkles size={14} />
             Instant Booking &amp; Price Calculator
           </div>
           <h2
             style={{ fontFamily: "var(--app-font-serif, serif)" }}
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#FBF6EE] tracking-tight mb-4"
+            className="text-2xl sm:text-4xl lg:text-5xl font-bold text-[#FBF6EE] tracking-tight mb-3"
           >
             Calculate Your Custom Bridal &amp; Event Quote
           </h2>
-          <p className="text-base sm:text-lg text-[#FBF6EE]/80 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-lg text-[#FBF6EE]/80 max-w-2xl mx-auto leading-relaxed">
             Get transparent, itemized luxury rates for your event date in under 60 seconds.
           </p>
         </div>
 
         {/* Progress Bar & Steps Indicator */}
-        <div className="mb-10 bg-[#16251E] p-4 sm:p-6 rounded-2xl border border-[#B8935A]/25 shadow-xl">
+        <div className="mb-8 bg-[#16251E] p-4 sm:p-6 rounded-2xl border border-[#B8935A]/25 shadow-xl">
           <div className="flex justify-between items-center mb-3 text-xs sm:text-sm font-medium">
-            <span className="text-[#B8935A] font-semibold uppercase tracking-wider">
+            <span className="text-[#B8935A] font-semibold uppercase tracking-wider flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#B8935A] animate-pulse" />
               Step {currentStep} of 6
             </span>
-            <span className="text-[#FBF6EE]/70">
+            <span className="text-[#FBF6EE]/80 font-bold">
               {stepTitles[currentStep - 1].label}
             </span>
           </div>
 
           {/* Progress track */}
-          <div className="w-full bg-[#1F3329] h-2.5 rounded-full overflow-hidden mb-6 border border-[#B8935A]/20">
+          <div className="w-full bg-[#1F3329] h-2 sm:h-2.5 rounded-full overflow-hidden mb-4 sm:mb-6 border border-[#B8935A]/20">
             <motion.div
               className="h-full bg-gradient-to-r from-[#B8935A] via-[#d4af72] to-[#B8935A] rounded-full"
               initial={{ width: "16.66%" }}
               animate={{ width: `${(currentStep / 6) * 100}%` }}
               transition={{ duration: 0.3, ease: "easeOut" }}
             />
+          </div>
+
+          {/* Mobile step dots progress bar (sm:hidden) */}
+          <div className="flex md:hidden justify-between items-center pt-1 px-1">
+            {stepTitles.map((st) => {
+              const isActive = currentStep === st.number;
+              const isCompleted = currentStep > st.number;
+              return (
+                <button
+                  key={st.number}
+                  type="button"
+                  onClick={() => {
+                    if (isCompleted) setCurrentStep(st.number);
+                  }}
+                  disabled={!isCompleted}
+                  className="flex flex-col items-center gap-1"
+                >
+                  <span
+                    className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-all ${
+                      isActive
+                        ? "bg-[#B8935A] text-[#1F3329] ring-2 ring-[#B8935A]/40"
+                        : isCompleted
+                        ? "bg-[#B8935A]/30 text-[#B8935A]"
+                        : "bg-[#1F3329] text-[#FBF6EE]/40 border border-[#B8935A]/20"
+                    }`}
+                  >
+                    {isCompleted ? <Check size={10} strokeWidth={3} /> : st.number}
+                  </span>
+                </button>
+              );
+            })}
           </div>
 
           {/* Desktop step pill timeline */}
@@ -460,8 +490,8 @@ export default function InstantQuoteCalculator() {
           </div>
         </div>
 
-        {/* Main Wizard Form Card */}
-        <div className="bg-[#FBF6EE] text-[#1F3329] rounded-3xl p-6 sm:p-10 shadow-2xl border-2 border-[#B8935A]/30 relative overflow-hidden">
+        {/* Main Wizard Form Card (Luxury Styling) */}
+        <div className="bg-[#FBF6EE] text-[#1F3329] rounded-3xl p-5 sm:p-10 shadow-2xl border-2 border-[#B8935A]/35 relative overflow-hidden">
           <AnimatePresence mode="wait">
             {!isSubmitted ? (
               <motion.div
@@ -482,16 +512,16 @@ export default function InstantQuoteCalculator() {
                         <Calendar className="text-[#B8935A]" size={28} />
                         Step 1 — Event Details
                       </h3>
-                      <p className="text-sm text-[#5a4a40] mt-1">
+                      <p className="text-xs sm:text-sm text-[#5a4a40] mt-1">
                         Tell us when your special event is taking place so we can check schedule availability.
                       </p>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
                       {/* Event Date */}
                       <div>
-                        <label className="block text-sm font-semibold text-[#1F3329] mb-2 flex items-center gap-2">
-                          <Calendar size={16} className="text-[#B8935A]" />
+                        <label className="block text-xs sm:text-sm font-semibold text-[#1F3329] mb-2 flex items-center gap-2">
+                          <Calendar size={15} className="text-[#B8935A]" />
                           What's the date for your event? <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -502,7 +532,7 @@ export default function InstantQuoteCalculator() {
                             setFormData((prev) => ({ ...prev, eventDate: e.target.value }));
                             if (formErrors.eventDate) setFormErrors((prev) => ({ ...prev, eventDate: "" }));
                           }}
-                          className={`w-full px-4 py-3.5 rounded-xl border bg-white text-[#1F3329] font-medium outline-none transition ${
+                          className={`w-full min-h-[48px] px-4 py-3 rounded-2xl border bg-white text-[#1F3329] font-medium outline-none transition ${
                             formErrors.eventDate
                               ? "border-red-500 ring-2 ring-red-200"
                               : "border-[#1F3329]/20 focus:ring-2 focus:ring-[#B8935A]"
@@ -518,8 +548,8 @@ export default function InstantQuoteCalculator() {
 
                       {/* Finish Time */}
                       <div>
-                        <label className="block text-sm font-semibold text-[#1F3329] mb-2 flex items-center gap-2">
-                          <Clock size={16} className="text-[#B8935A]" />
+                        <label className="block text-xs sm:text-sm font-semibold text-[#1F3329] mb-2 flex items-center gap-2">
+                          <Clock size={15} className="text-[#B8935A]" />
                           What time should services be finished by?{" "}
                           <span className="text-red-500">*</span>
                         </label>
@@ -530,7 +560,7 @@ export default function InstantQuoteCalculator() {
                             setFormData((prev) => ({ ...prev, finishTime: e.target.value }));
                             if (formErrors.finishTime) setFormErrors((prev) => ({ ...prev, finishTime: "" }));
                           }}
-                          className={`w-full px-4 py-3.5 rounded-xl border bg-white text-[#1F3329] font-medium outline-none transition ${
+                          className={`w-full min-h-[48px] px-4 py-3 rounded-2xl border bg-white text-[#1F3329] font-medium outline-none transition ${
                             formErrors.finishTime
                               ? "border-red-500 ring-2 ring-red-200"
                               : "border-[#1F3329]/20 focus:ring-2 focus:ring-[#B8935A]"
@@ -550,7 +580,7 @@ export default function InstantQuoteCalculator() {
                     </div>
 
                     {/* Optional Name for personalized step 5 */}
-                    <div className="bg-[#1F3329]/5 p-4 rounded-xl border border-[#1F3329]/10">
+                    <div className="bg-white/80 p-4 rounded-2xl border border-[#B8935A]/25">
                       <label className="block text-xs font-semibold text-[#1F3329] mb-1 uppercase tracking-wider">
                         First Name (Optional — for personalized quote preview)
                       </label>
@@ -561,13 +591,13 @@ export default function InstantQuoteCalculator() {
                         onChange={(e) =>
                           setFormData((prev) => ({ ...prev, firstName: e.target.value }))
                         }
-                        className="w-full px-4 py-2.5 rounded-lg border border-[#1F3329]/15 bg-white text-[#1F3329] text-sm focus:ring-2 focus:ring-[#B8935A] outline-none"
+                        className="w-full min-h-[44px] px-4 py-2.5 rounded-xl border border-[#1F3329]/15 bg-white text-[#1F3329] text-sm focus:ring-2 focus:ring-[#B8935A] outline-none"
                       />
                     </div>
                   </div>
                 )}
 
-                {/* STEP 2: REGION */}
+                {/* STEP 2: REGION (Refined Mobile Card Buttons) */}
                 {currentStep === 2 && (
                   <div className="space-y-6">
                     <div className="border-b border-[#1F3329]/10 pb-4">
@@ -578,17 +608,17 @@ export default function InstantQuoteCalculator() {
                         <MapPin className="text-[#B8935A]" size={28} />
                         Step 2 — Region &amp; Location
                       </h3>
-                      <p className="text-sm text-[#5a4a40] mt-1">
+                      <p className="text-xs sm:text-sm text-[#5a4a40] mt-1">
                         Where will our mobile team be traveling to serve you on your event day?
                       </p>
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-[#1F3329] mb-3">
-                        What region do you need services in?
+                      <label className="block text-xs sm:text-sm font-semibold text-[#1F3329] mb-3 uppercase tracking-wider">
+                        Select your event location:
                       </label>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-3.5">
                         {(
                           [
                             { id: "Toronto", fee: formatCAD(30) },
@@ -608,25 +638,29 @@ export default function InstantQuoteCalculator() {
                               onClick={() =>
                                 setFormData((prev) => ({ ...prev, region: r.id }))
                               }
-                              className={`p-4 rounded-xl border-2 text-left flex flex-col justify-between transition-all duration-200 ease-out ${
+                              className={`p-4 rounded-2xl border text-left flex items-center justify-between min-h-[56px] transition-all duration-200 ${
                                 selected
-                                  ? "border-[#B8935A] bg-[#1F3329] text-[#FBF6EE] shadow-md"
-                                  : "border-[#1F3329]/15 bg-white text-[#1F3329] hover:border-[#B8935A]/60 hover:bg-[#FBF6EE]"
+                                  ? "border-[#B8935A] bg-[#1F3329] text-[#FBF6EE] shadow-md ring-2 ring-[#B8935A]/30"
+                                  : "border-[#B8935A]/25 bg-white text-[#1F3329] hover:border-[#B8935A]/60 hover:bg-white/90"
                               }`}
                             >
-                              <div className="flex items-center justify-between w-full mb-2">
+                              <div className="flex flex-col">
                                 <span className="font-bold text-base">{r.id}</span>
-                                {selected && <CheckCircle2 size={18} className="text-[#B8935A]" />}
+                                <span
+                                  className={`text-xs font-semibold ${
+                                    selected ? "text-[#B8935A]" : "text-[#5a4a40]"
+                                  }`}
+                                >
+                                  Travel Fee: {r.fee}
+                                </span>
                               </div>
-                              <span
-                                className={`text-xs font-medium px-2 py-0.5 rounded-full inline-block w-fit transition-colors ${
-                                  selected
-                                    ? "bg-[#B8935A] text-[#1F3329] font-bold"
-                                    : "bg-[#1F3329]/10 text-[#1F3329]"
-                                }`}
-                              >
-                                Travel Fee: {r.fee}
-                              </span>
+                              {selected ? (
+                                <div className="w-7 h-7 rounded-full bg-[#B8935A] text-[#1F3329] flex items-center justify-center font-bold">
+                                  <Check size={16} strokeWidth={3} />
+                                </div>
+                              ) : (
+                                <div className="w-7 h-7 rounded-full border border-[#1F3329]/20" />
+                              )}
                             </button>
                           );
                         })}
@@ -635,7 +669,7 @@ export default function InstantQuoteCalculator() {
                   </div>
                 )}
 
-                {/* STEP 3: SERVICE TYPE */}
+                {/* STEP 3: SERVICE TYPE (Refined Cards) */}
                 {currentStep === 3 && (
                   <div className="space-y-6">
                     <div className="border-b border-[#1F3329]/10 pb-4">
@@ -646,7 +680,7 @@ export default function InstantQuoteCalculator() {
                         <Sparkles className="text-[#B8935A]" size={28} />
                         Step 3 — Service Type
                       </h3>
-                      <p className="text-sm text-[#5a4a40] mt-1">
+                      <p className="text-xs sm:text-sm text-[#5a4a40] mt-1">
                         Select the primary nature of your booking to calculate accurate service rates.
                       </p>
                     </div>
@@ -682,10 +716,10 @@ export default function InstantQuoteCalculator() {
                             onClick={() =>
                               setFormData((prev) => ({ ...prev, serviceType: item.type }))
                             }
-                            className={`p-6 rounded-2xl border-2 text-left flex flex-col justify-between transition-all duration-200 ease-out relative ${
+                            className={`p-5 sm:p-6 rounded-2xl border text-left flex flex-col justify-between transition-all duration-200 relative ${
                               selected
-                                ? "border-[#B8935A] bg-[#1F3329] text-[#FBF6EE] shadow-lg border-2"
-                                : "border-[#1F3329]/15 bg-white text-[#1F3329] hover:border-[#B8935A]/60"
+                                ? "border-[#B8935A] bg-[#1F3329] text-[#FBF6EE] shadow-xl ring-2 ring-[#B8935A]/30"
+                                : "border-[#B8935A]/30 bg-white text-[#1F3329] hover:border-[#B8935A]/60"
                             }`}
                           >
                             <div>
@@ -699,7 +733,13 @@ export default function InstantQuoteCalculator() {
                                 >
                                   {item.badge}
                                 </span>
-                                {selected && <CheckCircle2 size={20} className="text-[#B8935A]" />}
+                                {selected ? (
+                                  <div className="w-6 h-6 rounded-full bg-[#B8935A] text-[#1F3329] flex items-center justify-center font-bold">
+                                    <Check size={14} strokeWidth={3} />
+                                  </div>
+                                ) : (
+                                  <div className="w-6 h-6 rounded-full border border-[#1F3329]/20" />
+                                )}
                               </div>
                               <h4
                                 style={{ fontFamily: "var(--app-font-serif, serif)" }}
@@ -722,7 +762,7 @@ export default function InstantQuoteCalculator() {
                   </div>
                 )}
 
-                {/* STEP 4: SERVICE DETAILS & HEADCOUNT */}
+                {/* STEP 4: SERVICE DETAILS & HEADCOUNT (Segmented Pill Controls) */}
                 {currentStep === 4 && (
                   <div className="space-y-6">
                     <div className="border-b border-[#1F3329]/10 pb-4">
@@ -733,13 +773,13 @@ export default function InstantQuoteCalculator() {
                         <Users className="text-[#B8935A]" size={28} />
                         Step 4 — Service Details &amp; Add-ons
                       </h3>
-                      <p className="text-sm text-[#5a4a40] mt-1">
+                      <p className="text-xs sm:text-sm text-[#5a4a40] mt-1">
                         Specify exact guest numbers, hair/makeup preferences, and specialty styling choices.
                       </p>
                     </div>
 
-                    {/* Both Hair & Makeup Toggle */}
-                    <div className="bg-white p-5 rounded-2xl border border-[#1F3329]/15">
+                    {/* Both Hair & Makeup Toggle (Segmented Pill Container) */}
+                    <div className="bg-white p-5 rounded-2xl border border-[#B8935A]/30 shadow-sm">
                       <label className="block text-sm font-semibold text-[#1F3329] mb-1">
                         Does everyone need both Hair &amp; Makeup? <span className="text-red-500">*</span>
                       </label>
@@ -747,10 +787,10 @@ export default function InstantQuoteCalculator() {
                         Choose <strong>No</strong> if some people need makeup ONLY, or hair ONLY.
                       </p>
 
-                      <div className="flex gap-4">
+                      <div className="bg-[#1F3329]/10 p-1.5 rounded-2xl flex flex-col sm:flex-row gap-2">
                         {[
-                          { val: true, label: "Yes — Everyone needs Hair & Makeup" },
-                          { val: false, label: "No — Some need Hair ONLY or Makeup ONLY" },
+                          { val: true, label: "Yes — Hair & Makeup for All" },
+                          { val: false, label: "No — Separate Hair / Makeup Counts" },
                         ].map((choice) => (
                           <button
                             key={String(choice.val)}
@@ -764,10 +804,10 @@ export default function InstantQuoteCalculator() {
                                 setFormErrors((prev) => ({ ...prev, peopleCount: "", bothCount: "" }));
                               }
                             }}
-                            className={`flex-1 p-3.5 rounded-xl border-2 text-xs sm:text-sm font-bold transition-all duration-200 ease-out ${
+                            className={`flex-1 min-h-[44px] py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 ${
                               formData.bothHairMakeup === choice.val
-                                ? "border-[#B8935A] bg-[#1F3329] text-[#FBF6EE] shadow-md"
-                                : "border-[#1F3329]/20 bg-gray-50 text-[#1F3329] hover:bg-gray-100"
+                                ? "bg-[#1F3329] text-[#FBF6EE] shadow-md"
+                                : "text-[#1F3329] hover:bg-white/50"
                             }`}
                           >
                             {choice.label}
@@ -777,7 +817,7 @@ export default function InstantQuoteCalculator() {
                     </div>
 
                     {/* Numbers Inputs */}
-                    <div className="bg-white p-5 rounded-2xl border border-[#1F3329]/15 space-y-4">
+                    <div className="bg-white p-5 rounded-2xl border border-[#B8935A]/30 shadow-sm space-y-4">
                       {formData.bothHairMakeup ? (
                         <div>
                           <label className="block text-sm font-semibold text-[#1F3329] mb-1">
@@ -795,7 +835,7 @@ export default function InstantQuoteCalculator() {
                               }));
                               if (formErrors.bothCount) setFormErrors((prev) => ({ ...prev, bothCount: "" }));
                             }}
-                            className="w-full sm:w-48 px-4 py-3 rounded-xl border border-[#1F3329]/20 bg-[#FBF6EE] text-[#1F3329] font-bold text-lg focus:ring-2 focus:ring-[#B8935A] outline-none"
+                            className="w-full sm:w-48 min-h-[48px] px-4 py-3 rounded-2xl border border-[#1F3329]/20 bg-[#FBF6EE] text-[#1F3329] font-bold text-lg focus:ring-2 focus:ring-[#B8935A] outline-none"
                           />
                           {formErrors.bothCount && (
                             <p className="text-xs text-red-700 mt-1 font-semibold flex items-center gap-1">
@@ -822,7 +862,7 @@ export default function InstantQuoteCalculator() {
                                 }));
                                 if (formErrors.peopleCount) setFormErrors((prev) => ({ ...prev, peopleCount: "" }));
                               }}
-                              className="w-full px-4 py-3 rounded-xl border border-[#1F3329]/20 bg-[#FBF6EE] text-[#1F3329] font-bold text-lg focus:ring-2 focus:ring-[#B8935A] outline-none"
+                              className="w-full min-h-[48px] px-4 py-3 rounded-2xl border border-[#1F3329]/20 bg-[#FBF6EE] text-[#1F3329] font-bold text-lg focus:ring-2 focus:ring-[#B8935A] outline-none"
                             />
                           </div>
 
@@ -842,7 +882,7 @@ export default function InstantQuoteCalculator() {
                                 }));
                                 if (formErrors.peopleCount) setFormErrors((prev) => ({ ...prev, peopleCount: "" }));
                               }}
-                              className="w-full px-4 py-3 rounded-xl border border-[#1F3329]/20 bg-[#FBF6EE] text-[#1F3329] font-bold text-lg focus:ring-2 focus:ring-[#B8935A] outline-none"
+                              className="w-full min-h-[48px] px-4 py-3 rounded-2xl border border-[#1F3329]/20 bg-[#FBF6EE] text-[#1F3329] font-bold text-lg focus:ring-2 focus:ring-[#B8935A] outline-none"
                             />
                           </div>
                           {formErrors.peopleCount && (
@@ -858,7 +898,7 @@ export default function InstantQuoteCalculator() {
                     {/* Add-ons counts */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {/* Hair extensions */}
-                      <div className="bg-white p-5 rounded-2xl border border-[#1F3329]/15">
+                      <div className="bg-white p-5 rounded-2xl border border-[#B8935A]/30 shadow-sm">
                         <label className="block text-sm font-semibold text-[#1F3329] mb-1 flex items-center justify-between">
                           <span>Hair Extensions Installation</span>
                           <span className="text-xs text-[#B8935A] font-bold">{formatCAD(40)} / person</span>
@@ -878,12 +918,12 @@ export default function InstantQuoteCalculator() {
                               extensionsCount: Math.max(0, parseInt(e.target.value) || 0),
                             }))
                           }
-                          className="w-full px-4 py-2.5 rounded-xl border border-[#1F3329]/20 bg-[#FBF6EE] text-[#1F3329] font-bold outline-none"
+                          className="w-full min-h-[44px] px-4 py-2.5 rounded-xl border border-[#1F3329]/20 bg-[#FBF6EE] text-[#1F3329] font-bold outline-none"
                         />
                       </div>
 
                       {/* Jewelry / Dupatta */}
-                      <div className="bg-white p-5 rounded-2xl border border-[#1F3329]/15">
+                      <div className="bg-white p-5 rounded-2xl border border-[#B8935A]/30 shadow-sm">
                         <label className="block text-sm font-semibold text-[#1F3329] mb-1 flex items-center justify-between">
                           <span>Jewelry / Dupatta / Veil Setting</span>
                           <span className="text-xs text-[#B8935A] font-bold">{formatCAD(40)} / person</span>
@@ -902,13 +942,13 @@ export default function InstantQuoteCalculator() {
                               jewelryDupattaCount: Math.max(0, parseInt(e.target.value) || 0),
                             }))
                           }
-                          className="w-full px-4 py-2.5 rounded-xl border border-[#1F3329]/20 bg-[#FBF6EE] text-[#1F3329] font-bold outline-none"
+                          className="w-full min-h-[44px] px-4 py-2.5 rounded-xl border border-[#1F3329]/20 bg-[#FBF6EE] text-[#1F3329] font-bold outline-none"
                         />
                       </div>
                     </div>
 
                     {/* Included notice */}
-                    <div className="bg-[#1F3329]/5 p-4 rounded-xl border border-[#1F3329]/10 flex items-center gap-3">
+                    <div className="bg-[#1F3329]/5 p-4 rounded-2xl border border-[#1F3329]/10 flex items-center gap-3">
                       <Sparkles className="text-[#B8935A] shrink-0" size={20} />
                       <p className="text-xs text-[#1F3329] font-medium">
                         <strong>Complimentary Lashes Included:</strong> Premium mink or silk false lashes and custom skin preparation are automatically included with all makeup services at no extra charge ({formatCAD(0)}).
@@ -923,7 +963,7 @@ export default function InstantQuoteCalculator() {
                     {/* Personalized banner */}
                     <div className="bg-[#1F3329] text-[#FBF6EE] p-5 rounded-2xl border-2 border-[#B8935A] shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-[#B8935A] text-[#1F3329] flex items-center justify-center font-bold">
+                        <div className="w-10 h-10 rounded-full bg-[#B8935A] text-[#1F3329] flex items-center justify-center font-bold shrink-0">
                           <CheckCircle2 size={24} />
                         </div>
                         <div>
@@ -938,21 +978,21 @@ export default function InstantQuoteCalculator() {
                           </p>
                         </div>
                       </div>
-                      <span className="text-xs font-bold uppercase tracking-wider bg-[#B8935A]/20 text-[#B8935A] px-3 py-1 rounded-full border border-[#B8935A]/40">
+                      <span className="text-xs font-bold uppercase tracking-wider bg-[#B8935A]/20 text-[#B8935A] px-3 py-1 rounded-full border border-[#B8935A]/40 shrink-0">
                         Date Reserved for 15m
                       </span>
                     </div>
 
                     {/* Tier Selection Cards */}
                     <div>
-                      <h4 className="text-lg font-bold text-[#1F3329] mb-3 flex items-center justify-between">
+                      <h4 className="text-base sm:text-lg font-bold text-[#1F3329] mb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                         <span>Select Your Preferred Artist Tier</span>
                         <span className="text-xs text-[#8c6b36] font-semibold">
                           Calculated for {formData.region} • {selectedBreakdown.totalPeople} Person(s)
                         </span>
                       </h4>
 
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
                         {(
                           [
                             {
@@ -991,7 +1031,7 @@ export default function InstantQuoteCalculator() {
                               className={`rounded-2xl p-5 border-2 cursor-pointer transition-all duration-200 ease-out flex flex-col justify-between relative ${
                                 isSelected
                                   ? "border-[#B8935A] bg-[#1F3329] text-[#FBF6EE] shadow-xl"
-                                  : "border-[#1F3329]/15 bg-white text-[#1F3329] hover:border-[#B8935A]/50"
+                                  : "border-[#B8935A]/25 bg-white text-[#1F3329] hover:border-[#B8935A]/50"
                               }`}
                             >
                               <div>
@@ -1062,7 +1102,7 @@ export default function InstantQuoteCalculator() {
 
                                 <button
                                   type="button"
-                                  className={`w-full py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors duration-200 ${
+                                  className={`w-full py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors duration-200 min-h-[44px] ${
                                     isSelected
                                       ? "bg-[#B8935A] text-[#1F3329] shadow-md"
                                       : "bg-[#1F3329] text-[#FBF6EE] hover:bg-[#B8935A] hover:text-[#1F3329]"
@@ -1078,7 +1118,7 @@ export default function InstantQuoteCalculator() {
                     </div>
 
                     {/* What would you like to do next? */}
-                    <div className="bg-white p-5 rounded-2xl border border-[#1F3329]/15">
+                    <div className="bg-white p-5 rounded-2xl border border-[#B8935A]/30 shadow-sm">
                       <label className="block text-sm font-semibold text-[#1F3329] mb-2">
                         What would you like to do next?
                       </label>
@@ -1096,7 +1136,7 @@ export default function InstantQuoteCalculator() {
                             onClick={() =>
                               setFormData((prev) => ({ ...prev, nextAction: act }))
                             }
-                            className={`p-3 rounded-xl border-2 text-xs font-bold transition-all duration-200 ease-out ${
+                            className={`p-3 rounded-xl border-2 text-xs font-bold transition-all duration-200 ease-out min-h-[44px] ${
                               formData.nextAction === act
                                 ? "border-[#B8935A] bg-[#1F3329] text-[#FBF6EE]"
                                 : "border-[#1F3329]/15 bg-[#FBF6EE] text-[#1F3329] hover:border-[#B8935A]"
@@ -1121,7 +1161,7 @@ export default function InstantQuoteCalculator() {
                         <Mail className="text-[#B8935A]" size={28} />
                         Step 6 — Finalize &amp; Receive Quote
                       </h3>
-                      <p className="text-sm text-[#5a4a40] mt-1">
+                      <p className="text-xs sm:text-sm text-[#5a4a40] mt-1">
                         You'll receive your formal itemized breakdown via email within 30 seconds of submitting this form.
                       </p>
                     </div>
@@ -1165,7 +1205,7 @@ export default function InstantQuoteCalculator() {
                             setFormData((prev) => ({ ...prev, firstName: e.target.value }));
                             if (formErrors.firstName) setFormErrors((prev) => ({ ...prev, firstName: "" }));
                           }}
-                          className={`w-full px-4 py-3 rounded-xl border bg-white text-[#1F3329] font-medium outline-none transition ${
+                          className={`w-full min-h-[48px] px-4 py-3 rounded-2xl border bg-white text-[#1F3329] font-medium outline-none transition ${
                             formErrors.firstName ? "border-red-500 ring-2 ring-red-200" : "border-[#1F3329]/20 focus:ring-2 focus:ring-[#B8935A]"
                           }`}
                         />
@@ -1189,7 +1229,7 @@ export default function InstantQuoteCalculator() {
                             setFormData((prev) => ({ ...prev, lastName: e.target.value }));
                             if (formErrors.lastName) setFormErrors((prev) => ({ ...prev, lastName: "" }));
                           }}
-                          className={`w-full px-4 py-3 rounded-xl border bg-white text-[#1F3329] font-medium outline-none transition ${
+                          className={`w-full min-h-[48px] px-4 py-3 rounded-2xl border bg-white text-[#1F3329] font-medium outline-none transition ${
                             formErrors.lastName ? "border-red-500 ring-2 ring-red-200" : "border-[#1F3329]/20 focus:ring-2 focus:ring-[#B8935A]"
                           }`}
                         />
@@ -1213,7 +1253,7 @@ export default function InstantQuoteCalculator() {
                             setFormData((prev) => ({ ...prev, email: e.target.value }));
                             if (formErrors.email) setFormErrors((prev) => ({ ...prev, email: "" }));
                           }}
-                          className={`w-full px-4 py-3 rounded-xl border bg-white text-[#1F3329] font-medium outline-none transition ${
+                          className={`w-full min-h-[48px] px-4 py-3 rounded-2xl border bg-white text-[#1F3329] font-medium outline-none transition ${
                             formErrors.email ? "border-red-500 ring-2 ring-red-200" : "border-[#1F3329]/20 focus:ring-2 focus:ring-[#B8935A]"
                           }`}
                         />
@@ -1239,7 +1279,7 @@ export default function InstantQuoteCalculator() {
                                 phoneCountryCode: e.target.value,
                               }))
                             }
-                            className="px-2 py-3 rounded-xl border border-[#1F3329]/20 bg-white text-[#1F3329] text-xs font-bold outline-none"
+                            className="px-2 py-3 rounded-2xl border border-[#1F3329]/20 bg-white text-[#1F3329] text-xs font-bold outline-none"
                           >
                             {COUNTRY_CODES.map((c) => (
                               <option key={c.code} value={c.code}>
@@ -1256,7 +1296,7 @@ export default function InstantQuoteCalculator() {
                               setFormData((prev) => ({ ...prev, phoneNumber: e.target.value }));
                               if (formErrors.phoneNumber) setFormErrors((prev) => ({ ...prev, phoneNumber: "" }));
                             }}
-                            className={`w-full px-4 py-3 rounded-xl border bg-white text-[#1F3329] font-medium outline-none transition ${
+                            className={`w-full min-h-[48px] px-4 py-3 rounded-2xl border bg-white text-[#1F3329] font-medium outline-none transition ${
                               formErrors.phoneNumber ? "border-red-500 ring-2 ring-red-200" : "border-[#1F3329]/20 focus:ring-2 focus:ring-[#B8935A]"
                             }`}
                           />
@@ -1270,11 +1310,11 @@ export default function InstantQuoteCalculator() {
                       </div>
                     </div>
 
-                    {/* Submit Button */}
+                    {/* Submit Button (Full Width Mobile Luxury Fill) */}
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full py-4 rounded-2xl bg-gradient-to-r from-[#B8935A] via-[#d4af72] to-[#B8935A] text-[#1F3329] font-extrabold text-base uppercase tracking-wider shadow-xl hover:shadow-2xl transition-all duration-200 flex items-center justify-center gap-3 disabled:opacity-50"
+                      className="w-full min-h-[52px] py-4 rounded-2xl bg-gradient-to-r from-[#B8935A] via-[#d4af72] to-[#B8935A] text-[#1F3329] font-extrabold text-sm sm:text-base uppercase tracking-wider shadow-xl hover:shadow-2xl transition-all duration-200 flex items-center justify-center gap-3 disabled:opacity-50"
                     >
                       {isSubmitting ? (
                         <>
@@ -1292,12 +1332,12 @@ export default function InstantQuoteCalculator() {
                 )}
 
                 {/* BOTTOM WIZARD CONTROLS (Back / Next) */}
-                <div className="flex justify-between items-center pt-8 border-t border-[#1F3329]/10 mt-8">
+                <div className="flex justify-between items-center pt-6 sm:pt-8 border-t border-[#1F3329]/10 mt-6 sm:mt-8">
                   {currentStep > 1 ? (
                     <button
                       type="button"
                       onClick={handleBack}
-                      className="px-5 py-2.5 rounded-xl border border-[#1F3329]/20 text-[#1F3329] font-bold text-sm flex items-center gap-2 hover:bg-[#1F3329]/5 transition-colors duration-200"
+                      className="px-5 py-3 rounded-2xl border border-[#1F3329]/20 text-[#1F3329] font-bold text-xs sm:text-sm flex items-center gap-2 hover:bg-[#1F3329]/5 transition-colors duration-200 min-h-[44px]"
                     >
                       <ArrowLeft size={16} />
                       Back
@@ -1310,7 +1350,7 @@ export default function InstantQuoteCalculator() {
                     <button
                       type="button"
                       onClick={handleNext}
-                      className="px-7 py-3 rounded-xl bg-[#1F3329] text-[#FBF6EE] font-extrabold text-sm uppercase tracking-wider flex items-center gap-2.5 hover:bg-[#B8935A] hover:text-[#1F3329] shadow-lg transition-all duration-200"
+                      className="px-7 py-3 rounded-2xl bg-[#1F3329] text-[#FBF6EE] font-extrabold text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2.5 hover:bg-[#B8935A] hover:text-[#1F3329] shadow-lg transition-all duration-200 min-h-[44px]"
                     >
                       Next Step
                       <ArrowRight size={16} />
@@ -1325,10 +1365,10 @@ export default function InstantQuoteCalculator() {
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.25, ease: "easeOut" }}
-                className="text-center py-8 space-y-6"
+                className="text-center py-6 sm:py-8 space-y-6"
               >
-                <div className="w-20 h-20 rounded-full bg-[#1F3329] text-[#B8935A] flex items-center justify-center mx-auto shadow-2xl border-2 border-[#B8935A]">
-                  <CheckCircle2 size={44} />
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#1F3329] text-[#B8935A] flex items-center justify-center mx-auto shadow-2xl border-2 border-[#B8935A]">
+                  <CheckCircle2 size={40} />
                 </div>
 
                 <div>
@@ -1337,16 +1377,16 @@ export default function InstantQuoteCalculator() {
                   </span>
                   <h3
                     style={{ fontFamily: "var(--app-font-serif, serif)" }}
-                    className="text-3xl sm:text-4xl font-bold text-[#1F3329] mt-3 mb-2"
+                    className="text-2xl sm:text-4xl font-bold text-[#1F3329] mt-3 mb-2"
                   >
                     Quote Calculated &amp; Date Reserved!
                   </h3>
-                  <p className="text-base text-[#5a4a40] max-w-lg mx-auto">
+                  <p className="text-sm sm:text-base text-[#5a4a40] max-w-lg mx-auto">
                     Thank you, <strong>{formData.firstName}</strong>! Your itemized custom quote breakdown has been generated below for <strong>{formData.email}</strong>.
                   </p>
                 </div>
 
-                {/* Email Notice / Error Fallback Banner if EmailJS server returned notice */}
+                {/* Email Notice / Error Fallback Banner */}
                 {emailError && (
                   <div className="bg-amber-50 border border-amber-300 text-amber-900 p-4 rounded-xl max-w-lg mx-auto text-left text-xs font-medium space-y-2">
                     <div className="flex items-center gap-2 font-bold text-amber-900">
@@ -1368,7 +1408,7 @@ export default function InstantQuoteCalculator() {
                 )}
 
                 {/* Confirmed Quote Receipt Card */}
-                <div className="bg-[#1F3329] text-[#FBF6EE] p-6 rounded-2xl max-w-lg mx-auto text-left shadow-xl border border-[#B8935A]/40 space-y-4">
+                <div className="bg-[#1F3329] text-[#FBF6EE] p-5 sm:p-6 rounded-2xl max-w-lg mx-auto text-left shadow-xl border border-[#B8935A]/40 space-y-4">
                   <div className="flex justify-between items-center border-b border-[#B8935A]/30 pb-3">
                     <span className="text-xs font-bold uppercase tracking-wider text-[#B8935A]">
                       KS Beauty Mobile Booking
@@ -1417,14 +1457,14 @@ export default function InstantQuoteCalculator() {
                   </div>
                 </div>
 
-                <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
+                <div className="pt-4 flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
                   <button
                     type="button"
                     onClick={() => {
                       setIsSubmitted(false);
                       setCurrentStep(1);
                     }}
-                    className="px-6 py-3 rounded-xl border border-[#1F3329]/30 text-[#1F3329] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#1F3329]/10 transition-colors duration-200"
+                    className="px-6 py-3 rounded-xl border border-[#1F3329]/30 text-[#1F3329] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#1F3329]/10 transition-colors duration-200 min-h-[44px]"
                   >
                     <RefreshCw size={15} />
                     Calculate Another Quote
@@ -1432,7 +1472,7 @@ export default function InstantQuoteCalculator() {
 
                   <a
                     href="#gallery"
-                    className="px-6 py-3 rounded-xl bg-[#1F3329] text-[#FBF6EE] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#B8935A] hover:text-[#1F3329] transition-colors duration-200"
+                    className="px-6 py-3 rounded-xl bg-[#1F3329] text-[#FBF6EE] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#B8935A] hover:text-[#1F3329] transition-colors duration-200 min-h-[44px]"
                   >
                     Explore Bridal Gallery
                     <ArrowRight size={15} />
