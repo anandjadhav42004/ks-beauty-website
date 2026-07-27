@@ -13,7 +13,7 @@ import InstagramSection from "@/components/InstagramSection";
 import PricingSection from "@/components/PricingSection";
 import FAQSection from "@/components/FAQSection";
 import FinalCTASection from "@/components/FinalCTASection";
-import ContactForm from "@/components/ContactForm";
+import InstantQuoteCalculator from "@/components/InstantQuoteCalculator";
 import Footer from "@/components/Footer";
 import MobileStickyBar from "@/components/MobileStickyBar";
 
@@ -66,8 +66,8 @@ export default function HomePage() {
         {/* 14. Final CTA */}
         <FinalCTASection />
 
-        {/* 15. Contact Form */}
-        <ContactForm />
+        {/* 15. Instant Quote Calculator */}
+        <InstantQuoteCalculator />
       </main>
 
       <Footer />
