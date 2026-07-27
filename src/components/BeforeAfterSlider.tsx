@@ -1,7 +1,6 @@
 import React, { useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Sparkles, MoveHorizontal } from "lucide-react";
-import ImageWithFallback from "./ImageWithFallback";
 
 export default function BeforeAfterSlider() {
   const [sliderPos, setSliderPos] = useState<number>(50); // percentage 0-100
@@ -26,6 +25,12 @@ export default function BeforeAfterSlider() {
       handleMove(e.clientX);
     }
   };
+
+  // High-resolution Unsplash bridal portraits for Before vs After comparison
+  const afterImgSrc =
+    "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1200&auto=format&fit=crop";
+  const beforeImgSrc =
+    "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1200&auto=format&fit=crop";
 
   return (
     <section className="py-20 lg:py-32 relative overflow-hidden" style={{ background: "#FBF6EE" }}>
@@ -61,33 +66,40 @@ export default function BeforeAfterSlider() {
           onMouseLeave={() => setIsDragging(false)}
           onMouseMove={handleMouseMove}
           onTouchMove={handleTouchMove}
-          className="relative w-full max-w-4xl mx-auto aspect-[4/3] sm:aspect-[16/10] rounded-3xl overflow-hidden shadow-2xl border-4 border-[#B8935A]/40 select-none touch-pan-y cursor-ew-resize"
+          className="relative w-full max-w-4xl mx-auto aspect-[4/3] sm:aspect-[16/10] rounded-3xl overflow-hidden shadow-2xl border-4 border-[#B8935A]/40 select-none touch-pan-y cursor-ew-resize bg-[#1F3329]"
         >
           {/* AFTER IMAGE (Underneath, Full width) */}
           <div className="absolute inset-0 w-full h-full">
-            <ImageWithFallback
-              src="/images/before-after/after-glam.jpg"
+            <img
+              src={afterImgSrc}
               alt="Bridal After Hair & Makeup Glam"
               className="w-full h-full object-cover object-center"
             />
-            <div className="absolute top-4 right-4 bg-[#1F3329]/90 text-[#FBF6EE] text-xs font-extrabold uppercase tracking-widest px-3 py-1.5 rounded-full border border-[#B8935A]/50 shadow-md">
+            <div className="absolute top-4 right-4 bg-[#1F3329]/90 text-[#FBF6EE] text-xs font-extrabold uppercase tracking-widest px-3 py-1.5 rounded-full border border-[#B8935A]/50 shadow-md z-10">
               After (KS Beauty Glam)
             </div>
           </div>
 
           {/* BEFORE IMAGE (Clipped on top) */}
           <div
-            className="absolute top-0 left-0 bottom-0 overflow-hidden"
+            className="absolute top-0 left-0 bottom-0 overflow-hidden z-10"
             style={{ width: `${sliderPos}%` }}
           >
-            <div className="absolute top-0 left-0 w-full h-full" style={{ width: containerRef.current?.clientWidth || "100%" }}>
-              <ImageWithFallback
-                src="/images/before-after/before-natural.jpg"
+            <div
+              className="absolute top-0 left-0 h-full"
+              style={{
+                width: containerRef.current?.offsetWidth
+                  ? `${containerRef.current.offsetWidth}px`
+                  : "100%",
+              }}
+            >
+              <img
+                src={beforeImgSrc}
                 alt="Bridal Natural Prep"
                 className="w-full h-full object-cover object-center"
               />
               <div className="absolute top-4 left-4 bg-white/90 text-[#1F3329] text-xs font-extrabold uppercase tracking-widest px-3 py-1.5 rounded-full border border-[#1F3329]/20 shadow-md">
-                Before (Natural Skin)
+                Before (Natural Prep)
               </div>
             </div>
           </div>
