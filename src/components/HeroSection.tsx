@@ -176,9 +176,9 @@ export default function HeroSection({ onQuickQuoteSubmit }: HeroSectionProps) {
             <h1
               style={{
                 fontFamily: "var(--app-font-serif)",
-                fontSize: "34px",
+                fontSize: "clamp(24px, 6vw, 32px)",
                 fontWeight: 700,
-                lineHeight: 1.12,
+                lineHeight: 1.15,
                 color: "#FBF6EE",
                 marginBottom: "8px",
               }}

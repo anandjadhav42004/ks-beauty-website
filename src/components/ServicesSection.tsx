@@ -87,15 +87,15 @@ const featuredServices = [
     title: "Bridal Updos",
     description:
       "Intricate, secure bridal bun and updo architecture designed for dupatta support, veil attachment, and all-day stability.",
-    image: "/images/gallery/hair-styling-updo.jpg",
-    alt: "Intricate bridal updo with hair accessories",
+    image: "/images/gallery/bridal-mirror-prep.jpg",
+    alt: "Intricate bridal updo and prep in mirror reflection",
     badge: "Classic Bridal",
   },
   {
     title: "Mobile Makeup Services",
     description:
       "Luxury salon-quality beauty services delivered directly to your home, hotel suite, or venue anywhere across the GTA.",
-    image: "/images/gallery/editorial-golden-hour.jpg",
+    image: "/images/gallery/soft-glam-bouquet-profile.jpg",
     alt: "Mobile makeup artist service across Toronto & GTA",
     badge: "We Come To You",
   },
@@ -103,7 +103,7 @@ const featuredServices = [
     title: "Group Bookings",
     description:
       "Seamlessly coordinated hair and makeup scheduling for bridal parties, bridesmaids, mothers, and group celebrations.",
-    image: "/images/gallery/soft-glam-bouquet-profile.jpg",
+    image: "/images/gallery/editorial-couple-embrace.jpg",
     alt: "Group bridal party makeup and hair consultation",
     badge: "Group Package",
   },
