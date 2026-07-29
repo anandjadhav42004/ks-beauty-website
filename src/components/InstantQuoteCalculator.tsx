@@ -360,13 +360,15 @@ export default function InstantQuoteCalculator({ prefilledData }: InstantQuoteCa
     };
 
     try {
-      await emailjs.send(EMAILJS_SERVICE_ID, CLIENT_TEMPLATE_ID, payload, PUBLIC_KEY);
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        OWNER_TEMPLATE_ID,
-        { ...payload, owner_email: "rivaaz.glam@gmail.com" },
-        PUBLIC_KEY
-      );
+      if (EMAILJS_SERVICE_ID !== "YOUR_SERVICE_ID") {
+        await emailjs.send(EMAILJS_SERVICE_ID, CLIENT_TEMPLATE_ID, payload, PUBLIC_KEY);
+        await emailjs.send(
+          EMAILJS_SERVICE_ID,
+          OWNER_TEMPLATE_ID,
+          { ...payload, owner_email: "rivaaz.glam@gmail.com" },
+          PUBLIC_KEY
+        );
+      }
     } catch {
       // Gracefully log & proceed without breaking client confirmation preview
       setEmailError(null);

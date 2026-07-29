@@ -6,7 +6,7 @@ export default function WhatsAppConcierge() {
     "https://wa.me/16476403439?text=Hi%20Rivaaz%20Glam%20Studio!%20I'd%20like%20to%20check%20bridal%20availability%20for%20my%20event.";
 
   return (
-    <aside aria-label="WhatsApp concierge" className="fixed bottom-20 right-4 sm:bottom-8 sm:right-8 z-40">
+    <aside aria-label="WhatsApp concierge" className="fixed bottom-[84px] right-4 sm:bottom-8 sm:right-8 z-40">
       {/* Desktop / Tablet Full Pill */}
       <motion.a
         href={whatsappUrl}
@@ -35,7 +35,7 @@ export default function WhatsAppConcierge() {
         </div>
       </motion.a>
 
-      {/* Mobile Ultra-Compact Circular Icon (Never covers content) */}
+      {/* Mobile Ultra-Compact Circular Icon Floating Above Bottom Bar (20-24px clearance) */}
       <motion.a
         href={whatsappUrl}
         target="_blank"
@@ -43,11 +43,11 @@ export default function WhatsAppConcierge() {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         whileTap={{ scale: 0.9 }}
-        className="sm:hidden w-12 h-12 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-2xl border-2 border-[#FBF6EE] active:scale-95"
+        className="sm:hidden w-11 h-11 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-2xl border-2 border-[#FBF6EE] active:scale-95"
         style={{ boxShadow: "0 6px 20px rgba(37, 211, 102, 0.4)" }}
         aria-label="Contact via WhatsApp"
       >
-        <MessageCircle size={22} fill="white" />
+        <MessageCircle size={20} fill="white" />
       </motion.a>
     </aside>
   );
