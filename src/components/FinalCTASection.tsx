@@ -152,7 +152,8 @@ export default function FinalCTASection() {
             className="btn-primary ripple-container"
             onClick={(e) => {
               handleRipple(e);
-              document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
+              const target = document.querySelector("#calculator") || document.querySelector("#pricing") || document.querySelector("#contact");
+              target?.scrollIntoView({ behavior: "smooth" });
             }}
             data-testid="final-cta-book-now"
             style={{ padding: "16px 36px", fontSize: "15px" }}
