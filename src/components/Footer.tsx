@@ -40,7 +40,7 @@ export default function Footer() {
                     lineHeight: 1,
                   }}
                 >
-                  KS Beauty
+                  Rivaaz Glam Studio
                 </div>
                 <div
                   style={{
@@ -254,7 +254,7 @@ export default function Footer() {
               margin: 0,
             }}
           >
-            © 2025 KS Beauty. All rights reserved.
+            © 2026 Rivaaz Glam Studio. All Rights Reserved.
           </p>
           <div className="flex items-center gap-6 flex-wrap justify-center">
             <button

@@ -3,7 +3,7 @@ import { MessageCircle, Sparkles } from "lucide-react";
 
 export default function WhatsAppConcierge() {
   const whatsappUrl =
-    "https://wa.me/16476403439?text=Hi%20KS%20Beauty!%20I'd%20like%20to%20check%20bridal%20availability%20for%20my%20event.";
+    "https://wa.me/16476403439?text=Hi%20Rivaaz%20Glam%20Studio!%20I'd%20like%20to%20check%20bridal%20availability%20for%20my%20event.";
 
   return (
     <aside aria-label="WhatsApp concierges" className="fixed bottom-20 right-4 sm:bottom-8 sm:right-8 z-40">

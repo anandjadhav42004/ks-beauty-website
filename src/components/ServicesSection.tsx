@@ -28,6 +28,22 @@ const featuredServices = [
     badge: "Popular",
   },
   {
+    title: "Reception Makeup",
+    description:
+      "High-impact evening bridal glam with luminous skin, defined eyes, and long-wear camera finish for your reception night.",
+    image: "/images/hero/hero-main.jpg",
+    alt: "Glamorous reception bridal hair and makeup portrait",
+    badge: "Evening Glam",
+  },
+  {
+    title: "Party Makeup",
+    description:
+      "Chic, modern glam for sangeet, cocktail parties, galas, and milestone guest celebrations.",
+    image: "/images/gallery/editorial-marble-staircase.jpg",
+    alt: "Sophisticated party makeup and hair styling",
+    badge: "Special Event",
+  },
+  {
     title: "Baby Shower Makeup",
     description:
       "Fresh, luminous soft-focus maternity glam designed to enhance your natural glow on your special celebration day.",
@@ -44,31 +60,39 @@ const featuredServices = [
     badge: "Creative",
   },
   {
-    title: "Express Glam Services",
+    title: "Soft Glam Makeup",
     description:
-      "Quick yet flawless full-face makeup and hair styling optimized for tight schedules and last-minute special events.",
-    image: "/images/gallery/editorial-marble-staircase.jpg",
-    alt: "Express glam makeup application detail shot",
-    badge: "Fast Track",
+      "Effortless, glowing skin with neutral tones and soft accentuation designed for natural beauty lovers.",
+    image: "/images/gallery/soft-glam-luminous-close-up.jpg",
+    alt: "Luminous soft glam makeup detail portrait",
+    badge: "Natural Glow",
   },
   {
     title: "Hair Styling",
     description:
-      "Intricate bridal updos, textured romantic waves, sleek Hollywood waves, and veil or hair accessory placement.",
+      "Versatile custom hair styling including romantic waves, sleek blowouts, half-up styles, and hair extension placement.",
     image: "/images/gallery/hair-styling-updo.jpg",
-    alt: "Bridal hair styling textured romantic updo with pearl accessory",
+    alt: "Custom hair styling and extension placement",
     badge: "Artistry",
   },
   {
-    title: "Makeup Lessons",
+    title: "Hollywood Waves",
     description:
-      "Personalized 1-on-1 makeup masterclasses covering skin prep, custom color matching, day-to-night routines, and techniques.",
-    image: "/images/gallery/makeup-tools-palette.jpg",
-    alt: "1-on-1 makeup masterclass vanity brushes and eyeshadow palette",
-    badge: "1-on-1 Masterclass",
+      "Ultra-glamorous, vintage Hollywood vintage wave styling with high-shine glass finish and long-lasting hold.",
+    image: "/images/gallery/hollywood-waves-veil.jpg",
+    alt: "Glamorous vintage Hollywood waves hair styling",
+    badge: "Trendsetter",
   },
   {
-    title: "Mobile Services",
+    title: "Bridal Updos",
+    description:
+      "Intricate, secure bridal bun and updo architecture designed for dupatta support, veil attachment, and all-day stability.",
+    image: "/images/gallery/hair-styling-updo.jpg",
+    alt: "Intricate bridal updo with hair accessories",
+    badge: "Classic Bridal",
+  },
+  {
+    title: "Mobile Makeup Services",
     description:
       "Luxury salon-quality beauty services delivered directly to your home, hotel suite, or venue anywhere across the GTA.",
     image: "/images/gallery/editorial-golden-hour.jpg",
@@ -82,6 +106,14 @@ const featuredServices = [
     image: "/images/gallery/soft-glam-bouquet-profile.jpg",
     alt: "Group bridal party makeup and hair consultation",
     badge: "Group Package",
+  },
+  {
+    title: "Makeup Lessons",
+    description:
+      "Personalized 1-on-1 makeup masterclasses covering skin prep, custom color matching, day-to-night routines, and techniques.",
+    image: "/images/gallery/makeup-tools-palette.jpg",
+    alt: "1-on-1 makeup masterclass vanity brushes and eyeshadow palette",
+    badge: "1-on-1 Masterclass",
   },
 ];
 

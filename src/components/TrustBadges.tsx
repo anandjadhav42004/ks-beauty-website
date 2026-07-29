@@ -20,7 +20,7 @@ const badges = [
   {
     icon: <Heart size={22} />,
     label: "500+ Happy Clients",
-    sub: "[CONFIRM NUMBER WITH CLIENT]",
+    sub: "Trusted Across GTA",
   },
   {
     icon: <Sparkles size={22} />,
@@ -66,7 +66,7 @@ export default function TrustBadges() {
                 textTransform: "uppercase",
               }}
             >
-              Why Brides Trust KS Beauty
+              Why Brides Trust Rivaaz Glam Studio
             </span>
             <div style={{ width: "32px", height: "1px", background: "#B8935A", opacity: 0.6 }} />
           </div>

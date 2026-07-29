@@ -5,15 +5,14 @@ import ImageWithFallback from "./ImageWithFallback";
 
 const categories = [
   "All",
-  "Soft Glam",
   "Bridal",
-  "Mature Skin",
+  "Indian Bridal",
+  "Soft Glam",
   "Editorial",
-  "Hollywood Waves",
-  "Updos",
   "Party Glam",
-  "Reception",
+  "Hollywood Waves",
   "Hair Styling",
+  "Updos",
 ];
 
 const galleryItems = [

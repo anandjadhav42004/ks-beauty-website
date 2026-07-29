@@ -120,7 +120,7 @@ export default function FinalCTASection() {
             marginBottom: "16px",
           }}
         >
-          Ready to look and feel your best?
+          Ready to Look and Feel Your Best?
         </motion.h2>
 
         <motion.p
@@ -136,7 +136,7 @@ export default function FinalCTASection() {
             marginBottom: "36px",
           }}
         >
-          Book your bridal consultation today.
+          Book your bridal consultation today and let us create a timeless look you'll love.
         </motion.p>
 
         {/* Three CTAs: Book Now, WhatsApp Me, View Portfolio */}

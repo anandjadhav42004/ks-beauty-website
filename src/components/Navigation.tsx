@@ -65,7 +65,7 @@ export default function Navigation() {
     {
       title: "Explore",
       items: [
-        { label: "About KS Beauty", href: "#about", id: "about" },
+        { label: "About Rivaaz Glam Studio", href: "#about", id: "about" },
         { label: "Services & Artistry", href: "#services", id: "services" },
         { label: "Portfolio Gallery", href: "#gallery", id: "gallery" },
         { label: "Why Choose Us", href: "#why-us", id: "why-us" },
@@ -138,7 +138,7 @@ export default function Navigation() {
                   lineHeight: 1,
                 }}
               >
-                KS Beauty
+                Rivaaz Glam Studio
               </span>
               <span
                 style={{

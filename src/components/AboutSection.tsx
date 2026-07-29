@@ -211,13 +211,24 @@ export default function AboutSection() {
             <p
               style={{
                 fontFamily: "var(--app-font-sans)",
-                fontSize: "18px",
+                fontSize: "17px",
                 color: "#4a3a30",
                 lineHeight: 1.8,
-                marginBottom: "36px",
+                marginBottom: "20px",
               }}
             >
-              I'm Krishna Sukhwani, a certified Hair &amp; Makeup Artist with 10+ years of experience. I specialize in luxury bridal beauty, soft glam, and timeless looks for every skin tone. My goal is to make every client feel confident, beautiful, and stress-free on their special day.
+              Hi, I'm Krishna Sukhwani, founder of <strong>Rivaaz Glam Studio</strong>. With over 10 years of experience, I specialize in luxury bridal hair and makeup, soft glam, Indian bridal artistry, editorial beauty, and special occasion styling.
+            </p>
+            <p
+              style={{
+                fontFamily: "var(--app-font-sans)",
+                fontSize: "17px",
+                color: "#4a3a30",
+                lineHeight: 1.8,
+                marginBottom: "32px",
+              }}
+            >
+              My goal is to help every client feel confident, beautiful, and completely stress-free on one of the most important days of their life. Every appointment is personalized to your features, style, skin tone, and vision, ensuring timeless results both in person and in photographs.
             </p>
 
             {/* Credential pills */}

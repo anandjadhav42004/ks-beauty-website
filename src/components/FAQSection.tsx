@@ -5,47 +5,43 @@ import { ChevronDown } from "lucide-react";
 const faqs = [
   {
     q: "Do you travel?",
-    a: "Yes! We are a 100% mobile luxury bridal beauty team. We bring our full professional kit directly to your home, venue, or hotel suite.",
+    a: "Yes! Rivaaz Glam Studio is a 100% mobile luxury bridal beauty studio. We bring our full professional kit, ring lights, and styling tools directly to your home, venue, or hotel suite.",
   },
   {
     q: "How far do you travel?",
-    a: "We serve all of Toronto, Durham Region (Pickering, Ajax, Whitby, Oshawa), and the Greater Toronto Area with convenient mobile service.",
+    a: "We travel across Toronto, Durham Region (Pickering, Ajax, Whitby, Oshawa), Markham, Richmond Hill, Vaughan, Brampton, Mississauga, and the entire Greater Toronto Area.",
   },
   {
-    q: "How much is the deposit?",
-    a: "A 30% deposit is required upon booking to lock in your event date and time slot in our master calendar.",
+    q: "How much is the booking deposit?",
+    a: "A 30% deposit is required upon booking to secure your date and time slot in our master calendar. The remaining balance is due on your event day.",
   },
   {
-    q: "When should I book my bridal appointment?",
-    a: "We recommend booking 6 to 12 months in advance for peak wedding season (May–October) to guarantee your preferred morning time.",
+    q: "When should I book?",
+    a: "We recommend booking 6 to 12 months in advance for peak wedding season (May–October). Off-season dates can typically be booked 3 to 6 months prior.",
   },
   {
     q: "Do you provide lashes?",
-    a: "Yes! Complimentary premium strip or cluster false lashes and custom lash application are included with all makeup services.",
+    a: "Yes! Premium, weightless mink-style or cluster false lashes and custom application are included with every makeup booking at no extra charge.",
   },
   {
     q: "Can I bring inspiration photos?",
-    a: "We encourage it! Sharing your Pinterest boards, dress photos, and jewelry details helps us tailor your perfect personalized look.",
+    a: "Absolutely! We love reviewing your Pinterest boards, outfit embroidery details, and jewelry swatches to customize a look that complements your personal vision.",
   },
   {
-    q: "What's included in bridal packages?",
-    a: "Bridal packages include skin prep, high-definition 14-hour makeup, lashes, luxury hair styling, dupatta/veil setting, and a complimentary touch-up kit.",
+    q: "What products do you use?",
+    a: "We use high-performance, photo-certified luxury brands including Charlotte Tilbury, NARS, MAC, Giorgio Armani, Huda Beauty, Tom Ford, and Pat McGrath Labs.",
+  },
+  {
+    q: "Do you travel for destination weddings?",
+    a: "Yes! Krishna travels internationally and across North America for destination weddings and multi-day celebrations. Destination custom quotes are available upon request.",
+  },
+  {
+    q: "How long does bridal makeup take?",
+    a: "Bridal makeup and hair styling typically takes 2 to 2.5 hours to ensure flawless skin prep, veil/dupatta placement, and long-wear setting.",
   },
   {
     q: "What is your cancellation policy?",
-    a: "Cancellations submitted at least 30 days prior to the event date incur no fees beyond the initial booking deposit.",
-  },
-  {
-    q: "Do you offer bridal trials?",
-    a: "Yes — bridal trial sessions allow us to test products against your skin chemistry and refine your look 1 to 3 months before your wedding.",
-  },
-  {
-    q: "Which makeup brands do you use?",
-    a: "We use high-performance luxury brands including Charlotte Tilbury, NARS, MAC, Giorgio Armani, Huda Beauty, and Pat McGrath.",
-  },
-  {
-    q: "Can you accommodate bridal parties?",
-    a: "Yes — we coordinate timelines for bridesmaids and family members, bringing secondary certified artists for larger group bookings.",
+    a: "Cancellations made at least 30 days prior to your event date incur no further charges beyond the non-refundable booking retainer.",
   },
 ];
 
