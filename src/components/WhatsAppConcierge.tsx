@@ -28,9 +28,9 @@ export default function WhatsAppConcierge() {
         </div>
         <div className="flex flex-col text-left leading-tight pr-1">
           <span className="text-[10px] uppercase font-bold text-[#B8935A] tracking-wider flex items-center gap-1">
-            <Sparkles size={10} /> Live VIP Concierge
+            <Sparkles size={10} /> Instant Concierge
           </span>
-          <span className="text-xs font-semibold">Chat on WhatsApp</span>
+          <span className="text-xs font-semibold">Check Date Availability — WhatsApp</span>
         </div>
       </motion.a>
     </aside>

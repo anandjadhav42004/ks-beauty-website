@@ -1,5 +1,6 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { X, ChevronLeft, ChevronRight, Sparkles, ArrowRight } from "lucide-react";
 import ImageWithFallback from "./ImageWithFallback";
 
 const categories = [
@@ -105,6 +106,7 @@ const galleryItems = [
 export default function GallerySection() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -219,6 +221,7 @@ export default function GallerySection() {
                   cursor: "pointer",
                   boxShadow: "0 8px 24px rgba(31, 51, 41, 0.08)",
                 }}
+                onClick={() => setSelectedIndex(i)}
                 onMouseEnter={() => setHoveredIndex(i)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
@@ -296,13 +299,124 @@ export default function GallerySection() {
                         marginTop: "2px",
                       }}
                     >
-                      KS Beauty Editorial
+                      Click to View &amp; Book
                     </p>
                   </div>
                 </div>
               </motion.div>
             ))}
           </motion.div>
+        </AnimatePresence>
+
+        {/* Full-Screen Interactive Lightbox Modal */}
+        <AnimatePresence>
+          {selectedIndex !== null && filtered[selectedIndex] && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              onClick={handleClose}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10 select-none"
+              style={{
+                background: "rgba(15, 28, 22, 0.94)",
+                backdropFilter: "blur(20px)",
+              }}
+              data-testid="gallery-lightbox-overlay"
+            >
+              {/* Modal Container */}
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0, y: 15 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.9, opacity: 0, y: 15 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                onClick={(e) => e.stopPropagation()}
+                className="relative w-full max-w-4xl max-h-[90vh] flex flex-col rounded-3xl overflow-hidden shadow-2xl border border-[#B8935A]/40 bg-[#1F3329]"
+              >
+                {/* Close Button */}
+                <button
+                  onClick={handleClose}
+                  className="absolute top-4 right-4 z-30 w-10 h-10 rounded-full flex items-center justify-center bg-black/50 text-[#FBF6EE] hover:bg-[#B8935A] hover:text-[#1F3329] transition-all duration-200"
+                  aria-label="Close Lightbox"
+                  data-testid="lightbox-close-btn"
+                >
+                  <X size={20} />
+                </button>
+
+                {/* Left / Right Arrow Navigation */}
+                {filtered.length > 1 && (
+                  <>
+                    <button
+                      onClick={handlePrev}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full flex items-center justify-center bg-black/40 text-[#FBF6EE] hover:bg-[#B8935A] hover:text-[#1F3329] transition-all duration-200"
+                      aria-label="Previous Photo"
+                      data-testid="lightbox-prev-btn"
+                    >
+                      <ChevronLeft size={24} />
+                    </button>
+                    <button
+                      onClick={handleNext}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full flex items-center justify-center bg-black/40 text-[#FBF6EE] hover:bg-[#B8935A] hover:text-[#1F3329] transition-all duration-200"
+                      aria-label="Next Photo"
+                      data-testid="lightbox-next-btn"
+                    >
+                      <ChevronRight size={24} />
+                    </button>
+                  </>
+                )}
+
+                {/* Main Lightbox Image View */}
+                <div className="relative flex-1 bg-black/30 flex items-center justify-center overflow-hidden min-h-[300px] sm:min-h-[420px]">
+                  <ImageWithFallback
+                    src={filtered[selectedIndex].image}
+                    alt={filtered[selectedIndex].alt}
+                    loading="eager"
+                    style={{
+                      maxHeight: "65vh",
+                      maxWidth: "100%",
+                      objectFit: "contain",
+                      display: "block",
+                      margin: "auto",
+                    }}
+                  />
+                </div>
+
+                {/* Caption Bar & Action Controls */}
+                <div className="p-5 sm:p-6 bg-[#1F3329] border-t border-[#B8935A]/30 flex flex-col sm:flex-row items-center justify-between gap-4 z-20">
+                  <div className="text-center sm:text-left">
+                    <span className="inline-block px-3 py-1 rounded-full bg-[#B8935A]/20 text-[#B8935A] text-[11px] font-bold uppercase tracking-widest mb-1.5 border border-[#B8935A]/40">
+                      {filtered[selectedIndex].category}
+                    </span>
+                    <h3
+                      style={{ fontFamily: "var(--app-font-serif, serif)" }}
+                      className="text-lg sm:text-xl font-bold text-[#FBF6EE] leading-snug"
+                    >
+                      {filtered[selectedIndex].label}
+                    </h3>
+                  </div>
+
+                  <button
+                    onClick={() => handleBookThisLook(filtered[selectedIndex])}
+                    className="w-full sm:w-auto px-7 py-3 rounded-full flex items-center justify-center gap-2.5 transition-all duration-300 hover:scale-[1.03] active:scale-[0.97]"
+                    style={{
+                      background: "linear-gradient(135deg, #B8935A 0%, #D4AF37 100%)",
+                      color: "#1F3329",
+                      fontFamily: "var(--app-font-sans)",
+                      fontSize: "14px",
+                      fontWeight: 700,
+                      letterSpacing: "0.05em",
+                      boxShadow: "0 6px 20px rgba(184, 147, 90, 0.4)",
+                    }}
+                    data-testid="lightbox-book-look-btn"
+                  >
+                    <Sparkles size={16} />
+                    <span>✨ Book This Look</span>
+                    <ArrowRight size={16} />
+                  </button>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
         </AnimatePresence>
       </div>
     </section>

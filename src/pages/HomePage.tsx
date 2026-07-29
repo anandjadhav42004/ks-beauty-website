@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import TrustBadges from "@/components/TrustBadges";
@@ -20,6 +21,16 @@ import BackToTop from "@/components/BackToTop";
 import WhatsAppConcierge from "@/components/WhatsAppConcierge";
 
 export default function HomePage() {
+  const [quotePrefill, setQuotePrefill] = useState<{ service: string; date: string } | null>(null);
+
+  const handleHeroQuickQuoteSubmit = (service: string, date: string) => {
+    setQuotePrefill({ service, date });
+    const calculatorEl = document.querySelector("#calculator") || document.querySelector("#pricing");
+    if (calculatorEl) {
+      calculatorEl.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <>
       {/* SEO Meta — injected via document in index.html */}
@@ -27,7 +38,7 @@ export default function HomePage() {
 
       <main>
         {/* 1. Hero */}
-        <HeroSection />
+        <HeroSection onQuickQuoteSubmit={handleHeroQuickQuoteSubmit} />
 
         {/* 2. Trust Badges */}
         <TrustBadges />
@@ -69,7 +80,7 @@ export default function HomePage() {
         <FinalCTASection />
 
         {/* 16. Instant Quote Calculator */}
-        <InstantQuoteCalculator />
+        <InstantQuoteCalculator prefilledData={quotePrefill} />
       </main>
 
       <Footer />

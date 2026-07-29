@@ -4,7 +4,11 @@ import { ArrowRight, Sparkles, Calendar, ChevronDown, Instagram, Facebook, Share
 import GoldDrapeDivider from "./GoldDrapeDivider";
 import ImageWithFallback from "./ImageWithFallback";
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  onQuickQuoteSubmit?: (service: string, date: string) => void;
+}
+
+export default function HeroSection({ onQuickQuoteSubmit }: HeroSectionProps) {
   const [linesReady, setLinesReady] = useState(false);
   const [subReady, setSubReady] = useState(false);
   const [ctaReady, setCtaReady] = useState(false);
@@ -44,13 +48,13 @@ export default function HeroSection() {
 
   const handleQuickQuoteSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const contactSection = document.querySelector("#contact");
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: "smooth" });
-      const serviceSelect = document.querySelector("#service-type") as HTMLSelectElement;
-      const dateInput = document.querySelector("#event-date") as HTMLInputElement;
-      if (serviceSelect && selectedService) serviceSelect.value = selectedService;
-      if (dateInput && eventDate) dateInput.value = eventDate;
+    if (onQuickQuoteSubmit) {
+      onQuickQuoteSubmit(selectedService, eventDate);
+    } else {
+      const calcEl = document.querySelector("#calculator") || document.querySelector("#pricing");
+      if (calcEl) {
+        calcEl.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 

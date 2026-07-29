@@ -110,7 +110,14 @@ const COUNTRY_CODES = [
   { code: "+971", label: "🇦🇪 +971" },
 ];
 
-export default function InstantQuoteCalculator() {
+interface InstantQuoteCalculatorProps {
+  prefilledData?: {
+    service?: string;
+    date?: string;
+  } | null;
+}
+
+export default function InstantQuoteCalculator({ prefilledData }: InstantQuoteCalculatorProps = {}) {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [formData, setFormData] = useState<QuoteFormData>({
     firstName: "",
@@ -131,6 +138,45 @@ export default function InstantQuoteCalculator() {
     phoneCountryCode: "+1",
     phoneNumber: "",
   });
+
+  // Pre-fill calculator when data is received from Hero quick-quote bar
+  React.useEffect(() => {
+    if (!prefilledData) return;
+
+    setFormData((prev) => {
+      let mappedType: ServiceTypeOption = "Bridal";
+      let bothFlag = true;
+      let bothCnt = 1;
+      let makeupCnt = 0;
+
+      if (prefilledData.service === "Special Event Glam") {
+        mappedType = "Non-Bridal";
+        bothFlag = true;
+        bothCnt = 1;
+      } else if (prefilledData.service === "Bridal Party Package") {
+        mappedType = "Semi-Bridal";
+        bothFlag = true;
+        bothCnt = 3;
+      } else if (prefilledData.service === "Touch-Up & Trial") {
+        mappedType = "Bridal";
+        bothFlag = false;
+        makeupCnt = 1;
+      } else if (prefilledData.service === "Bridal Makeup & Hair") {
+        mappedType = "Bridal";
+        bothFlag = true;
+        bothCnt = 1;
+      }
+
+      return {
+        ...prev,
+        eventDate: prefilledData.date || prev.eventDate,
+        serviceType: mappedType,
+        bothHairMakeup: bothFlag,
+        bothCount: bothCnt,
+        makeupOnlyCount: makeupCnt,
+      };
+    });
+  }, [prefilledData]);
 
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
