@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Instagram, Play } from "lucide-react";
+import { Instagram, Play, ArrowRight } from "lucide-react";
 import ImageWithFallback from "./ImageWithFallback";
 
 const posts = [

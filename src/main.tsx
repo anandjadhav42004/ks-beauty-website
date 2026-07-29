@@ -29,9 +29,14 @@ class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <div style={{ minHeight: "100vh", background: "#FBF6EE", color: "#1F3329", display: "flex", flexDirection: "column", itemsCenter: "center", justifyContent: "center", padding: "2rem", textAlign: "center", fontFamily: "sans-serif" }}>
+        <div style={{ minHeight: "100vh", background: "#FBF6EE", color: "#1F3329", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem", textAlign: "center", fontFamily: "sans-serif" }}>
           <h1 style={{ fontSize: "2rem", fontWeight: 700, marginBottom: "1rem", color: "#1F3329" }}>KS Beauty</h1>
-          <p style={{ fontSize: "1rem", color: "#5a4a40", marginBottom: "1.5rem" }}>Something encountered a temporary display glitch.</p>
+          <p style={{ fontSize: "1.1rem", color: "#7A2E38", fontWeight: 600, marginBottom: "1rem" }}>
+            Error: {this.state.error?.message || "Unknown rendering exception"}
+          </p>
+          <pre style={{ textAlign: "left", background: "#1F3329", color: "#FBF6EE", padding: "1rem", borderRadius: "12px", fontSize: "12px", maxWidth: "90vw", overflowX: "auto", marginBottom: "1.5rem" }}>
+            {this.state.error?.stack}
+          </pre>
           <button
             onClick={() => {
               this.setState({ hasError: false, error: null });
