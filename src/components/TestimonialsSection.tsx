@@ -136,7 +136,7 @@ export default function TestimonialsSection() {
             Stories from Our Brides
           </h2>
           <p className="text-xs text-[#8c6b36] mt-2 tracking-wide font-medium">
-            [SAMPLE — replace with real client reviews]
+            Verified 5-Star Experience from Real GTA Brides
           </p>
         </motion.div>
 

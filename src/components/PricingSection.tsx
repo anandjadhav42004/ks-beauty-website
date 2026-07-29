@@ -225,11 +225,13 @@ export default function PricingSection() {
                     <span
                       style={{
                         fontFamily: "var(--app-font-sans)",
-                        fontSize: "10px",
-                        color: pkg.popular ? "rgba(251, 246, 238, 0.5)" : "rgba(90, 74, 64, 0.5)",
+                        fontSize: "11px",
+                        fontWeight: 600,
+                        letterSpacing: "0.06em",
+                        color: pkg.popular ? "rgba(184, 147, 90, 0.9)" : "#B8935A",
                       }}
                     >
-                      [PLACEHOLDER]
+                      CAD
                     </span>
                   </div>
                 </div>
