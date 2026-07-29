@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Calendar,
@@ -140,7 +140,7 @@ export default function InstantQuoteCalculator({ prefilledData }: InstantQuoteCa
   });
 
   // Pre-fill calculator when data is received from Hero quick-quote bar
-  React.useEffect(() => {
+  useEffect(() => {
     if (!prefilledData) return;
 
     setFormData((prev) => {

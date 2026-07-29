@@ -122,6 +122,45 @@ export default function GallerySection() {
       ? galleryItems
       : galleryItems.filter((item) => item.category === activeCategory);
 
+  const handlePrev = useCallback(() => {
+    if (selectedIndex === null) return;
+    setSelectedIndex((prev) => (prev === 0 ? filtered.length - 1 : (prev as number) - 1));
+  }, [selectedIndex, filtered.length]);
+
+  const handleNext = useCallback(() => {
+    if (selectedIndex === null) return;
+    setSelectedIndex((prev) => (prev === filtered.length - 1 ? 0 : (prev as number) + 1));
+  }, [selectedIndex, filtered.length]);
+
+  const handleClose = useCallback(() => {
+    setSelectedIndex(null);
+  }, []);
+
+  const handleBookThisLook = (item: (typeof galleryItems)[0]) => {
+    handleClose();
+    setTimeout(() => {
+      const calcEl = document.querySelector("#calculator") || document.querySelector("#pricing");
+      if (calcEl) {
+        calcEl.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 150);
+  };
+
+  useEffect(() => {
+    if (selectedIndex === null) return;
+    document.body.style.overflow = "hidden";
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") handleClose();
+      if (e.key === "ArrowLeft") handlePrev();
+      if (e.key === "ArrowRight") handleNext();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedIndex, handleClose, handlePrev, handleNext]);
+
   return (
     <section
       ref={sectionRef}
