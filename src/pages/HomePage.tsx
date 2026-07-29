@@ -7,7 +7,6 @@ import CTARibbon from "@/components/CTARibbon";
 import WhyChooseSection from "@/components/WhyChooseSection";
 import AddOnsSection from "@/components/AddOnsSection";
 import GallerySection from "@/components/GallerySection";
-import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import ProcessTimeline from "@/components/ProcessTimeline";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import InstagramSection from "@/components/InstagramSection";
@@ -51,10 +50,7 @@ export default function HomePage() {
         {/* 8. Gallery */}
         <GallerySection />
 
-        {/* 9. Interactive Before / After Slider */}
-        <BeforeAfterSlider />
-
-        {/* 10. Process Timeline */}
+        {/* 9. Process Timeline */}
         <ProcessTimeline />
 
         {/* 11. Testimonials */}

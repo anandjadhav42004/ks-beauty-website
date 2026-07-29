@@ -61,8 +61,9 @@ export default function AboutSection() {
                 }}
               >
                 <ImageWithFallback
-                  src="/images/about/founder-portrait.jpg"
-                  alt="Krishna S. in black blazer holding makeup palette reflected in studio mirror — KS Beauty founder"
+                  src=""
+                  placeholderText="Krishna Sukhwani"
+                  alt="Krishna S. — KS Beauty founder & lead artist"
                   loading="lazy"
                   style={{
                     position: "absolute",
@@ -213,22 +214,10 @@ export default function AboutSection() {
                 fontSize: "18px",
                 color: "#4a3a30",
                 lineHeight: 1.8,
-                marginBottom: "24px",
-              }}
-            >
-              A certified makeup artist with over 10 years of experience creating stunning bridal and editorial looks. I specialize in South Asian and multicultural beauty, and I come to you, wherever your morning begins.
-            </p>
-
-            <p
-              style={{
-                fontFamily: "var(--app-font-sans)",
-                fontSize: "17px",
-                color: "#5a4a40",
-                lineHeight: 1.8,
                 marginBottom: "36px",
               }}
             >
-              Every bride deserves to feel like herself — only more radiant. My approach is rooted in listening: understanding your vision, your skin, your culture, and your day, then crafting a look that holds up from the morning puja to the last dance.
+              I'm Krishna Sukhwani, a certified Hair &amp; Makeup Artist with 10+ years of experience. I specialize in luxury bridal beauty, soft glam, and timeless looks for every skin tone. My goal is to make every client feel confident, beautiful, and stress-free on their special day.
             </p>
 
             {/* Credential pills */}

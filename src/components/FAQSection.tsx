@@ -4,28 +4,48 @@ import { ChevronDown } from "lucide-react";
 
 const faqs = [
   {
-    q: "Do you travel across the GTA?",
-    a: "Yes — we serve Toronto, Durham Region (Pickering, Ajax, Whitby, Oshawa), Markham, Richmond Hill, Vaughan, Brampton, Mississauga, and the broader Greater Toronto Area. Travel fees may apply for locations beyond a certain distance; we'll confirm everything during your consultation.",
+    q: "Do you travel?",
+    a: "Yes! We are a 100% mobile luxury bridal beauty team. We bring our full professional kit directly to your home, venue, or hotel suite.",
   },
   {
-    q: "How far in advance should I book?",
-    a: "We recommend booking at least 6–12 months in advance for peak wedding season (May–October). For off-season dates, 3–6 months is typically sufficient. We occasionally have last-minute availability — reach out and we'll do our best to accommodate you.",
+    q: "How far do you travel?",
+    a: "We serve all of Toronto, Durham Region (Pickering, Ajax, Whitby, Oshawa), and the Greater Toronto Area with convenient mobile service.",
+  },
+  {
+    q: "How much is the deposit?",
+    a: "A 30% deposit is required upon booking to lock in your event date and time slot in our master calendar.",
+  },
+  {
+    q: "When should I book my bridal appointment?",
+    a: "We recommend booking 6 to 12 months in advance for peak wedding season (May–October) to guarantee your preferred morning time.",
+  },
+  {
+    q: "Do you provide lashes?",
+    a: "Yes! Complimentary premium strip or cluster false lashes and custom lash application are included with all makeup services.",
+  },
+  {
+    q: "Can I bring inspiration photos?",
+    a: "We encourage it! Sharing your Pinterest boards, dress photos, and jewelry details helps us tailor your perfect personalized look.",
+  },
+  {
+    q: "What's included in bridal packages?",
+    a: "Bridal packages include skin prep, high-definition 14-hour makeup, lashes, luxury hair styling, dupatta/veil setting, and a complimentary touch-up kit.",
+  },
+  {
+    q: "What is your cancellation policy?",
+    a: "Cancellations submitted at least 30 days prior to the event date incur no fees beyond the initial booking deposit.",
   },
   {
     q: "Do you offer bridal trials?",
-    a: "Absolutely — and we strongly recommend them. A trial session allows us to perfect your look, test products against your skin chemistry, refine timing, and give you the confidence of knowing exactly how you'll look on your wedding day. Trials are conducted 1–3 months before your event.",
+    a: "Yes — bridal trial sessions allow us to test products against your skin chemistry and refine your look 1 to 3 months before your wedding.",
   },
   {
     q: "Which makeup brands do you use?",
-    a: "We work exclusively with high-performance luxury brands including Charlotte Tilbury, NARS, MAC, Giorgio Armani Beauty, Huda Beauty, Pat McGrath Labs, and Tom Ford. Every product is sanitized and single-use applicators are always used for hygiene.",
+    a: "We use high-performance luxury brands including Charlotte Tilbury, NARS, MAC, Giorgio Armani, Huda Beauty, and Pat McGrath.",
   },
   {
     q: "Can you accommodate bridal parties?",
-    a: "Yes — we specialize in bridal party bookings. We coordinate timelines for bridesmaids, mothers of the bride and groom, and any other family members. For larger parties, we bring additional certified artists to ensure everyone is flawless and on schedule.",
-  },
-  {
-    q: "Do you provide touch-up services?",
-    a: "Yes. We offer touch-up kits with every booking and can arrange for an artist to stay on-site for a designated touch-up window if needed. Ask about our event-day touch-up add-on when you book your consultation.",
+    a: "Yes — we coordinate timelines for bridesmaids and family members, bringing secondary certified artists for larger group bookings.",
   },
 ];
 

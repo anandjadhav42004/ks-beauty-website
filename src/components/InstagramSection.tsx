@@ -3,12 +3,12 @@ import { Instagram, ArrowRight } from "lucide-react";
 import ImageWithFallback from "./ImageWithFallback";
 
 const posts = [
-  { image: "/images/gallery/bridal-1.jpg", label: "Bridal Glam", alt: "Bridal glam makeup by KS Beauty" },
-  { image: "/images/gallery/bridal-2.jpg", label: "Mehendi Look", alt: "Indian bridal beauty look by KS Beauty" },
-  { image: "/images/gallery/hair-styling-1.jpg", label: "Hair Styling", alt: "Bridal updo & hair styling by KS Beauty" },
-  { image: "/images/gallery/reception-1.jpg", label: "Reception", alt: "Reception makeup look by KS Beauty" },
-  { image: "/images/gallery/soft-glam-1.jpg", label: "Soft Glam", alt: "Soft glam beauty look by KS Beauty" },
-  { image: "/images/services/bridal-makeup-hair.jpg", label: "Trial Prep", alt: "Bridal touch-up and trial prep by KS Beauty" },
+  { image: "/images/instagram/hero-main.jpg", label: "Bridal Glam", alt: "Seated South Asian bride in velvet maroon lehenga by KS Beauty" },
+  { image: "/images/instagram/bridal-nath-detail.jpg", label: "Jewelry & Nath", alt: "South Asian bride touching pearl nath close-up by KS Beauty" },
+  { image: "/images/instagram/updo-gown-marble-steps.jpg", label: "Hair Styling", alt: "Bridal updo & gown walk on marble steps by KS Beauty" },
+  { image: "/images/instagram/editorial-couple-dip.jpg", label: "Editorial Couple", alt: "Editorial wedding couple dip pose by KS Beauty" },
+  { image: "/images/instagram/editorial-golden-hour.jpg", label: "Golden Hour", alt: "Candid golden hour sunset bridal shoot by KS Beauty" },
+  { image: "/images/instagram/soft-glam-white-gown.jpg", label: "Soft Glam", alt: "Radiant soft glam white gown bridal portrait by KS Beauty" },
 ];
 
 export default function InstagramSection() {
@@ -160,7 +160,7 @@ export default function InstagramSection() {
             }}
           >
             <Instagram size={16} />
-            Follow @ksbeauty_toronto
+            Follow @ks_beauty6ix
             <ArrowRight size={14} />
           </a>
         </motion.div>

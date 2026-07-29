@@ -113,60 +113,83 @@ export default function FinalCTASection() {
           transition={{ duration: 0.7, ease: "easeOut" }}
           style={{
             fontFamily: "var(--app-font-serif)",
-            fontSize: "clamp(30px, 5vw, 60px)",
+            fontSize: "clamp(32px, 5vw, 56px)",
             fontWeight: 700,
             color: "#1F3329",
             lineHeight: 1.1,
-            marginBottom: "24px",
+            marginBottom: "16px",
           }}
         >
-          Let's Create Your{" "}
-          <span style={{ color: "#7A2E38", fontStyle: "italic" }}>Dream</span>{" "}
-          Bridal Look
+          Ready to look and feel your best?
         </motion.h2>
 
-        <motion.div
+        <motion.p
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.15, ease: "easeOut" }}
+          transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "8px",
+            fontFamily: "var(--app-font-sans)",
+            fontSize: "18px",
+            color: "#6a5a50",
+            lineHeight: 1.6,
             marginBottom: "36px",
           }}
         >
-          <MapPin size={15} style={{ color: "#B8935A", flexShrink: 0 }} />
-          <p
-            style={{
-              fontFamily: "var(--app-font-sans)",
-              fontSize: "15px",
-              color: "#6a5a50",
-              lineHeight: 1.6,
-            }}
-          >
-            Serving Toronto · Durham Region · Pickering · Ajax · Whitby · Oshawa · the Greater Toronto Area
-          </p>
-        </motion.div>
+          Book your bridal consultation today.
+        </motion.p>
 
+        {/* Three CTAs: Book Now, WhatsApp Me, View Portfolio */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.45, delay: 0.25 }}
+          transition={{ duration: 0.45, delay: 0.2 }}
+          className="flex flex-wrap items-center justify-center gap-4"
         >
+          {/* Button 1: Book Now */}
           <button
             className="btn-primary ripple-container"
             onClick={(e) => {
               handleRipple(e);
               document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
             }}
-            data-testid="final-cta-button"
-            style={{ padding: "18px 44px", fontSize: "15px" }}
+            data-testid="final-cta-book-now"
+            style={{ padding: "16px 36px", fontSize: "15px" }}
           >
-            Request Your Custom Quote
+            Book Now
+            <ArrowRight size={16} className="btn-arrow" />
+          </button>
+
+          {/* Button 2: WhatsApp Me */}
+          <a
+            href="https://wa.me/16476403439?text=Hi%20KS%20Beauty!%20I'd%20like%20to%20check%20bridal%20availability%20for%20my%20event."
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid="final-cta-whatsapp"
+            className="px-8 py-4 rounded-full font-sans font-bold text-sm flex items-center gap-2 transition-all duration-300 shadow-md active:scale-95"
+            style={{
+              background: "#25D366",
+              color: "#FFFFFF",
+              minHeight: "52px",
+              boxShadow: "0 6px 20px rgba(37, 211, 102, 0.25)",
+            }}
+          >
+            <span>WhatsApp Me</span>
+            <ArrowRight size={16} />
+          </a>
+
+          {/* Button 3: View Portfolio */}
+          <button
+            className="btn-secondary ripple-container"
+            onClick={(e) => {
+              handleRipple(e);
+              document.querySelector("#gallery")?.scrollIntoView({ behavior: "smooth" });
+            }}
+            data-testid="final-cta-portfolio"
+            style={{ padding: "16px 36px", fontSize: "15px" }}
+          >
+            View Portfolio
             <ArrowRight size={16} className="btn-arrow" />
           </button>
         </motion.div>

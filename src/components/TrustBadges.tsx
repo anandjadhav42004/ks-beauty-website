@@ -9,33 +9,28 @@ const badges = [
   },
   {
     icon: <Award size={22} />,
-    label: "Certified",
-    sub: "Artist",
+    label: "Certified Hair &",
+    sub: "Makeup Artist",
   },
   {
     icon: <MapPin size={22} />,
-    label: "Mobile Across",
-    sub: "GTA",
+    label: "Mobile Services Across",
+    sub: "Toronto & GTA",
+  },
+  {
+    icon: <Heart size={22} />,
+    label: "500+ Happy Clients",
+    sub: "[CONFIRM NUMBER WITH CLIENT]",
   },
   {
     icon: <Sparkles size={22} />,
-    label: "Premium",
+    label: "Premium Luxury",
     sub: "Products",
   },
   {
     icon: <Shield size={22} />,
     label: "Sanitized",
     sub: "Professional Kit",
-  },
-  {
-    icon: <Sunrise size={22} />,
-    label: "Early Morning",
-    sub: "Bookings",
-  },
-  {
-    icon: <Heart size={22} />,
-    label: "Bridal",
-    sub: "Specialist",
   },
 ];
 

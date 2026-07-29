@@ -84,7 +84,7 @@ export default function Footer() {
                 <Instagram size={16} />
               </a>
               <a
-                href="mailto:contact@ksbeauty.ca"
+                href="mailto:rivaaz.glam@gmail.com"
                 aria-label="Email"
                 className="w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-110"
                 style={{
@@ -154,8 +154,8 @@ export default function Footer() {
               <Mail size={15} style={{ color: "#B8935A", marginTop: "3px", flexShrink: 0 }} />
               <div>
                 <p style={{ fontFamily: "var(--app-font-sans)", fontSize: "11px", color: "rgba(251, 246, 238, 0.4)", margin: 0, textTransform: "uppercase" }}>Inquiries</p>
-                <a href="mailto:contact@ksbeauty.ca" style={{ fontFamily: "var(--app-font-sans)", fontSize: "14px", color: "#FBF6EE", textDecoration: "none" }}>
-                  contact@ksbeauty.ca
+                <a href="mailto:rivaaz.glam@gmail.com" style={{ fontFamily: "var(--app-font-sans)", fontSize: "14px", color: "#FBF6EE", textDecoration: "none" }}>
+                  rivaaz.glam@gmail.com
                 </a>
               </div>
             </div>
@@ -163,8 +163,8 @@ export default function Footer() {
               <Phone size={15} style={{ color: "#B8935A", marginTop: "3px", flexShrink: 0 }} />
               <div>
                 <p style={{ fontFamily: "var(--app-font-sans)", fontSize: "11px", color: "rgba(251, 246, 238, 0.4)", margin: 0, textTransform: "uppercase" }}>Phone / WhatsApp</p>
-                <a href="tel:+14165550192" style={{ fontFamily: "var(--app-font-sans)", fontSize: "14px", color: "#FBF6EE", textDecoration: "none" }}>
-                  (416) 555-0192
+                <a href="tel:+16476403439" style={{ fontFamily: "var(--app-font-sans)", fontSize: "14px", color: "#FBF6EE", textDecoration: "none" }}>
+                  +1 (647) 640-3439
                 </a>
               </div>
             </div>
@@ -173,7 +173,7 @@ export default function Footer() {
               <div>
                 <p style={{ fontFamily: "var(--app-font-sans)", fontSize: "11px", color: "rgba(251, 246, 238, 0.4)", margin: 0, textTransform: "uppercase" }}>Instagram</p>
                 <a href="https://www.instagram.com/ks_beauty6ix?igsh=b3R0YTk3MGoxM3Jn" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "var(--app-font-sans)", fontSize: "14px", color: "#FBF6EE", textDecoration: "none" }}>
-                  @ksbeauty_toronto
+                  @ks_beauty6ix
                 </a>
               </div>
             </div>

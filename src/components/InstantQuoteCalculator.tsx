@@ -23,13 +23,8 @@ import emailjs from "@emailjs/browser";
 
 // --- TYPES & INTERFACES ---
 export type RegionOption =
-  | "Toronto"
   | "Durham Region"
-  | "Pickering"
-  | "Ajax"
-  | "Whitby"
-  | "Oshawa"
-  | "GTA (general)";
+  | "GTA (Greater Toronto Area)";
 
 export type ServiceTypeOption = "Bridal" | "Semi-Bridal" | "Non-Bridal";
 
@@ -73,15 +68,10 @@ const formatCAD = (amount: number): string => {
   }).format(amount);
 };
 
-// --- TRAVEL FEE MATRIX ---
+// --- TRAVEL FEE MATRIX (Flat $30 across Durham Region & GTA) ---
 const TRAVEL_FEES: Record<RegionOption, number> = {
-  Toronto: 30,
-  "GTA (general)": 35,
-  Pickering: 40,
-  Ajax: 45,
-  "Durham Region": 50,
-  Whitby: 50,
-  Oshawa: 55,
+  "Durham Region": 30,
+  "GTA (Greater Toronto Area)": 30,
 };
 
 // --- BASE PRICE MATRIX PER PERSON (Hair & Makeup combined) ---
@@ -126,7 +116,7 @@ export default function InstantQuoteCalculator() {
     firstName: "",
     eventDate: "",
     finishTime: "",
-    region: "Toronto",
+    region: "Durham Region",
     serviceType: "Bridal",
     bothHairMakeup: true,
     bothCount: 1,
@@ -328,7 +318,7 @@ export default function InstantQuoteCalculator() {
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         OWNER_TEMPLATE_ID,
-        { ...payload, owner_email: "info@ksbeauty.ca" },
+        { ...payload, owner_email: "rivaaz.glam@gmail.com" },
         PUBLIC_KEY
       );
     } catch (err) {
@@ -618,16 +608,11 @@ export default function InstantQuoteCalculator() {
                         Select your event location:
                       </label>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-3.5">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {(
                           [
-                            { id: "Toronto", fee: formatCAD(30) },
-                            { id: "GTA (general)", fee: formatCAD(35) },
-                            { id: "Pickering", fee: formatCAD(40) },
-                            { id: "Ajax", fee: formatCAD(45) },
-                            { id: "Whitby", fee: formatCAD(50) },
-                            { id: "Oshawa", fee: formatCAD(55) },
-                            { id: "Durham Region", fee: formatCAD(50) },
+                            { id: "Durham Region", fee: formatCAD(30) },
+                            { id: "GTA (Greater Toronto Area)", fee: formatCAD(30) },
                           ] as Array<{ id: RegionOption; fee: string }>
                         ).map((r) => {
                           const selected = formData.region === r.id;
@@ -638,32 +623,44 @@ export default function InstantQuoteCalculator() {
                               onClick={() =>
                                 setFormData((prev) => ({ ...prev, region: r.id }))
                               }
-                              className={`p-4 rounded-2xl border text-left flex items-center justify-between min-h-[56px] transition-all duration-200 ${
+                              className={`p-5 rounded-2xl border text-left flex items-center justify-between min-h-[64px] transition-all duration-200 ${
                                 selected
                                   ? "border-[#B8935A] bg-[#1F3329] text-[#FBF6EE] shadow-md ring-2 ring-[#B8935A]/30"
                                   : "border-[#B8935A]/25 bg-white text-[#1F3329] hover:border-[#B8935A]/60 hover:bg-white/90"
                               }`}
                             >
                               <div className="flex flex-col">
-                                <span className="font-bold text-base">{r.id}</span>
+                                <span className="font-bold text-base sm:text-lg">{r.id}</span>
                                 <span
-                                  className={`text-xs font-semibold ${
+                                  className={`text-xs font-semibold mt-0.5 ${
                                     selected ? "text-[#B8935A]" : "text-[#5a4a40]"
                                   }`}
                                 >
-                                  Travel Fee: {r.fee}
+                                  Flat Travel Fee: {r.fee}
                                 </span>
                               </div>
                               {selected ? (
-                                <div className="w-7 h-7 rounded-full bg-[#B8935A] text-[#1F3329] flex items-center justify-center font-bold">
-                                  <Check size={16} strokeWidth={3} />
+                                <div className="w-8 h-8 rounded-full bg-[#B8935A] text-[#1F3329] flex items-center justify-center font-bold shrink-0">
+                                  <Check size={18} strokeWidth={3} />
                                 </div>
                               ) : (
-                                <div className="w-7 h-7 rounded-full border border-[#1F3329]/20" />
+                                <div className="w-8 h-8 rounded-full border border-[#1F3329]/20 shrink-0" />
                               )}
                             </button>
                           );
                         })}
+                      </div>
+
+                      {/* Mobile & In-Studio Appointment Notice */}
+                      <div className="mt-5 p-4 rounded-2xl bg-[#1F3329]/5 border border-[#B8935A]/30 flex items-start gap-3">
+                        <div className="p-2 rounded-xl bg-[#1F3329] text-[#B8935A] shrink-0 mt-0.5">
+                          <Sparkles size={16} />
+                        </div>
+                        <div className="text-xs sm:text-sm text-[#1F3329] leading-relaxed">
+                          <span className="font-bold text-[#7A2E38] block mb-0.5">🏠 Mobile Service &amp; In-Studio Appointments Available:</span>
+                          We offer both <strong>Mobile Services</strong> (we travel directly to your venue or home) and <strong>In-Studio Appointments</strong> at our <strong>Oshawa, Durham Region, and GTA / Junction studio locations</strong>.
+                          <span className="block text-[11px] text-[#5a4a40] mt-1 font-medium italic">* Exact studio address is provided upon booking confirmation.</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1290,7 +1287,7 @@ export default function InstantQuoteCalculator() {
                           <input
                             type="tel"
                             required
-                            placeholder="(416) 555-0199"
+                            placeholder="(647) 640-3439"
                             value={formData.phoneNumber}
                             onChange={(e) => {
                               setFormData((prev) => ({ ...prev, phoneNumber: e.target.value }));
@@ -1395,13 +1392,13 @@ export default function InstantQuoteCalculator() {
                     </div>
                     <p className="leading-relaxed">{emailError}</p>
                     <div className="pt-1 flex items-center gap-4 text-xs font-bold text-[#1F3329]">
-                      <a href="tel:4165550199" className="flex items-center gap-1 hover:underline">
+                      <a href="tel:+16476403439" className="flex items-center gap-1 hover:underline">
                         <PhoneCall size={12} />
-                        (416) 555-0199
+                        +1 (647) 640-3439
                       </a>
-                      <a href="mailto:info@ksbeauty.ca" className="flex items-center gap-1 hover:underline">
+                      <a href="mailto:rivaaz.glam@gmail.com" className="flex items-center gap-1 hover:underline">
                         <Mail size={12} />
-                        info@ksbeauty.ca
+                        rivaaz.glam@gmail.com
                       </a>
                     </div>
                   </div>

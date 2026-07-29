@@ -56,11 +56,11 @@ export default function HeroSection() {
 
   // Recent GTA Brides avatar trust strip
   const recentBrides = [
-    { name: "Aria M.", role: "Brampton Bride", img: "/images/gallery/bridal-1.jpg" },
-    { name: "Priya K.", role: "Toronto Reception", img: "/images/gallery/bridal-2.jpg" },
-    { name: "Sonia R.", role: "Mississauga Wedding", img: "/images/services/bridal-makeup-hair.jpg" },
-    { name: "Jessica T.", role: "Vaughan Soft Glam", img: "/images/gallery/soft-glam-1.jpg" },
-    { name: "Ananya S.", role: "Markham Bridal", img: "/images/gallery/reception-1.jpg" },
+    { name: "Aria M.", role: "Brampton Bride", img: "/images/hero/hero-main.jpg" },
+    { name: "Priya K.", role: "Toronto Reception", img: "/images/gallery/bridal-nath-detail.jpg" },
+    { name: "Sonia R.", role: "Mississauga Wedding", img: "/images/gallery/soft-glam-white-gown.jpg" },
+    { name: "Jessica T.", role: "Vaughan Soft Glam", img: "/images/gallery/editorial-couple-dip.jpg" },
+    { name: "Ananya S.", role: "Markham Bridal", img: "/images/gallery/updo-gown-marble-steps.jpg" },
   ];
 
   return (
@@ -137,7 +137,7 @@ export default function HeroSection() {
         <div className="relative w-full aspect-[4/5] min-h-[440px] overflow-hidden">
           <ImageWithFallback
             src="/images/hero/hero-main.jpg"
-            alt="KS Beauty luxury mobile bridal makeup & hair"
+            alt="KS Beauty luxury mobile bridal makeup & hair — Seated South Asian bride in velvet maroon lehenga in studio candlelight portrait"
             loading="eager"
             style={{
               width: "100%",
@@ -146,11 +146,11 @@ export default function HeroSection() {
               objectPosition: "center 15%",
             }}
           />
-          {/* Dark gradient scrim on bottom third for text contrast */}
+          {/* Soft gradient scrim on bottom third for crisp text contrast without darkening subject */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: "linear-gradient(to top, rgba(31, 51, 41, 0.95) 0%, rgba(31, 51, 41, 0.6) 45%, transparent 75%)",
+              background: "linear-gradient(to top, rgba(31, 51, 41, 0.85) 0%, rgba(31, 51, 41, 0.35) 25%, transparent 50%)",
             }}
           />
 
@@ -167,7 +167,7 @@ export default function HeroSection() {
                 marginBottom: "6px",
               }}
             >
-              Mobile Bridal Artistry · Toronto GTA
+              Toronto Makeup Artist · Mobile Bridal Artistry
             </span>
             <h1
               style={{
@@ -176,30 +176,71 @@ export default function HeroSection() {
                 fontWeight: 700,
                 lineHeight: 1.12,
                 color: "#FBF6EE",
+                marginBottom: "8px",
+              }}
+            >
+              Luxury Bridal Hair &amp; Makeup for Modern Brides
+            </h1>
+            <p
+              style={{
+                fontFamily: "var(--app-font-sans)",
+                fontSize: "15px",
+                fontWeight: 500,
+                color: "#E2D7C5",
+                marginBottom: "6px",
+              }}
+            >
+              Mobile Services Across Toronto &amp; the GTA
+            </p>
+            <p
+              style={{
+                fontFamily: "var(--app-font-sans)",
+                fontSize: "12px",
+                fontWeight: 600,
+                color: "#B8935A",
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
                 marginBottom: "16px",
               }}
             >
-              Luxury Bridal Beauty,{" "}
-              <span style={{ color: "#B8935A", fontStyle: "italic" }}>Delivered.</span>
-            </h1>
+              Soft Glam • Indian Bridal • Editorial • Special Events
+            </p>
 
-            {/* Single full-width primary CTA on mobile hero */}
-            <button
-              onClick={(e) => {
-                handleRipple(e);
-                document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
-              }}
-              className="w-full py-3.5 px-6 rounded-full flex items-center justify-center gap-2 font-sans font-bold text-sm shadow-xl active:scale-95 transition-transform"
-              style={{
-                background: "linear-gradient(135deg, #B8935A 0%, #D4AF37 100%)",
-                color: "#1F3329",
-                minHeight: "48px",
-                boxShadow: "0 8px 24px rgba(0, 0, 0, 0.3)",
-              }}
-            >
-              <span>Get a Free Quote</span>
-              <ArrowRight size={16} />
-            </button>
+            {/* CTAs on mobile hero */}
+            <div className="flex flex-col gap-2.5 w-full">
+              <button
+                onClick={(e) => {
+                  handleRipple(e);
+                  document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="w-full py-3.5 px-6 rounded-full flex items-center justify-center gap-2 font-sans font-bold text-sm shadow-xl active:scale-95 transition-transform"
+                style={{
+                  background: "linear-gradient(135deg, #B8935A 0%, #D4AF37 100%)",
+                  color: "#1F3329",
+                  minHeight: "48px",
+                  boxShadow: "0 8px 24px rgba(0, 0, 0, 0.3)",
+                }}
+              >
+                <span>Book Your Appointment</span>
+                <ArrowRight size={16} />
+              </button>
+              <button
+                onClick={(e) => {
+                  handleRipple(e);
+                  document.querySelector("#gallery")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="w-full py-3 px-6 rounded-full flex items-center justify-center gap-2 font-sans font-semibold text-sm transition-all"
+                style={{
+                  background: "rgba(251, 246, 238, 0.1)",
+                  border: "1px solid rgba(184, 147, 90, 0.4)",
+                  color: "#FBF6EE",
+                  minHeight: "44px",
+                }}
+              >
+                <span>View Portfolio</span>
+                <ArrowRight size={16} />
+              </button>
+            </div>
           </div>
         </div>
 
@@ -245,7 +286,7 @@ export default function HeroSection() {
                 textTransform: "uppercase",
               }}
             >
-              Mobile Bridal Artistry · Toronto GTA
+              Toronto Makeup Artist · Mobile Bridal Artistry
             </span>
           </motion.div>
 
@@ -255,16 +296,15 @@ export default function HeroSection() {
             transition={{ duration: 0.7, ease: "easeOut" }}
             style={{
               fontFamily: "var(--app-font-serif)",
-              fontSize: "clamp(44px, 5.5vw, 76px)",
+              fontSize: "clamp(42px, 5vw, 68px)",
               fontWeight: 700,
-              lineHeight: 1.08,
+              lineHeight: 1.1,
               color: "#1F3329",
               letterSpacing: "-0.02em",
-              marginBottom: "24px",
+              marginBottom: "16px",
             }}
           >
-            Luxury Hair &amp; Makeup,{" "}
-            <span style={{ color: "#B8935A", fontStyle: "italic", fontWeight: 600 }}>Delivered</span> to Your Door.
+            Luxury Bridal Hair &amp; Makeup for Modern Brides
           </motion.h1>
 
           <motion.p
@@ -273,16 +313,38 @@ export default function HeroSection() {
             transition={{ duration: 0.55, ease: "easeOut" }}
             style={{
               fontFamily: "var(--app-font-sans)",
-              fontSize: "18px",
-              fontWeight: 400,
-              color: "#5a4a40",
-              lineHeight: 1.7,
-              marginBottom: "36px",
-              maxWidth: "520px",
+              fontSize: "20px",
+              fontWeight: 600,
+              color: "#1F3329",
+              lineHeight: 1.5,
+              marginBottom: "8px",
+              maxWidth: "540px",
             }}
           >
-            Elevated mobile bridal beauty across Toronto, Durham Region &amp; the GTA — arriving at your venue calm, punctual, and fully equipped.
+            Mobile Services Across Toronto &amp; the GTA
           </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={subReady ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.55, delay: 0.1, ease: "easeOut" }}
+            style={{
+              display: "inline-block",
+              fontFamily: "var(--app-font-sans)",
+              fontSize: "13px",
+              fontWeight: 600,
+              color: "#B8935A",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              background: "rgba(184, 147, 90, 0.12)",
+              border: "1px solid rgba(184, 147, 90, 0.3)",
+              padding: "6px 14px",
+              borderRadius: "100px",
+              marginBottom: "32px",
+            }}
+          >
+            Soft Glam • Indian Bridal • Editorial • Special Events
+          </motion.div>
 
           {/* Buttons */}
           <motion.div
@@ -299,18 +361,18 @@ export default function HeroSection() {
               }}
               data-testid="hero-cta-primary"
             >
-              Get a Custom Quote
+              Book Your Appointment
               <ArrowRight size={16} className="btn-arrow" />
             </button>
             <button
               className="btn-secondary ripple-container"
               onClick={(e) => {
                 handleRipple(e);
-                document.querySelector("#services")?.scrollIntoView({ behavior: "smooth" });
+                document.querySelector("#gallery")?.scrollIntoView({ behavior: "smooth" });
               }}
               data-testid="hero-cta-secondary"
             >
-              View Services
+              View Portfolio
               <ArrowRight size={16} className="btn-arrow" />
             </button>
           </motion.div>
@@ -403,7 +465,7 @@ export default function HeroSection() {
               >
                 <ImageWithFallback
                   src="/images/hero/hero-main.jpg"
-                  alt="Full bridal portrait by KS Beauty"
+                  alt="Luxury South Asian bridal portrait by KS Beauty — Seated Indian bride in velvet maroon lehenga surrounded by studio candlelight"
                   loading="eager"
                   fallbackBg="#FBF6EE"
                   style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%" }}

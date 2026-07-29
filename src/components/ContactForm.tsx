@@ -46,7 +46,7 @@ export default function ContactForm() {
     const CLIENT_TEMPLATE_ID = "YOUR_CLIENT_TEMPLATE_ID"; // [REPLACE WITH CLIENT AUTO-REPLY TEMPLATE ID]
     const OWNER_TEMPLATE_ID = "YOUR_OWNER_TEMPLATE_ID"; // [REPLACE WITH OWNER NOTIFICATION TEMPLATE ID]
     const PUBLIC_KEY = "YOUR_PUBLIC_KEY"; // [REPLACE WITH YOUR EMAILJS PUBLIC KEY]
-    const OWNER_EMAIL = "info@ksbeauty.ca"; // [UPDATE WITH OWNER'S EMAIL]
+    const OWNER_EMAIL = "rivaaz.glam@gmail.com"; // [UPDATE WITH OWNER'S EMAIL]
 
     try {
       // 1. Client Auto-Reply Email
@@ -58,7 +58,7 @@ export default function ContactForm() {
           to_email: data.get("email"),
           service: data.get("service"),
           event_date: data.get("date"),
-          message: `Hi ${data.get("name")}, thank you for reaching out to KS Beauty! We've received your inquiry for ${data.get("service")} on ${data.get("date")}. If we're available for your date, we'll personally reach out within 24 hours with a custom quote and next steps. In the meantime, feel free to follow our latest bridal looks on Instagram @ksbeauty_toronto. Warmly, KS Beauty`,
+          message: `Hi ${data.get("name")}, thank you for reaching out to KS Beauty! We've received your inquiry for ${data.get("service")} on ${data.get("date")}. If we're available for your date, we'll personally reach out within 24 hours with a custom quote and next steps. In the meantime, feel free to follow our latest bridal looks on Instagram @ks_beauty6ix. Warmly, KS Beauty`,
         },
         PUBLIC_KEY
       );

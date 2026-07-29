@@ -4,36 +4,84 @@ import ImageWithFallback from "./ImageWithFallback";
 
 const featuredServices = [
   {
-    title: "Bridal Makeup & Hair",
+    title: "Bridal Hair & Makeup",
     description:
-      "A full-day bridal experience — from your morning hair styling and makeup application to a look that photographs beautifully and lasts. Fully mobile, arriving at your venue.",
-    image: "/images/services/bridal-makeup-hair.jpg",
-    alt: "Close-up bride's face with makeup sponge blending and veil by KS Beauty",
+      "Complete, long-lasting mobile bridal hair and makeup artistry tailored to your skin tone, dress, and ceremony style.",
+    image: "/images/hero/hero-main.jpg",
+    alt: "Bridal hair and makeup application by KS Beauty",
     badge: "Signature Service",
   },
   {
-    title: "Special Event Glam",
+    title: "Indian Bridal Makeup",
     description:
-      "Cocktail parties, galas, receptions, and milestone celebrations. A polished, long-wear look tailored to the occasion and your personal aesthetic.",
-    image: "/images/services/special-event-glam.jpg",
-    alt: "Eyeshadow application at evening event with diamond jewelry by KS Beauty",
-    badge: "Most Booked",
+      "Traditional and contemporary South Asian bridal glam, dupatta draping, jewelry setting, and high-pigment 14-hour wear.",
+    image: "/images/gallery/bridal-nath-detail.jpg",
+    alt: "Indian bride in ornate gold jewelry and bridal nath by KS Beauty",
+    badge: "Specialist",
   },
   {
-    title: "Group & Bridal Party Bookings",
+    title: "Engagement Makeup",
     description:
-      "Seamless coordination for your entire bridal party. Multiple artists when needed, timed scheduling, and cohesive looks from bridesmaids to mother of the bride.",
-    image: "/images/gallery/soft-glam-1.jpg",
-    alt: "Bridal party getting ready and group glamour by KS Beauty",
-    badge: "Group Rates",
+      "Radiant, camera-ready glam crafted specifically for engagement photoshoots, ring ceremonies, and pre-wedding celebrations.",
+    image: "/images/gallery/editorial-couple-dip.jpg",
+    alt: "Soft glam engagement makeup look by KS Beauty",
+    badge: "Popular",
   },
   {
-    title: "Touch-Up & Trial Sessions",
+    title: "Baby Shower Makeup",
     description:
-      "Your bridal trial is a full rehearsal — we'll perfect your look, test products on your skin, and ensure you walk down the aisle with complete confidence.",
-    image: "/images/services/touchup-trial.jpg",
-    alt: "Bride in red lehenga having eyeshadow applied during trial session by KS Beauty",
-    badge: "Recommended",
+      "Fresh, luminous soft-focus maternity glam designed to enhance your natural glow on your special celebration day.",
+    image: "/images/gallery/soft-glam-luminous-close-up.jpg",
+    alt: "Luminous soft makeup for baby shower by KS Beauty",
+    badge: "Gentle Glam",
+  },
+  {
+    title: "Fashion & Editorial Makeup",
+    description:
+      "High-fashion, creative, and runway-standard hair and makeup for photoshoots, editorial features, and brand campaigns.",
+    image: "/images/gallery/editorial-marble-staircase.jpg",
+    alt: "Editorial high-fashion makeup look by KS Beauty",
+    badge: "Creative",
+  },
+  {
+    title: "Express Glam Services",
+    description:
+      "Quick yet flawless full-face makeup and hair styling optimized for tight schedules and last-minute special events.",
+    image: "/images/gallery/soft-glam-white-gown.jpg",
+    alt: "Express glam makeup for special events by KS Beauty",
+    badge: "Fast Track",
+  },
+  {
+    title: "Hair Styling",
+    description:
+      "Intricate bridal updos, textured romantic waves, sleek Hollywood waves, and veil or hair accessory placement.",
+    image: "/images/gallery/updo-gown-marble-steps.jpg",
+    alt: "Bridal hair styling updo with accessories by KS Beauty",
+    badge: "Artistry",
+  },
+  {
+    title: "Makeup Lessons",
+    description:
+      "Personalized 1-on-1 makeup masterclasses covering skin prep, custom color matching, day-to-night routines, and techniques.",
+    image: "/images/gallery/bridal-mirror-prep.jpg",
+    alt: "1-on-1 makeup lesson session by KS Beauty",
+    badge: "1-on-1 Masterclass",
+  },
+  {
+    title: "Mobile Services",
+    description:
+      "Luxury salon-quality beauty services delivered directly to your home, hotel suite, or venue anywhere across the GTA.",
+    image: "/images/gallery/editorial-golden-hour.jpg",
+    alt: "Mobile makeup artist service across Toronto & GTA",
+    badge: "We Come To You",
+  },
+  {
+    title: "Group Bookings",
+    description:
+      "Seamlessly coordinated hair and makeup scheduling for bridal parties, bridesmaids, mothers, and group celebrations.",
+    image: "/images/gallery/soft-glam-bouquet-profile.jpg",
+    alt: "Group bridal party makeup and hair by KS Beauty",
+    badge: "Group Package",
   },
 ];
 
@@ -140,17 +188,17 @@ export default function ServicesSection() {
           </p>
         </motion.div>
 
-        {/* Featured services cards — Mobile horizontal snap carousel / Desktop 2-col grid */}
-        <div className="flex md:grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-20 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-6 md:pb-0 px-2 md:px-0">
+        {/* 10 Featured services cards — Responsive 3-column desktop grid / 2-column tablet / 1-column mobile */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-20">
           {featuredServices.map((service, i) => (
             <motion.div
               key={service.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.08, ease: "easeOut" }}
+              transition={{ duration: 0.5, delay: (i % 3) * 0.08, ease: "easeOut" }}
               data-testid={`service-card-${i}`}
-              className="shrink-0 w-[85vw] sm:w-[340px] md:w-auto snap-center relative"
+              className="relative flex flex-col h-full"
               style={{
                 background: "rgba(251, 246, 238, 0.95)",
                 border: "1px solid rgba(184, 147, 90, 0.4)",
@@ -169,7 +217,7 @@ export default function ServicesSection() {
               {/* Service image */}
               <div
                 style={{
-                  height: "210px",
+                  height: "200px",
                   background: "#1F3329",
                   position: "relative",
                   overflow: "hidden",
@@ -208,66 +256,35 @@ export default function ServicesSection() {
                 >
                   {service.badge}
                 </div>
-
-                {/* Top-right Floating Info Badge */}
-                <div
-                  className="hidden sm:flex items-center gap-1.5"
-                  style={{
-                    position: "absolute",
-                    top: "14px",
-                    right: "14px",
-                    background: "rgba(184, 147, 90, 0.9)",
-                    backdropFilter: "blur(8px)",
-                    borderRadius: "100px",
-                    padding: "4px 10px",
-                    fontFamily: "var(--app-font-sans)",
-                    fontSize: "10px",
-                    fontWeight: 700,
-                    color: "#1F3329",
-                    boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-                  }}
-                >
-                  <Sparkles size={11} />
-                  <span>MOST BOOKED</span>
-                </div>
               </div>
 
-              {/* Overlapping Circular Icon Badge (Boundary between image & content) */}
-              <div className="relative px-6 pt-6 pb-7">
-                <div
-                  className="absolute -top-6 right-6 w-11 h-11 rounded-full flex items-center justify-center shadow-lg"
-                  style={{
-                    background: "linear-gradient(135deg, #1F3329 0%, #2D4A3C 100%)",
-                    border: "2px solid #B8935A",
-                    color: "#B8935A",
-                    boxShadow: "0 6px 16px rgba(31, 51, 41, 0.25)",
-                  }}
-                >
-                  <Sparkles size={18} />
+              {/* Card content */}
+              <div className="relative p-6 flex flex-col flex-1 justify-between">
+                <div>
+                  <h3
+                    style={{
+                      fontFamily: "var(--app-font-serif)",
+                      fontSize: "21px",
+                      fontWeight: 700,
+                      color: "#1F3329",
+                      marginBottom: "10px",
+                      lineHeight: 1.25,
+                    }}
+                  >
+                    {service.title}
+                  </h3>
+                  <p
+                    style={{
+                      fontFamily: "var(--app-font-sans)",
+                      fontSize: "14px",
+                      color: "#5a4a40",
+                      lineHeight: 1.65,
+                      marginBottom: "20px",
+                    }}
+                  >
+                    {service.description}
+                  </p>
                 </div>
-                <h3
-                  style={{
-                    fontFamily: "var(--app-font-serif)",
-                    fontSize: "22px",
-                    fontWeight: 700,
-                    color: "#1F3329",
-                    marginBottom: "12px",
-                    lineHeight: 1.25,
-                  }}
-                >
-                  {service.title}
-                </h3>
-                <p
-                  style={{
-                    fontFamily: "var(--app-font-sans)",
-                    fontSize: "15px",
-                    color: "#5a4a40",
-                    lineHeight: 1.75,
-                    marginBottom: "20px",
-                  }}
-                >
-                  {service.description}
-                </p>
                 <button
                   style={{
                     background: "none",
@@ -283,7 +300,7 @@ export default function ServicesSection() {
                     color: "#B8935A",
                     letterSpacing: "0.08em",
                     textTransform: "uppercase",
-                    transition: "gap 200ms ease-out",
+                    marginTop: "auto",
                   }}
                   onClick={() => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })}
                   data-testid={`service-learn-more-${i}`}

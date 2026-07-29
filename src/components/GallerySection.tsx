@@ -2,65 +2,103 @@ import { useState, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import ImageWithFallback from "./ImageWithFallback";
 
-const categories = ["All", "Bridal", "Soft Glam", "Reception", "Party Makeup", "Editorial", "Hair Styling"];
+const categories = [
+  "All",
+  "Soft Glam",
+  "Bridal",
+  "Mature Skin",
+  "Editorial",
+  "Hollywood Waves",
+  "Updos",
+  "Party Glam",
+  "Reception",
+  "Hair Styling",
+];
 
-// TODO: replace with client's real portfolio photos before launch.
 const galleryItems = [
   {
     category: "Bridal",
-    label: "Traditional Red & Gold Lehenga",
-    image: "/images/gallery/bridal-1.jpg",
-    alt: "Bride in red velvet gold-embroidered lehenga with floral hairpiece looking into hand mirror",
-    height: "320px",
-  },
-  {
-    category: "Soft Glam",
-    label: "Dewy Skin & Diamond Elegance",
-    image: "/images/gallery/soft-glam-1.jpg",
-    alt: "Close-up eye makeup with cream beaded gown and diamond necklace by KS Beauty",
-    height: "280px",
-  },
-  {
-    category: "Reception",
-    label: "Chandelier Bokeh Glamour",
-    image: "/images/gallery/reception-1.jpg",
-    alt: "Evening reception portrait with chandelier and string light bokeh by KS Beauty",
-    height: "300px",
-  },
-  {
-    category: "Hair Styling",
-    label: "Floral & Gold Hairpins Updo",
-    image: "/images/gallery/hair-styling-1.jpg",
-    alt: "Floral and gold hairpins styled into bridal updo by KS Beauty",
-    height: "320px",
+    label: "Seated Candlelight Maroon Lehenga",
+    image: "/images/hero/hero-main.jpg",
+    alt: "South Asian bride in elaborate velvet maroon lehenga seated in warm candlelight studio portrait",
+    height: "360px",
   },
   {
     category: "Bridal",
-    label: "Dupatta Draping & Maang Tikka",
-    image: "/images/gallery/bridal-2.jpg",
-    alt: "Bride in red and gold lehenga with draped dupatta and maang tikka holding hand mirror",
-    height: "340px",
+    label: "Nath & Pearl Jewelry Close-up",
+    image: "/images/gallery/bridal-nath-detail.jpg",
+    alt: "Close-up portrait of South Asian bride touching pearl nath nose ring with gold jewelry",
+    height: "360px",
+  },
+  {
+    category: "Bridal",
+    label: "Oval Mirror Reflection & Kalire",
+    image: "/images/gallery/bridal-mirror-prep.jpg",
+    alt: "Bridal prep portrait reflected in oval mirror with intricate gold kalire",
+    height: "360px",
   },
   {
     category: "Soft Glam",
-    label: "Morning Prep Touch-Up",
-    image: "/images/services/bridal-makeup-hair.jpg",
-    alt: "Close-up of bridal makeup application and skin prep by KS Beauty",
-    height: "260px",
+    label: "Strapless Gown & Wildflower Bouquet",
+    image: "/images/gallery/soft-glam-white-gown.jpg",
+    alt: "Bride in strapless white gown holding wildflower bouquet with natural soft glam makeup",
+    height: "360px",
   },
   {
-    category: "Party Makeup",
-    label: "Event Eyeshadow Application",
-    image: "/images/services/special-event-glam.jpg",
-    alt: "Eyeshadow application with diamond jewelry at evening event",
-    height: "250px",
+    category: "Soft Glam",
+    label: "Luminous Gown & Veil Profile",
+    image: "/images/gallery/soft-glam-bouquet-profile.jpg",
+    alt: "Side profile portrait of bride in strapless white gown admiring bouquet with delicate veil",
+    height: "360px",
+  },
+  {
+    category: "Updos",
+    label: "Marble Steps Gown Walk & Updo",
+    image: "/images/gallery/updo-gown-marble-steps.jpg",
+    alt: "Bride lifting white ballgown walking up architectural marble steps with sheer veil and updo",
+    height: "360px",
   },
   {
     category: "Editorial",
-    label: "Studio Mirror Rehearsal",
-    image: "/images/about/founder-portrait.jpg",
-    alt: "Professional makeup trial and consultation in studio setting by KS Beauty",
-    height: "290px",
+    label: "Architectural Staircase Editorial",
+    image: "/images/gallery/editorial-marble-staircase.jpg",
+    alt: "High fashion landscape editorial bridal portrait on grand marble staircase",
+    height: "360px",
+  },
+  {
+    category: "Editorial",
+    label: "Golden Hour Sunset Hand Reach",
+    image: "/images/gallery/editorial-golden-hour.jpg",
+    alt: "Candid bride extending hand toward camera in golden hour sunlight",
+    height: "360px",
+  },
+  {
+    category: "Editorial",
+    label: "Vintage Green Door Couple Dip",
+    image: "/images/gallery/editorial-couple-dip.jpg",
+    alt: "Groom dipping bride in strapless white ballgown in front of vintage green doors",
+    height: "360px",
+  },
+  {
+    category: "Editorial",
+    label: "Romantic Overcoat Couple Embrace",
+    image: "/images/gallery/editorial-couple-embrace.jpg",
+    alt: "Groom holding bride from behind in wool overcoat outdoors in romantic editorial portrait",
+    height: "360px",
+  },
+  {
+    category: "Mature Skin",
+    label: "Radiant Luminous Makeup Close-up",
+    image: "/images/gallery/soft-glam-luminous-close-up.jpg",
+    alt: "Soft-focus radiant bridal makeup close-up with luminous skin",
+    height: "360px",
+  },
+  {
+    category: "Hollywood Waves",
+    label: "Hollywood Waves & Flowing Veil",
+    image: "/images/gallery/hollywood-waves-veil.jpg",
+    alt: "Classic Hollywood waves bridal hairstyling with sheer flowing veil placement",
+    height: "360px",
   },
 ];
 
@@ -127,8 +165,8 @@ export default function GallerySection() {
           </h2>
         </motion.div>
 
-        {/* Filter tabs — Horizontal scroll strip on mobile / Centered wrap on desktop */}
-        <div className="flex overflow-x-auto no-scrollbar md:flex-wrap justify-start md:justify-center gap-2 mb-10 pb-2 px-1">
+        {/* Filter tabs — Responsive flex wrap on all screens */}
+        <div className="flex flex-wrap justify-center gap-2 mb-10 pb-2 px-1">
           {categories.map((cat) => (
             <button
               key={cat}
@@ -163,19 +201,17 @@ export default function GallerySection() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="flex md:block overflow-x-auto snap-x snap-mandatory gap-5 no-scrollbar pb-6 md:pb-0 masonry-grid"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {filtered.map((item, i) => (
               <motion.div
                 key={`${item.category}-${i}`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: i * 0.06 }}
+                transition={{ duration: 0.4, delay: i * 0.05 }}
                 data-testid={`gallery-item-${i}`}
-                className="shrink-0 w-[85vw] sm:w-[320px] md:w-auto snap-center relative group"
+                className="w-full relative group"
                 style={{
-                  y: i % 2 === 0 ? yEven : yOdd,
-                  willChange: "transform",
                   position: "relative",
                   borderRadius: "18px",
                   overflow: "hidden",
