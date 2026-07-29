@@ -391,7 +391,7 @@ export default function InstantQuoteCalculator({ prefilledData }: InstantQuoteCa
   return (
     <section
       id="contact"
-      className="py-16 sm:py-20 lg:py-32 relative overflow-hidden"
+      className="py-10 sm:py-14 lg:py-16 relative overflow-hidden"
       style={{ background: "#1F3329", color: "#FBF6EE" }}
     >
       {/* Background Decorator Gradients */}
@@ -414,27 +414,27 @@ export default function InstantQuoteCalculator({ prefilledData }: InstantQuoteCa
 
       <div
         id="quote-calculator"
-        className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10"
+        className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10"
       >
         {/* Section Header */}
-        <div className="text-center mb-8 sm:mb-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#B8935A]/40 bg-[#B8935A]/10 text-[#B8935A] text-xs uppercase tracking-widest font-semibold mb-3">
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#B8935A]/40 bg-[#B8935A]/10 text-[#B8935A] text-xs uppercase tracking-widest font-semibold mb-2.5">
             <Sparkles size={14} />
             Instant Booking &amp; Price Calculator
           </div>
           <h2
             style={{ fontFamily: "var(--app-font-serif, serif)" }}
-            className="text-2xl sm:text-4xl lg:text-5xl font-bold text-[#FBF6EE] tracking-tight mb-3"
+            className="text-2xl sm:text-4xl lg:text-5xl font-bold text-[#FBF6EE] tracking-tight mb-2.5"
           >
             Calculate Your Custom Bridal &amp; Event Quote
           </h2>
-          <p className="text-sm sm:text-lg text-[#FBF6EE]/80 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base text-[#FBF6EE]/80 max-w-2xl mx-auto leading-relaxed">
             Get transparent, itemized luxury rates for your event date in under 60 seconds.
           </p>
         </div>
 
         {/* Progress Bar & Steps Indicator */}
-        <div className="mb-8 bg-[#16251E] p-4 sm:p-6 rounded-2xl border border-[#B8935A]/25 shadow-xl">
+        <div className="mb-6 bg-[#16251E] p-4 sm:p-5 rounded-2xl border border-[#B8935A]/25 shadow-xl">
           <div className="flex justify-between items-center mb-3 text-xs sm:text-sm font-medium">
             <span className="text-[#B8935A] font-semibold uppercase tracking-wider flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-[#B8935A] animate-pulse" />
@@ -527,7 +527,7 @@ export default function InstantQuoteCalculator({ prefilledData }: InstantQuoteCa
         </div>
 
         {/* Main Wizard Form Card (Luxury Styling) */}
-        <div className="bg-[#FBF6EE] text-[#1F3329] rounded-3xl p-5 sm:p-10 shadow-2xl border-2 border-[#B8935A]/35 relative overflow-hidden">
+        <div className="bg-[#FBF6EE] text-[#1F3329] rounded-3xl p-5 sm:p-8 md:p-9 shadow-2xl border-2 border-[#B8935A]/35 relative overflow-hidden">
           <AnimatePresence mode="wait">
             {!isSubmitted ? (
               <motion.div
