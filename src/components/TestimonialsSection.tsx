@@ -8,7 +8,7 @@ const testimonials = [
     role: "Bride · Toronto",
     review: "Krishna made me feel absolutely beautiful on my wedding day. My makeup lasted over 14 hours and photographed beautifully.",
     rating: 5,
-    image: "/images/gallery/soft-glam-white-gown.jpg",
+    image: "/images/gallery/bridal-nath-detail.jpg",
     alt: "Client testimonial portrait for Sarah",
   },
   {
@@ -16,7 +16,7 @@ const testimonials = [
     role: "Bride · Mississauga",
     review: "Krishna made my wedding morning calm and stress-free. Her dupatta draping and South Asian bridal glam were sheer perfection.",
     rating: 5,
-    image: "/images/gallery/bridal-nath-detail.jpg",
+    image: "/images/gallery/editorial-couple-dip.jpg",
     alt: "Client testimonial portrait for Priya",
   },
   {
@@ -32,7 +32,7 @@ const testimonials = [
     role: "Bridesmaid · Vaughan",
     review: "Krishna styled our entire bridal party on time. Every bridesmaid looked stunning with cohesive, personalized hair and makeup.",
     rating: 5,
-    image: "/images/gallery/editorial-couple-dip.jpg",
+    image: "/images/gallery/soft-glam-bouquet-profile.jpg",
     alt: "Client testimonial portrait for Jessica",
   },
   {
@@ -40,7 +40,7 @@ const testimonials = [
     role: "Bride · Pickering",
     review: "From the trial session to the wedding day, Krishna listened to every request. My Hollywood waves stayed intact all night!",
     rating: 5,
-    image: "/images/gallery/updo-gown-marble-steps.jpg",
+    image: "/images/gallery/hollywood-waves-veil.jpg",
     alt: "Client testimonial portrait for Simran",
   },
   {
@@ -56,7 +56,7 @@ const testimonials = [
     role: "Editorial Shoot · Toronto",
     review: "Professional, punctual, and extremely skilled. Krishna's attention to detail on mature skin and soft glam is unmatched.",
     rating: 5,
-    image: "/images/gallery/bridal-mirror-prep.jpg",
+    image: "/images/gallery/editorial-marble-staircase.jpg",
     alt: "Client testimonial portrait for Natasha",
   },
   {
@@ -64,7 +64,7 @@ const testimonials = [
     role: "Baby Shower · Oshawa",
     review: "Such a pleasant experience! The maternity glam look felt light, radiant, and kept me glowing for all my photos.",
     rating: 5,
-    image: "/images/gallery/soft-glam-luminous-close-up.jpg",
+    image: "/images/gallery/updo-gown-marble-steps.jpg",
     alt: "Client testimonial portrait for Kiran",
   },
 ];

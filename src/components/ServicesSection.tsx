@@ -7,64 +7,64 @@ const featuredServices = [
     title: "Bridal Hair & Makeup",
     description:
       "Complete, long-lasting mobile bridal hair and makeup artistry tailored to your skin tone, dress, and ceremony style.",
-    image: "/images/hero/hero-main.jpg",
-    alt: "Bridal hair and makeup application by KS Beauty",
+    image: "/images/gallery/bridal-nath-detail.jpg",
+    alt: "Signature Western bridal hair and makeup in classic white gown and veil",
     badge: "Signature Service",
   },
   {
     title: "Indian Bridal Makeup",
     description:
       "Traditional and contemporary South Asian bridal glam, dupatta draping, jewelry setting, and high-pigment 14-hour wear.",
-    image: "/images/gallery/bridal-nath-detail.jpg",
-    alt: "Indian bride in ornate gold jewelry and bridal nath by KS Beauty",
+    image: "/images/gallery/editorial-couple-dip.jpg",
+    alt: "Traditional Indian bride in ornate velvet maroon lehenga and gold jewelry",
     badge: "Specialist",
   },
   {
     title: "Engagement Makeup",
     description:
       "Radiant, camera-ready glam crafted specifically for engagement photoshoots, ring ceremonies, and pre-wedding celebrations.",
-    image: "/images/gallery/editorial-couple-dip.jpg",
-    alt: "Soft glam engagement makeup look by KS Beauty",
+    image: "/images/gallery/soft-glam-white-gown.jpg",
+    alt: "Soft glam engagement makeup photoshoot portrait",
     badge: "Popular",
   },
   {
     title: "Baby Shower Makeup",
     description:
       "Fresh, luminous soft-focus maternity glam designed to enhance your natural glow on your special celebration day.",
-    image: "/images/gallery/soft-glam-luminous-close-up.jpg",
-    alt: "Luminous soft makeup for baby shower by KS Beauty",
+    image: "/images/gallery/updo-gown-marble-steps.jpg",
+    alt: "Luminous soft makeup for baby shower maternity celebration",
     badge: "Gentle Glam",
   },
   {
     title: "Fashion & Editorial Makeup",
     description:
       "High-fashion, creative, and runway-standard hair and makeup for photoshoots, editorial features, and brand campaigns.",
-    image: "/images/gallery/editorial-marble-staircase.jpg",
-    alt: "Editorial high-fashion makeup look by KS Beauty",
+    image: "/images/gallery/editorial-golden-hour.jpg",
+    alt: "Editorial high-fashion golden hour makeup look",
     badge: "Creative",
   },
   {
     title: "Express Glam Services",
     description:
       "Quick yet flawless full-face makeup and hair styling optimized for tight schedules and last-minute special events.",
-    image: "/images/gallery/soft-glam-white-gown.jpg",
-    alt: "Express glam makeup for special events by KS Beauty",
+    image: "/images/gallery/editorial-marble-staircase.jpg",
+    alt: "Express glam makeup application detail shot",
     badge: "Fast Track",
   },
   {
     title: "Hair Styling",
     description:
       "Intricate bridal updos, textured romantic waves, sleek Hollywood waves, and veil or hair accessory placement.",
-    image: "/images/gallery/updo-gown-marble-steps.jpg",
-    alt: "Bridal hair styling updo with accessories by KS Beauty",
+    image: "/images/gallery/hair-styling-updo.jpg",
+    alt: "Bridal hair styling textured romantic updo with pearl accessory",
     badge: "Artistry",
   },
   {
     title: "Makeup Lessons",
     description:
       "Personalized 1-on-1 makeup masterclasses covering skin prep, custom color matching, day-to-night routines, and techniques.",
-    image: "/images/gallery/bridal-mirror-prep.jpg",
-    alt: "1-on-1 makeup lesson session by KS Beauty",
+    image: "/images/gallery/makeup-tools-palette.jpg",
+    alt: "1-on-1 makeup masterclass vanity brushes and eyeshadow palette",
     badge: "1-on-1 Masterclass",
   },
   {
@@ -80,7 +80,7 @@ const featuredServices = [
     description:
       "Seamlessly coordinated hair and makeup scheduling for bridal parties, bridesmaids, mothers, and group celebrations.",
     image: "/images/gallery/soft-glam-bouquet-profile.jpg",
-    alt: "Group bridal party makeup and hair by KS Beauty",
+    alt: "Group bridal party makeup and hair consultation",
     badge: "Group Package",
   },
 ];
