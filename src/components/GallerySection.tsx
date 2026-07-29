@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { X, ChevronLeft, ChevronRight, Sparkles, ArrowRight, Play, ExternalLink } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Sparkles, ArrowRight } from "lucide-react";
 import ImageWithFallback from "./ImageWithFallback";
 
 const categories = [
@@ -13,41 +13,6 @@ const categories = [
   "Hollywood Waves",
   "Hair Styling",
   "Updos",
-];
-
-const featuredReels = [
-  {
-    title: "Signature Royal Maroon Indian Bridal Glam",
-    subtitle: "14-Hour High-Pigment Artistry & Dupatta Draping",
-    url: "https://www.instagram.com/reel/DXVZjpOEXWm/",
-    thumbnail: "/images/gallery/editorial-couple-dip.jpg",
-    alt: "Real client photo: Royal Maroon Velvet Indian Bridal Lehenga",
-    badge: "100K+ Views",
-  },
-  {
-    title: "Soft Glam & Vintage Hollywood Waves",
-    subtitle: "Luminous Skin Finish & Silk Veil Placement",
-    url: "https://www.instagram.com/reel/DX2lVIoBrM6/",
-    thumbnail: "/images/gallery/hollywood-waves-veil.jpg",
-    alt: "Real client photo: Hollywood waves hair styling with veil",
-    badge: "Trending Reel",
-  },
-  {
-    title: "Bridal Prep & Pearl Nath Touch-Ups",
-    subtitle: "Behind the Scenes Morning Bridal Artistry",
-    url: "https://www.instagram.com/reel/DX2s9f5T2Wv/",
-    thumbnail: "/images/gallery/bridal-mirror-prep.jpg",
-    alt: "Real client photo: Indian bridal mirror prep and nath touch-ups",
-    badge: "Behind the Scenes",
-  },
-  {
-    title: "Seated Candlelight Bridal Transformation",
-    subtitle: "Custom Skin Prep & High-Definition Camera Finish",
-    url: "https://www.instagram.com/reel/DX-r_EYsumb/",
-    thumbnail: "/images/hero/hero-main.jpg",
-    alt: "Real client photo: Seated South Asian bride in studio portrait",
-    badge: "Client Favorite",
-  },
 ];
 
 const galleryItems = [
@@ -246,90 +211,6 @@ export default function GallerySection() {
             Every Look, a Story
           </h2>
         </motion.div>
-
-        {/* Featured Instagram Video Reels */}
-        <div className="mb-16">
-          <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
-            <div>
-              <span className="text-xs font-bold text-[#B8935A] uppercase tracking-widest block mb-1">
-                Featured Reel Transformations
-              </span>
-              <h3
-                style={{ fontFamily: "var(--app-font-serif, serif)" }}
-                className="text-xl sm:text-2xl font-bold text-[#1F3329]"
-              >
-                Watch Our Live Bridal &amp; Glam Artistry
-              </h3>
-            </div>
-            <a
-              href="https://www.instagram.com/ks_beauty6ix"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-xs font-bold text-[#B8935A] uppercase tracking-wider hover:text-[#1F3329] transition-colors"
-            >
-              <span>Follow @ks_beauty6ix</span>
-              <ExternalLink size={14} />
-            </a>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {featuredReels.map((reel, idx) => (
-              <a
-                key={reel.url}
-                href={reel.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-testid={`featured-reel-${idx}`}
-                className="group relative rounded-2xl overflow-hidden bg-[#1F3329] border border-[#B8935A]/30 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl flex flex-col justify-end min-h-[380px]"
-              >
-                {/* Real Client Photo Thumbnail */}
-                <div className="absolute inset-0">
-                  <ImageWithFallback
-                    src={reel.thumbnail}
-                    alt={reel.alt}
-                    loading="lazy"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      objectPosition: "center",
-                    }}
-                    className="transition-transform duration-500 group-hover:scale-105"
-                  />
-                  {/* Dark gradient scrim overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1F3329] via-[#1F3329]/40 to-black/25 group-hover:via-[#1F3329]/60 transition-colors" />
-                </div>
-
-                {/* Top Reel Badge */}
-                <div className="absolute top-3.5 left-3.5 z-10">
-                  <span className="px-2.5 py-1 rounded-full bg-[#1F3329]/80 backdrop-blur-md border border-[#B8935A]/40 text-[#B8935A] text-[10px] font-bold uppercase tracking-wider">
-                    {reel.badge}
-                  </span>
-                </div>
-
-                {/* Center Circular Play Button Overlay */}
-                <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
-                  <div className="w-14 h-14 rounded-full bg-[#1F3329]/80 backdrop-blur-md border-2 border-[#B8935A] flex items-center justify-center text-[#B8935A] shadow-2xl transition-all duration-300 group-hover:scale-110 group-hover:bg-[#B8935A] group-hover:text-[#1F3329]">
-                    <Play size={22} fill="currentColor" className="ml-1" />
-                  </div>
-                </div>
-
-                {/* Bottom Title & Subtitle */}
-                <div className="relative z-10 p-5 text-left">
-                  <h4
-                    style={{ fontFamily: "var(--app-font-serif, serif)" }}
-                    className="text-base font-bold text-[#FBF6EE] leading-snug mb-1 group-hover:text-[#B8935A] transition-colors"
-                  >
-                    {reel.title}
-                  </h4>
-                  <p className="text-xs text-[#FBF6EE]/75 line-clamp-2">
-                    {reel.subtitle}
-                  </p>
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
 
         {/* Filter tabs — Responsive flex wrap on all screens */}
         <div className="flex flex-wrap justify-center gap-2 mb-10 pb-2 px-1">

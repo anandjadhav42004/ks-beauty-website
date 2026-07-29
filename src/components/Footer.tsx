@@ -15,6 +15,7 @@ export default function Footer() {
 
   return (
     <footer
+      className="relative overflow-hidden"
       style={{
         background: "#1a2d23",
         borderTop: "1px solid rgba(184, 147, 90, 0.3)",
@@ -22,7 +23,38 @@ export default function Footer() {
         paddingBottom: "24px",
       }}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+      {/* Subtle Beauty-Themed Vector Background Decorator (10-12% opacity) */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.12] overflow-hidden">
+        <svg
+          className="absolute -right-16 -top-16 w-96 h-96 text-[#B8935A]"
+          viewBox="0 0 200 200"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="0.8"
+        >
+          {/* Makeup Brushes & Palette Motif */}
+          <circle cx="100" cy="100" r="80" strokeDasharray="4 4" />
+          <path d="M60 140 L140 60 M75 145 L145 75 M50 120 L120 50" />
+          <circle cx="140" cy="60" r="10" fill="currentColor" opacity="0.3" />
+          <circle cx="75" cy="145" r="8" fill="currentColor" opacity="0.3" />
+          <path d="M30 100 Q60 40 100 30 Q140 40 170 100" fill="none" />
+        </svg>
+
+        <svg
+          className="absolute -left-16 -bottom-16 w-80 h-80 text-[#B8935A]"
+          viewBox="0 0 200 200"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="0.8"
+        >
+          {/* Hair Styling & Floral Flourish Motif */}
+          <circle cx="100" cy="100" r="60" />
+          <path d="M40 100 C70 60, 130 60, 160 100 C130 140, 70 140, 40 100 Z" />
+          <path d="M100 40 L100 160 M40 100 L160 100" strokeDasharray="3 3" />
+        </svg>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
         {/* Main footer grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Brand column */}

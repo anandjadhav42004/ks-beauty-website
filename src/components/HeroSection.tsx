@@ -446,35 +446,55 @@ export default function HeroSection({ onQuickQuoteSubmit }: HeroSectionProps) {
           </motion.div>
         </div>
 
-        {/* Right Column: Cutout Hero Image (Cols 8-12) */}
+        {/* Right Column: Multi-Pillar Visual Showcase Collage (Cols 8-12) */}
         <div className="col-span-5 relative">
           <motion.div
             style={{ y: imageY }}
             initial={{ opacity: 0, x: 50 }}
             animate={linesReady ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.9, delay: 0.1, ease: "easeOut" }}
-            className="relative w-full lg:w-[125%] lg:-mr-[25%]"
+            className="relative w-full lg:w-[120%] lg:-mr-[20%] grid grid-cols-12 gap-3 items-center"
           >
-            <div
-              className="relative w-full aspect-[4/5] hero-cutout-mask"
-              style={{
-                background: "#FBF6EE",
-              }}
-            >
-              <motion.div
-                initial={{ scale: 1.15 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 1.4, ease: "easeOut" }}
-                className="w-full h-full"
-              >
+            {/* Left Card: Hair Styling & Hollywood Waves */}
+            <div className="col-span-4 space-y-3 pt-6">
+              <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-[#B8935A]/30 group">
                 <ImageWithFallback
-                  src="/images/hero/hero-main.jpg"
-                  alt="Luxury South Asian bridal portrait by KS Beauty — Seated Indian bride in velvet maroon lehenga surrounded by studio candlelight"
+                  src="/images/gallery/hair-styling-updo.jpg"
+                  alt="Luxury hair styling updo and waves"
                   loading="eager"
-                  fallbackBg="#FBF6EE"
-                  style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%" }}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
-              </motion.div>
+                <div className="absolute inset-x-0 bottom-0 p-2 bg-gradient-to-t from-black/80 to-transparent">
+                  <span className="text-[10px] font-bold text-[#B8935A] uppercase tracking-wider block">Hair Styling</span>
+                </div>
+              </div>
+              <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-[#B8935A]/30 group">
+                <ImageWithFallback
+                  src="/images/gallery/makeup-tools-palette.jpg"
+                  alt="Luxury vanity makeup brushes and palette"
+                  loading="eager"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+                <div className="absolute inset-x-0 bottom-0 p-2 bg-gradient-to-t from-black/80 to-transparent">
+                  <span className="text-[10px] font-bold text-[#B8935A] uppercase tracking-wider block">Brushes &amp; Prep</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Main Card: Western Bridal & Soft Glam */}
+            <div className="col-span-8 space-y-3">
+              <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl border-2 border-[#B8935A]/40 group">
+                <ImageWithFallback
+                  src="/images/gallery/bridal-nath-detail.jpg"
+                  alt="Western soft glam bridal hair and makeup"
+                  loading="eager"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+                <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-[#1F3329] to-transparent">
+                  <span className="text-xs font-bold text-[#FBF6EE] block">Soft Glam &amp; Bridal Artistry</span>
+                  <span className="text-[10px] text-[#B8935A] uppercase font-semibold">Serving All GTA Brides</span>
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>
