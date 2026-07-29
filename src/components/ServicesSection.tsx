@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import ImageWithFallback from "./ImageWithFallback";
@@ -153,6 +154,9 @@ const servicePillars = [
 ];
 
 export default function ServicesSection() {
+  const [showAll, setShowAll] = useState(false);
+  const visibleServices = showAll ? featuredServices : featuredServices.slice(0, 4);
+
   return (
     <section
       id="services"
@@ -220,9 +224,9 @@ export default function ServicesSection() {
           </p>
         </motion.div>
 
-        {/* 10 Featured services cards — Responsive 3-column desktop grid / 2-column tablet / 1-column mobile */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-20">
-          {featuredServices.map((service, i) => (
+        {/* Featured services cards — 4 core cards initially, full suite when expanded */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-10">
+          {visibleServices.map((service, i) => (
             <motion.div
               key={service.title}
               initial={{ opacity: 0, y: 30 }}
@@ -349,6 +353,17 @@ export default function ServicesSection() {
             </motion.div>
           ))}
         </div>
+
+        {!showAll && (
+          <div className="text-center mt-6 mb-16">
+            <button
+              onClick={() => setShowAll(true)}
+              className="px-8 py-3.5 rounded-full border-2 border-[#B8935A] bg-[#1F3329] text-[#FBF6EE] font-bold text-xs uppercase tracking-widest shadow-xl hover:bg-[#B8935A] hover:text-[#1F3329] transition-all active:scale-95"
+            >
+              + View All 14 Luxury Services
+            </button>
+          </div>
+        )}
 
         {/* 8 Full Service Pillars Grid with ✨ Icon */}
         <motion.div

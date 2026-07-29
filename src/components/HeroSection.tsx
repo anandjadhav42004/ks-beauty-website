@@ -156,19 +156,19 @@ export default function HeroSection() {
               </span>
             </motion.div>
 
-            {/* Responsive Action Buttons (Stacked on mobile, row on tablet/desktop) */}
+            {/* Responsive Action Buttons (Side-by-side compact buttons on mobile) */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={ctaReady ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
-              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 mb-8 w-full sm:w-auto"
+              className="flex flex-row items-center gap-3 mb-6 w-full sm:w-auto"
             >
               <button
                 onClick={(e) => {
                   handleRipple(e);
                   document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="relative overflow-hidden py-4 px-8 rounded-full flex items-center justify-center gap-2 font-sans font-bold text-sm shadow-xl active:scale-95 transition-transform"
+                className="flex-1 sm:flex-none relative overflow-hidden py-3.5 px-6 rounded-full flex items-center justify-center gap-2 font-sans font-bold text-xs sm:text-sm shadow-xl active:scale-95 transition-transform"
                 style={{
                   background: "linear-gradient(135deg, #1F3329 0%, #294537 100%)",
                   border: "1px solid #B8935A",
@@ -177,26 +177,13 @@ export default function HeroSection() {
                 }}
                 data-testid="hero-primary-cta"
               >
-                <span>Book Your Appointment</span>
-                <ArrowRight size={16} className="text-[#B8935A]" />
-                {ripples.map((r) => (
-                  <span
-                    key={r.id}
-                    className="absolute bg-white/30 rounded-full animate-ping pointer-events-none"
-                    style={{
-                      left: r.x,
-                      top: r.y,
-                      width: 100,
-                      height: 100,
-                      transform: "translate(-50%, -50%)",
-                    }}
-                  />
-                ))}
+                <span>Book Appointment</span>
+                <ArrowRight size={14} className="text-[#B8935A]" />
               </button>
 
               <button
                 onClick={() => document.querySelector("#gallery")?.scrollIntoView({ behavior: "smooth" })}
-                className="py-4 px-8 rounded-full flex items-center justify-center gap-2 font-sans font-semibold text-sm transition-all border active:scale-95"
+                className="flex-1 sm:flex-none py-3.5 px-6 rounded-full flex items-center justify-center gap-2 font-sans font-semibold text-xs sm:text-sm transition-all border active:scale-95"
                 style={{
                   borderColor: "rgba(184, 147, 90, 0.4)",
                   background: "rgba(251, 246, 238, 0.7)",

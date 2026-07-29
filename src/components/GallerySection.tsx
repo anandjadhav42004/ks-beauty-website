@@ -240,7 +240,7 @@ export default function GallerySection() {
           ))}
         </div>
 
-        {/* Masonry / App-Carousel grid */}
+        {/* Masonry / Instagram 2-Column App Grid */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeCategory}
@@ -248,7 +248,7 @@ export default function GallerySection() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6"
           >
             {filtered.map((item, i) => (
               <motion.div
@@ -257,15 +257,7 @@ export default function GallerySection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: i * 0.05 }}
                 data-testid={`gallery-item-${i}`}
-                className="w-full relative group"
-                style={{
-                  position: "relative",
-                  borderRadius: "18px",
-                  overflow: "hidden",
-                  border: "1px solid rgba(184, 147, 90, 0.4)",
-                  cursor: "pointer",
-                  boxShadow: "0 8px 24px rgba(31, 51, 41, 0.08)",
-                }}
+                className="w-full relative group rounded-2xl overflow-hidden border border-[#B8935A]/40 shadow-lg cursor-pointer aspect-[4/5] sm:aspect-square"
                 onClick={() => setSelectedIndex(i)}
                 onMouseEnter={() => setHoveredIndex(i)}
                 onMouseLeave={() => setHoveredIndex(null)}
@@ -276,7 +268,7 @@ export default function GallerySection() {
                   loading="lazy"
                   style={{
                     width: "100%",
-                    height: item.height,
+                    height: "100%",
                     display: "block",
                     objectFit: "cover",
                     transform: hoveredIndex === i ? "scale(1.05)" : "scale(1)",

@@ -118,24 +118,24 @@ export default function Navigation() {
           boxShadow: scrolled ? "0 4px 24px rgba(31, 51, 41, 0.08)" : "none",
         }}
       >
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-5 lg:px-10 py-2.5 flex items-center justify-between">
           {/* Wordmark with Monogram Logo Mark */}
           <a
             href="#"
-            className="flex items-center gap-3"
+            className="flex items-center gap-2.5"
             data-testid="nav-wordmark"
             style={{ textDecoration: "none" }}
           >
-            <LogoMark size={36} />
+            <LogoMark size={34} />
             <div className="flex flex-col leading-tight">
               <span
                 style={{
                   fontFamily: "var(--app-font-serif)",
-                  fontSize: "24px",
+                  fontSize: "clamp(17px, 2.5vw, 20px)",
                   fontWeight: 700,
                   color: "#1F3329",
                   letterSpacing: "0.02em",
-                  lineHeight: 1,
+                  lineHeight: 1.05,
                 }}
               >
                 Rivaaz Glam Studio
@@ -148,10 +148,10 @@ export default function Navigation() {
                   color: "#B8935A",
                   letterSpacing: "0.18em",
                   textTransform: "uppercase",
-                  lineHeight: 1.6,
+                  lineHeight: 1.4,
                 }}
               >
-                Luxury Bridal Artistry
+                Luxury Beauty Studio
               </span>
             </div>
           </a>
