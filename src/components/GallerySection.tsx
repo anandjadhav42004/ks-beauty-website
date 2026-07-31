@@ -212,27 +212,28 @@ export default function GallerySection() {
           </h2>
         </motion.div>
 
-        {/* Filter tabs — Responsive flex wrap on all screens */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10 pb-2 px-1">
+        {/* Filter tabs — Horizontal scroll on mobile, flex wrap on desktop */}
+        <div className="flex items-center justify-start md:justify-center gap-2 overflow-x-auto pb-3 mb-8 -mx-5 px-5 md:mx-0 scrollbar-none">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
               data-testid={`gallery-filter-${cat.toLowerCase().replace(" ", "-")}`}
-              className="shrink-0 transition-all duration-200 active:scale-95"
+              className="shrink-0 transition-all duration-200 active:scale-95 whitespace-nowrap"
               style={{
-                padding: "8px 20px",
+                padding: "8px 18px",
                 borderRadius: "100px",
                 border: activeCategory === cat
                   ? "1.5px solid #B8935A"
                   : "1.5px solid rgba(184, 147, 90, 0.25)",
-                background: activeCategory === cat ? "#1F3329" : "rgba(251, 246, 238, 0.6)",
+                background: activeCategory === cat ? "#1F3329" : "rgba(251, 246, 238, 0.7)",
                 color: activeCategory === cat ? "#FBF6EE" : "#5a4a40",
                 fontFamily: "var(--app-font-sans)",
-                fontSize: "13px",
-                fontWeight: 600,
+                fontSize: "12px",
+                fontWeight: activeCategory === cat ? 700 : 500,
                 letterSpacing: "0.04em",
                 cursor: "pointer",
+                boxShadow: activeCategory === cat ? "0 4px 12px rgba(31, 51, 41, 0.2)" : "none",
               }}
             >
               {cat}

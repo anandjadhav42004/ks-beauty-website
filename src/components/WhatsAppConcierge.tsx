@@ -6,7 +6,13 @@ export default function WhatsAppConcierge() {
     "https://wa.me/16476403439?text=Hi%20Rivaaz%20Glam%20Studio!%20I'd%20like%20to%20check%20bridal%20availability%20for%20my%20event.";
 
   return (
-    <aside aria-label="WhatsApp concierge" className="fixed bottom-[84px] right-4 sm:bottom-8 sm:right-8 z-40">
+    <aside
+      aria-label="WhatsApp concierge"
+      className="fixed right-4 sm:bottom-8 sm:right-8 z-40"
+      style={{
+        bottom: "calc(82px + env(safe-area-inset-bottom, 0px))",
+      }}
+    >
       {/* Desktop / Tablet Full Pill */}
       <motion.a
         href={whatsappUrl}
@@ -24,8 +30,9 @@ export default function WhatsAppConcierge() {
           boxShadow: "0 8px 24px rgba(31, 51, 41, 0.35)",
         }}
       >
-        <div className="w-7 h-7 rounded-full bg-[#25D366] text-white flex items-center justify-center shrink-0 shadow-md">
+        <div className="w-7 h-7 rounded-full bg-[#25D366] text-white flex items-center justify-center shrink-0 shadow-md relative">
           <MessageCircle size={16} fill="white" />
+          <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-[#25D366] ring-2 ring-white animate-pulse" />
         </div>
         <div className="flex flex-col text-left leading-tight pr-1">
           <span className="text-[10px] uppercase font-bold text-[#B8935A] tracking-wider flex items-center gap-1">
@@ -35,7 +42,7 @@ export default function WhatsAppConcierge() {
         </div>
       </motion.a>
 
-      {/* Mobile Ultra-Compact Circular Icon Floating Above Bottom Bar (20-24px clearance) */}
+      {/* Mobile Ultra-Compact Circular Icon Floating Above Bottom Bar */}
       <motion.a
         href={whatsappUrl}
         target="_blank"
@@ -43,11 +50,13 @@ export default function WhatsAppConcierge() {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         whileTap={{ scale: 0.9 }}
-        className="sm:hidden w-11 h-11 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-2xl border-2 border-[#FBF6EE] active:scale-95"
-        style={{ boxShadow: "0 6px 20px rgba(37, 211, 102, 0.4)" }}
+        className="sm:hidden relative w-12 h-12 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-2xl border-2 border-[#FBF6EE] active:scale-95"
+        style={{ boxShadow: "0 6px 20px rgba(37, 211, 102, 0.45)" }}
         aria-label="Contact via WhatsApp"
       >
-        <MessageCircle size={20} fill="white" />
+        <MessageCircle size={22} fill="white" />
+        <span className="absolute top-0 right-0 w-3 h-3 rounded-full bg-[#25D366] ring-2 ring-[#FBF6EE] animate-ping" />
+        <span className="absolute top-0 right-0 w-3 h-3 rounded-full bg-[#25D366] ring-2 ring-[#FBF6EE]" />
       </motion.a>
     </aside>
   );

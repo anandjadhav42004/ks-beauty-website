@@ -155,12 +155,30 @@ const servicePillars = [
 
 export default function ServicesSection() {
   const [showAll, setShowAll] = useState(false);
-  const visibleServices = showAll ? featuredServices : featuredServices.slice(0, 4);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+  const categoryOptions = ["All", "Bridal", "Party & Glam", "Hair & Styling"];
+
+  const filteredServices = featuredServices.filter((s) => {
+    if (selectedCategory === "All") return true;
+    if (selectedCategory === "Bridal") {
+      return s.title.includes("Bridal") || s.title.includes("Reception");
+    }
+    if (selectedCategory === "Party & Glam") {
+      return s.title.includes("Party") || s.title.includes("Engagement") || s.title.includes("Glam") || s.title.includes("Shower");
+    }
+    if (selectedCategory === "Hair & Styling") {
+      return s.title.includes("Hair") || s.title.includes("Waves") || s.title.includes("Updos") || s.title.includes("Lessons");
+    }
+    return true;
+  });
+
+  const visibleServices = showAll ? filteredServices : filteredServices.slice(0, 4);
 
   return (
     <section
       id="services"
-      className="py-24 lg:py-36 relative overflow-hidden"
+      className="py-20 lg:py-36 relative overflow-hidden"
       style={{ background: "#FBF6EE" }}
     >
       {/* Corner ornament background detail */}
@@ -173,16 +191,16 @@ export default function ServicesSection() {
         }}
       />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+      <div className="max-w-7xl mx-auto px-5 lg:px-10">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-center mb-16"
+          className="text-center mb-10"
         >
-          <div className="flex items-center justify-center gap-3 mb-5">
+          <div className="flex items-center justify-center gap-3 mb-4">
             <div style={{ width: "32px", height: "1px", background: "#B8935A" }} />
             <span
               style={{
@@ -201,11 +219,11 @@ export default function ServicesSection() {
           <h2
             style={{
               fontFamily: "var(--app-font-serif)",
-              fontSize: "clamp(30px, 4vw, 50px)",
+              fontSize: "clamp(28px, 4vw, 50px)",
               fontWeight: 700,
               color: "#1F3329",
               lineHeight: 1.15,
-              marginBottom: "16px",
+              marginBottom: "12px",
             }}
           >
             Beauty, On Your Terms
@@ -213,15 +231,41 @@ export default function ServicesSection() {
           <p
             style={{
               fontFamily: "var(--app-font-sans)",
-              fontSize: "18px",
+              fontSize: "16px",
               color: "#5a4a40",
               maxWidth: "500px",
               margin: "0 auto",
-              lineHeight: 1.7,
+              lineHeight: 1.6,
             }}
           >
             Every service is fully mobile and tailored to your vision, your culture, and your day.
           </p>
+
+          {/* Category Filter Tabs (Horizontal scroll on mobile) */}
+          <div className="flex items-center justify-start md:justify-center gap-2 overflow-x-auto pb-2 pt-6 scrollbar-none -mx-5 px-5 md:mx-0">
+            {categoryOptions.map((cat) => {
+              const isActive = selectedCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className="px-4 py-2 rounded-full text-xs font-bold font-sans transition-all whitespace-nowrap active:scale-95 shrink-0"
+                  style={{
+                    background: isActive
+                      ? "linear-gradient(135deg, #1F3329 0%, #294537 100%)"
+                      : "rgba(184, 147, 90, 0.12)",
+                    color: isActive ? "#FBF6EE" : "#1F3329",
+                    border: isActive
+                      ? "1px solid #B8935A"
+                      : "1px solid rgba(184, 147, 90, 0.3)",
+                    boxShadow: isActive ? "0 4px 14px rgba(31, 51, 41, 0.25)" : "none",
+                  }}
+                >
+                  {cat}
+                </button>
+              );
+            })}
+          </div>
         </motion.div>
 
         {/* Featured services cards — 4 core cards initially, full suite when expanded */}

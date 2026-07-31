@@ -122,23 +122,13 @@ export default function PricingSection() {
                 y: -8,
                 boxShadow: "0 20px 45px rgba(31, 51, 41, 0.14)",
               }}
-              className="shrink-0 w-[85vw] sm:w-[320px] md:w-auto snap-center relative"
+              className="shrink-0 w-[88vw] sm:w-[320px] md:w-auto snap-center relative p-6 sm:p-8 rounded-3xl flex flex-col justify-between shadow-lg transition-all duration-300"
               style={{
                 background: pkg.popular ? "#1F3329" : "rgba(251, 246, 238, 0.9)",
                 color: pkg.popular ? "#FBF6EE" : "#2B2420",
                 border: pkg.popular
                   ? "2px solid #B8935A"
                   : "1px solid rgba(184, 147, 90, 0.25)",
-                borderRadius: "24px",
-                padding: "36px 32px",
-                position: "relative",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                boxShadow: pkg.popular
-                  ? "0 12px 36px rgba(31, 51, 41, 0.2)"
-                  : "0 4px 20px rgba(31, 51, 41, 0.05)",
-                transition: "all 300ms ease-out",
               }}
             >
               {/* Popular Gold Badge */}

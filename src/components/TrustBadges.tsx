@@ -72,7 +72,7 @@ export default function TrustBadges() {
           </div>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-4 lg:gap-6">
+        <div className="grid grid-cols-2 sm:flex sm:flex-wrap justify-center gap-3 sm:gap-4 lg:gap-6">
           {badges.map((badge, i) => (
             <motion.div
               key={badge.label}
@@ -85,18 +85,10 @@ export default function TrustBadges() {
                 ease: [0.175, 0.885, 0.32, 1.275], // spring-like
               }}
               data-testid={`trust-badge-${i}`}
+              className="flex flex-col items-center justify-center p-3.5 sm:p-5 rounded-2xl transition-all duration-200"
               style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: "10px",
                 background: "rgba(251, 246, 238, 0.04)",
                 border: "1px solid rgba(184, 147, 90, 0.25)",
-                borderRadius: "18px",
-                padding: "20px 24px",
-                minWidth: "120px",
-                transition: "all 250ms ease-out",
-                cursor: "default",
               }}
               whileHover={{
                 scale: 1.04,

@@ -15,12 +15,11 @@ export default function Footer() {
 
   return (
     <footer
-      className="relative overflow-hidden"
+      className="relative overflow-hidden pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))] md:pb-10"
       style={{
         background: "#1a2d23",
         borderTop: "1px solid rgba(184, 147, 90, 0.3)",
         paddingTop: "40px",
-        paddingBottom: "24px",
       }}
     >
       {/* Subtle Beauty-Themed Vector Background Decorator (10-12% opacity) */}

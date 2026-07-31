@@ -3,7 +3,11 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Sparkles, Instagram, Calendar, Star } from "lucide-react";
 import ImageWithFallback from "./ImageWithFallback";
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  onQuickQuoteSubmit?: (service: string, date: string) => void;
+}
+
+export default function HeroSection({ onQuickQuoteSubmit }: HeroSectionProps = {}) {
   const [linesReady, setLinesReady] = useState(false);
   const [subReady, setSubReady] = useState(false);
   const [ctaReady, setCtaReady] = useState(false);
@@ -42,6 +46,9 @@ export default function HeroSection() {
 
   const handleQuickQuoteSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (onQuickQuoteSubmit) {
+      onQuickQuoteSubmit(selectedService, "");
+    }
     const target = document.querySelector("#calculator") || document.querySelector("#contact");
     if (target) {
       target.scrollIntoView({ behavior: "smooth" });
@@ -282,6 +289,57 @@ export default function HeroSection() {
             </motion.div>
           </div>
 
+        </div>
+
+        {/* Mobile Quick Quote Bar */}
+        <div className="md:hidden relative z-30 w-full mt-6">
+          <motion.form
+            onSubmit={handleQuickQuoteSubmit}
+            initial={{ opacity: 0, y: 16 }}
+            animate={ctaReady ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="rounded-2xl p-4 space-y-3 shadow-xl"
+            style={{
+              background: "rgba(31, 51, 41, 0.96)",
+              backdropFilter: "blur(16px)",
+              border: "1px solid rgba(184, 147, 90, 0.4)",
+            }}
+          >
+            <div className="flex items-center justify-between border-b border-white/10 pb-2">
+              <span className="text-xs font-bold text-[#B8935A] uppercase tracking-wider flex items-center gap-1.5">
+                <Sparkles size={12} /> Quick Quote Estimator
+              </span>
+              <span className="text-[10px] text-white/70 font-semibold">Mobile GTA</span>
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-[10px] font-bold text-[#B8935A] uppercase tracking-widest block">
+                Select Service
+              </label>
+              <select
+                value={selectedService}
+                onChange={(e) => setSelectedService(e.target.value)}
+                className="w-full bg-[#16261E] text-white font-sans text-xs rounded-xl p-2.5 border border-[#B8935A]/40 focus:outline-none focus:border-[#D4AF37]"
+              >
+                <option value="Bridal Makeup & Hair">Bridal Makeup & Hair</option>
+                <option value="Special Event Glam">Special Event Glam</option>
+                <option value="Soft Glam & Waves">Soft Glam & Waves</option>
+                <option value="Group Booking">Group Booking</option>
+              </select>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-3 px-4 rounded-xl font-sans font-bold text-xs flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all"
+              style={{
+                background: "linear-gradient(135deg, #B8935A 0%, #D4AF37 100%)",
+                color: "#1F3329",
+              }}
+            >
+              <span>Calculate Instant Price</span>
+              <ArrowRight size={14} />
+            </button>
+          </motion.form>
         </div>
 
         {/* Floating Quick Quote Bar (Desktop & Tablet) */}

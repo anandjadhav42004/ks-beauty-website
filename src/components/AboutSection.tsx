@@ -6,7 +6,7 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="relative py-24 lg:py-36 overflow-hidden"
+      className="relative py-20 lg:py-36 overflow-hidden overflow-x-hidden"
       style={{ background: "#FBF6EE" }}
     >
       {/* Subtle side ornament */}

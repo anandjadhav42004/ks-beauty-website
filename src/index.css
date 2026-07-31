@@ -67,6 +67,23 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+/* Global Mobile Overflow Lock & Scrollbar Hide Utilities */
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw;
+  width: 100%;
+}
+
+.scrollbar-none::-webkit-scrollbar,
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none,
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* KS BEAUTY — LIGHT MODE */
 :root {
   --button-outline: rgba(184, 147, 90, 0.25);

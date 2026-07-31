@@ -236,14 +236,10 @@ export default function WhyChooseSection() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
                   data-testid={`why-item-${i}`}
+                  className="flex gap-3.5 sm:gap-4 p-4 sm:p-6 rounded-2xl transition-all duration-200"
                   style={{
-                    display: "flex",
-                    gap: "16px",
-                    padding: "20px 24px",
                     background: "rgba(251, 246, 238, 0.7)",
                     border: "1px solid rgba(184, 147, 90, 0.15)",
-                    borderRadius: "18px",
-                    transition: "all 250ms ease-out",
                   }}
                   whileHover={{
                     borderColor: "rgba(184, 147, 90, 0.4)",

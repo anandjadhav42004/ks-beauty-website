@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Sparkles } from "lucide-react";
+import { Menu, X, Sparkles, Phone, MessageCircle } from "lucide-react";
 import LogoMark from "./LogoMark";
 
 export default function Navigation() {
@@ -220,84 +220,116 @@ export default function Navigation() {
           </button>
         </div>
 
-        {/* Reorganized Mobile Menu Drawer */}
+        {/* Reorganized Mobile Menu Drawer with Backdrop Overlay */}
         <AnimatePresence>
           {mobileOpen && (
-            <motion.div
-              initial={{ opacity: 0, x: "100%" }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: "100%" }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="md:hidden fixed top-[70px] right-0 bottom-0 w-[85vw] max-w-xs z-50 flex flex-col justify-between shadow-2xl p-6 overflow-y-auto"
-              style={{
-                background: "rgba(31, 51, 41, 0.98)",
-                backdropFilter: "blur(20px)",
-                WebkitBackdropFilter: "blur(20px)",
-                borderLeft: "1px solid rgba(184, 147, 90, 0.4)",
-              }}
-            >
-              <div className="space-y-6 pt-2">
-                {mobileGroups.map((group) => (
-                  <div key={group.title} className="space-y-2">
-                    <span
-                      style={{
-                        fontFamily: "var(--app-font-sans)",
-                        fontSize: "10px",
-                        fontWeight: 700,
-                        color: "#B8935A",
-                        letterSpacing: "0.2em",
-                        textTransform: "uppercase",
-                      }}
-                    >
-                      {group.title}
-                    </span>
-                    <div className="flex flex-col gap-1">
-                      {group.items.map((item) => {
-                        const isActive = activeSection === item.id;
-                        return (
-                          <a
-                            key={item.label}
-                            href={item.href}
-                            onClick={() => setMobileOpen(false)}
-                            className="flex items-center justify-between min-h-[42px] px-3 rounded-xl transition-colors hover:bg-white/5 active:bg-white/10"
-                            style={{
-                              fontFamily: "var(--app-font-sans)",
-                              fontWeight: isActive ? 700 : 500,
-                              fontSize: "14px",
-                              color: isActive ? "#B8935A" : "#FBF6EE",
-                              textDecoration: "none",
-                              background: isActive ? "rgba(184, 147, 90, 0.12)" : "transparent",
-                            }}
-                          >
-                            <span>{item.label}</span>
-                            {isActive && (
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#B8935A]" />
-                            )}
-                          </a>
-                        );
-                      })}
-                    </div>
-                  </div>
-                ))}
-              </div>
+            <>
+              {/* Tap to close backdrop overlay */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={() => setMobileOpen(false)}
+                className="md:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+              />
 
-              <div className="pt-6 border-t border-[#B8935A]/30 mt-6">
-                <button
-                  className="w-full min-h-[48px] rounded-full flex items-center justify-center font-sans font-bold text-sm shadow-xl gap-2"
-                  style={{
-                    background: "linear-gradient(135deg, #B8935A 0%, #D4AF37 100%)",
-                    color: "#1F3329",
-                  }}
-                  onClick={() => {
-                    setMobileOpen(false);
-                    document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                >
-                  <Sparkles size={16} />
-                  Get Instant Quote
-                </button>
-              </div>
-            </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: "100%" }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: "100%" }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="md:hidden fixed top-[64px] right-0 bottom-0 w-[88vw] max-w-xs z-50 flex flex-col justify-between shadow-2xl p-5 overflow-y-auto pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))]"
+                style={{
+                  background: "rgba(22, 38, 30, 0.98)",
+                  backdropFilter: "blur(24px)",
+                  WebkitBackdropFilter: "blur(24px)",
+                  borderLeft: "1px solid rgba(184, 147, 90, 0.4)",
+                }}
+              >
+                <div className="space-y-5 pt-1">
+                  {mobileGroups.map((group) => (
+                    <div key={group.title} className="space-y-2">
+                      <span
+                        style={{
+                          fontFamily: "var(--app-font-sans)",
+                          fontSize: "10px",
+                          fontWeight: 700,
+                          color: "#B8935A",
+                          letterSpacing: "0.2em",
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        {group.title}
+                      </span>
+                      <div className="flex flex-col gap-1">
+                        {group.items.map((item) => {
+                          const isActive = activeSection === item.id;
+                          return (
+                            <a
+                              key={item.label}
+                              href={item.href}
+                              onClick={() => setMobileOpen(false)}
+                              className="flex items-center justify-between min-h-[44px] px-3.5 rounded-xl transition-colors hover:bg-white/5 active:bg-white/10"
+                              style={{
+                                fontFamily: "var(--app-font-sans)",
+                                fontWeight: isActive ? 700 : 500,
+                                fontSize: "14px",
+                                color: isActive ? "#D4AF37" : "#FBF6EE",
+                                textDecoration: "none",
+                                background: isActive ? "rgba(184, 147, 90, 0.15)" : "transparent",
+                              }}
+                            >
+                              <span>{item.label}</span>
+                              {isActive && (
+                                <span className="w-2 h-2 rounded-full bg-[#D4AF37] shadow-[0_0_8px_#D4AF37]" />
+                              )}
+                            </a>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="pt-5 border-t border-[#B8935A]/30 mt-6 space-y-3">
+                  {/* Quick Action Phone / WhatsApp Bar */}
+                  <div className="grid grid-cols-2 gap-2">
+                    <a
+                      href="tel:16476403439"
+                      className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-white/5 border border-white/10 text-[#FBF6EE] text-xs font-semibold"
+                    >
+                      <Phone size={14} className="text-[#B8935A]" />
+                      <span>Call Us</span>
+                    </a>
+                    <a
+                      href="https://wa.me/16476403439?text=Hi%20Rivaaz%20Glam%20Studio!"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-[#25D366]/15 border border-[#25D366]/40 text-[#25D366] text-xs font-semibold"
+                    >
+                      <MessageCircle size={14} />
+                      <span>WhatsApp</span>
+                    </a>
+                  </div>
+
+                  <button
+                    className="w-full min-h-[48px] rounded-full flex items-center justify-center font-sans font-bold text-sm shadow-xl gap-2 active:scale-95 transition-all"
+                    style={{
+                      background: "linear-gradient(135deg, #B8935A 0%, #D4AF37 100%)",
+                      color: "#1F3329",
+                    }}
+                    onClick={() => {
+                      setMobileOpen(false);
+                      document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
+                    }}
+                  >
+                    <Sparkles size={16} />
+                    Get Instant Quote
+                  </button>
+                </div>
+              </motion.div>
+            </>
           )}
         </AnimatePresence>
       </motion.nav>
