@@ -3,58 +3,48 @@ import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./index.css";
 
-interface Props {
-  children: ReactNode;
-}
+// Catch render errors
+class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean; error: Error | null }> {
+  constructor(props: { children: ReactNode }) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
 
-interface State {
-  hasError: boolean;
-  error: Error | null;
-}
-
-class ErrorBoundary extends Component<Props, State> {
-  public state: State = {
-    hasError: false,
-    error: null,
-  };
-
-  public static getDerivedStateFromError(error: Error): State {
+  static getDerivedStateFromError(error: Error) {
     return { hasError: true, error };
   }
 
-  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("Uncaught error:", error, errorInfo);
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    // TODO: Add proper error reporting (e.g. Sentry) later
+    console.error("Error caught by boundary:", error, errorInfo);
   }
 
-  public render() {
+  render() {
     if (this.state.hasError) {
       return (
-        <div style={{ minHeight: "100vh", background: "#FBF6EE", color: "#1F3329", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem", textAlign: "center", fontFamily: "sans-serif" }}>
-          <h1 style={{ fontSize: "2rem", fontWeight: 700, marginBottom: "1rem", color: "#1F3329" }}>KS Beauty</h1>
-          <p style={{ fontSize: "1.1rem", color: "#7A2E38", fontWeight: 600, marginBottom: "1rem" }}>
-            Error: {this.state.error?.message || "Unknown rendering exception"}
-          </p>
-          <pre style={{ textAlign: "left", background: "#1F3329", color: "#FBF6EE", padding: "1rem", borderRadius: "12px", fontSize: "12px", maxWidth: "90vw", overflowX: "auto", marginBottom: "1.5rem" }}>
-            {this.state.error?.stack}
-          </pre>
-          <button
+        <div className="min-h-screen flex flex-col items-center justify-center p-4">
+          <h1 className="text-2xl font-bold mb-4">Oops! Something went wrong.</h1>
+          <p className="mb-4 text-red-600 text-sm">{this.state.error?.message}</p>
+          <button 
+            className="px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition"
             onClick={() => {
               this.setState({ hasError: false, error: null });
               window.location.reload();
             }}
-            style={{ padding: "0.75rem 1.75rem", borderRadius: "9999px", background: "#1F3329", color: "#FBF6EE", fontWeight: 600, border: "none", cursor: "pointer" }}
           >
-            Reload Application
+            Reload Page
           </button>
         </div>
       );
     }
-
     return this.props.children;
   }
 }
 
-createRoot(document.getElementById("root")!).render(
+const rootElement = document.getElementById("root");
+if (!rootElement) throw new Error("Failed to find the root element");
+
+createRoot(rootElement).render(
   <React.StrictMode>
     <ErrorBoundary>
       <App />

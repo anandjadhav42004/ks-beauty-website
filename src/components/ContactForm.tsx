@@ -41,12 +41,12 @@ export default function ContactForm() {
     setErrors({});
     setFormState("loading");
 
-    // [REPLACE WITH YOUR EMAILJS CREDENTIALS]
-    const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID"; // [REPLACE WITH YOUR EMAILJS SERVICE ID]
-    const CLIENT_TEMPLATE_ID = "YOUR_CLIENT_TEMPLATE_ID"; // [REPLACE WITH CLIENT AUTO-REPLY TEMPLATE ID]
-    const OWNER_TEMPLATE_ID = "YOUR_OWNER_TEMPLATE_ID"; // [REPLACE WITH OWNER NOTIFICATION TEMPLATE ID]
-    const PUBLIC_KEY = "YOUR_PUBLIC_KEY"; // [REPLACE WITH YOUR EMAILJS PUBLIC KEY]
-    const OWNER_EMAIL = "rivaaz.glam@gmail.com"; // [UPDATE WITH OWNER'S EMAIL]
+    // EmailJS credentials (configure in .env or deployment host environment variables)
+    const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || "YOUR_SERVICE_ID";
+    const CLIENT_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_CLIENT_TEMPLATE_ID || "YOUR_CLIENT_TEMPLATE_ID";
+    const OWNER_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_OWNER_TEMPLATE_ID || "YOUR_OWNER_TEMPLATE_ID";
+    const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "YOUR_PUBLIC_KEY";
+    const OWNER_EMAIL = import.meta.env.VITE_OWNER_EMAIL || "rivaaz.glam@gmail.com";
 
     try {
       // 1. Client Auto-Reply Email

@@ -88,7 +88,7 @@ This is currently a **demo build**. Before going live for the client, the follow
 - [ ] Replace sample testimonials with real client reviews and headshots
 - [ ] Replace Instagram preview grid with real content or live feed embed
 - [ ] Update pricing (currently placeholder values)
-- [ ] Add a custom domain (currently on a temporary `.replit.app` / dev URL)
+- [ ] Add a custom domain (currently on a temporary dev URL)
 - [ ] Add a real Privacy Policy and Terms of Service page
 - [ ] Set up analytics (Google Analytics / Meta Pixel) if running ads
 

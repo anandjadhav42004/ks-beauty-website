@@ -18,8 +18,14 @@ import {
   Info,
   AlertTriangle,
   PhoneCall,
+  MessageCircle,
 } from "lucide-react";
 import emailjs from "@emailjs/browser";
+import { AvailabilityPicker } from "@/components/AvailabilityPicker";
+import { sendInvoiceEmail } from "@/lib/sendInvoiceEmail";
+import { confirmBooking } from "@/lib/confirmBooking";
+import { saveBooking } from "@/lib/availabilityStore";
+import { useToast } from "@/hooks/use-toast";
 
 // --- TYPES & INTERFACES ---
 export type RegionOption =
@@ -51,6 +57,7 @@ export interface QuoteFormData {
   // Step 5
   selectedTier: TierName;
   nextAction: NextActionOption;
+  preferredContactTime: string;
   // Step 6
   lastName: string;
   email: string;
@@ -118,7 +125,15 @@ interface InstantQuoteCalculatorProps {
 }
 
 export default function InstantQuoteCalculator({ prefilledData }: InstantQuoteCalculatorProps = {}) {
+  const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState<number>(1);
+  const [quoteRef, setQuoteRef] = useState<string>("");
+  const [whatsappUrl, setWhatsappUrl] = useState<string>("");
+  const [emailDeliveryState, setEmailDeliveryState] = useState<{
+    isLive: boolean;
+    success: boolean;
+    message: string;
+  }>({ isLive: false, success: false, message: "" });
   const [formData, setFormData] = useState<QuoteFormData>({
     firstName: "",
     eventDate: "",
@@ -133,6 +148,7 @@ export default function InstantQuoteCalculator({ prefilledData }: InstantQuoteCa
     jewelryDupattaCount: 0,
     selectedTier: "Senior Artist",
     nextAction: "Book this package",
+    preferredContactTime: "🌅 Morning Window (7:00 AM – 11:00 AM)",
     lastName: "",
     email: "",
     phoneCountryCode: "+1",
@@ -327,51 +343,85 @@ export default function InstantQuoteCalculator({ prefilledData }: InstantQuoteCa
     setCurrentStep((prev) => Math.max(prev - 1, 1));
   };
 
-  // --- SUBMIT HANDLER WITH ERROR RECOVERY ---
+  // --- SUBMIT HANDLER WITH PARALLEL EMAIL & WHATSAPP CONFIRMATION ---
   const handleSubmitQuote = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateStep(6)) return;
 
     setIsSubmitting(true);
     setEmailError(null);
+
+    const generatedRef = `KS-${Math.floor(100000 + Math.random() * 900000)}`;
+    setQuoteRef(generatedRef);
+
     const breakdown = calculateBreakdown(formData.selectedTier);
 
-    const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
-    const CLIENT_TEMPLATE_ID = "YOUR_CLIENT_TEMPLATE_ID";
-    const OWNER_TEMPLATE_ID = "YOUR_OWNER_TEMPLATE_ID";
-    const PUBLIC_KEY = "YOUR_PUBLIC_KEY";
-
-    const payload = {
-      client_name: `${formData.firstName} ${formData.lastName}`,
-      to_email: formData.email,
-      to_phone: `${formData.phoneCountryCode} ${formData.phoneNumber}`,
-      event_date: formData.eventDate,
-      finish_time: formData.finishTime,
-      region: formData.region,
-      service_type: formData.serviceType,
-      selected_tier: formData.selectedTier,
-      next_action: formData.nextAction,
-      subtotal: formatCAD(breakdown.subtotal),
-      hst_tax: `${formatCAD(breakdown.hstTax)} (13% HST)`,
-      grand_total: formatCAD(breakdown.grandTotal),
-      itemized_details: breakdown.items
-        .map((it) => `${it.label} x${it.qty} = ${formatCAD(it.total)}`)
-        .join("\n"),
-    };
-
     try {
-      if (EMAILJS_SERVICE_ID !== "YOUR_SERVICE_ID") {
-        await emailjs.send(EMAILJS_SERVICE_ID, CLIENT_TEMPLATE_ID, payload, PUBLIC_KEY);
-        await emailjs.send(
-          EMAILJS_SERVICE_ID,
-          OWNER_TEMPLATE_ID,
-          { ...payload, owner_email: "rivaaz.glam@gmail.com" },
-          PUBLIC_KEY
-        );
+      const result = await confirmBooking({
+        quoteRef: generatedRef,
+        clientName: `${formData.firstName} ${formData.lastName}`,
+        clientEmail: formData.email,
+        clientPhone: `${formData.phoneCountryCode} ${formData.phoneNumber}`,
+        eventDate: formData.eventDate,
+        finishTime: formData.finishTime,
+        preferredContactTime: formData.preferredContactTime,
+        region: formData.region,
+        serviceType: formData.serviceType,
+        selectedTier: formData.selectedTier,
+        nextAction: formData.nextAction,
+        breakdownItems: breakdown.items,
+        travelFee: breakdown.travelFee,
+        subtotal: breakdown.subtotal,
+        hstTax: breakdown.hstTax,
+        grandTotal: breakdown.grandTotal,
+      });
+
+      // Save booking to persistent store for owner admin dashboard
+      saveBooking({
+        quoteRef: generatedRef,
+        clientName: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        phone: `${formData.phoneCountryCode} ${formData.phoneNumber}`,
+        eventDate: formData.eventDate,
+        finishTime: formData.finishTime,
+        preferredContactTime: formData.preferredContactTime,
+        serviceType: formData.serviceType,
+        region: formData.region,
+        selectedTier: formData.selectedTier,
+        nextAction: formData.nextAction,
+        grandTotal: breakdown.grandTotal,
+      });
+
+      setWhatsappUrl(result.whatsappUrl);
+      setEmailDeliveryState({
+        isLive: result.isLive,
+        success: result.emailSuccess,
+        message: result.emailMessage,
+      });
+
+      if (result.isLive && result.emailSuccess) {
+        toast({
+          title: "Live Invoice Email Delivered!",
+          description: `Invoice sent to ${formData.email} and studio owner.`,
+        });
+      } else if (result.isLive && !result.emailSuccess) {
+        toast({
+          title: "Email Delivery Notice",
+          description: result.emailMessage,
+        });
+      } else {
+        toast({
+          title: "Quote Calculated (Preview Mode)",
+          description: "Quote saved! Configure EmailJS keys in .env to send live emails.",
+        });
       }
-    } catch {
-      // Gracefully log & proceed without breaking client confirmation preview
-      setEmailError(null);
+
+      if (!result.emailSuccess) {
+        setEmailError(result.emailMessage);
+      }
+    } catch (err) {
+      console.warn("Booking confirmation error:", err);
+      setEmailError("Quote calculated successfully; preview breakdown generated on screen.");
     } finally {
       setIsSubmitting(false);
       setIsSubmitted(true);
@@ -1192,6 +1242,15 @@ export default function InstantQuoteCalculator({ prefilledData }: InstantQuoteCa
                         ))}
                       </div>
                     </div>
+
+                    {/* Check Availability / Preferred Contact Time Selection */}
+                    <AvailabilityPicker
+                      selectedContactTime={formData.preferredContactTime}
+                      onSelectContactTime={(t) =>
+                        setFormData((prev) => ({ ...prev, preferredContactTime: t }))
+                      }
+                      eventDate={formData.eventDate}
+                    />
                   </div>
                 )}
 
@@ -1417,8 +1476,8 @@ export default function InstantQuoteCalculator({ prefilledData }: InstantQuoteCa
                 </div>
 
                 <div>
-                  <span className="text-xs uppercase tracking-widest text-[#B8935A] font-bold bg-[#1F3329]/10 px-3 py-1 rounded-full">
-                    Quote Reference #{Math.floor(100000 + Math.random() * 900000)}
+                  <span className="text-xs uppercase tracking-widest text-[#B8935A] font-bold bg-[#1F3329]/10 px-3 py-1 rounded-full border border-[#B8935A]/30">
+                    Quote Reference #{quoteRef || "KS-839210"}
                   </span>
                   <h3
                     style={{ fontFamily: "var(--app-font-serif, serif)" }}
@@ -1478,6 +1537,10 @@ export default function InstantQuoteCalculator({ prefilledData }: InstantQuoteCa
                       <span className="text-[#FBF6EE]/75">Completion Time:</span>
                       <span className="font-semibold">{formData.finishTime}</span>
                     </div>
+                    <div className="flex justify-between">
+                      <span className="text-[#FBF6EE]/75">Preferred Contact Window:</span>
+                      <span className="font-semibold text-[#B8935A]">{formData.preferredContactTime}</span>
+                    </div>
                   </div>
 
                   <div className="pt-3 border-t border-[#B8935A]/30 space-y-1.5 text-xs">
@@ -1500,6 +1563,47 @@ export default function InstantQuoteCalculator({ prefilledData }: InstantQuoteCa
                       <span>{formatCAD(selectedBreakdown.grandTotal)}</span>
                     </div>
                   </div>
+                </div>
+
+                {/* Honest Delivery Status Banner (Live vs Demo Mode vs Error) */}
+                <div className="pt-2 max-w-lg mx-auto space-y-3">
+                  {emailDeliveryState.isLive && emailDeliveryState.success && (
+                    <div className="bg-emerald-50 border border-emerald-300 text-emerald-900 p-3.5 rounded-2xl text-xs font-semibold flex items-center justify-center gap-2 shadow-sm">
+                      <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+                      <span>✅ Live invoice sent to <strong>{formData.email}</strong> &amp; studio owner notified!</span>
+                    </div>
+                  )}
+
+                  {emailDeliveryState.isLive && !emailDeliveryState.success && (
+                    <div className="bg-red-50 border border-red-300 text-red-900 p-3.5 rounded-2xl text-xs font-semibold flex items-center justify-center gap-2 shadow-sm">
+                      <AlertTriangle size={16} className="text-red-600 shrink-0" />
+                      <span>❌ Delivery Alert: {emailDeliveryState.message}</span>
+                    </div>
+                  )}
+
+                  {!emailDeliveryState.isLive && (
+                    <div className="bg-amber-50 border border-amber-300 text-amber-900 p-4 rounded-2xl text-xs font-medium text-left space-y-1 shadow-sm">
+                      <div className="flex items-center gap-2 font-bold text-amber-950">
+                        <Info size={16} className="text-amber-700" />
+                        <span>⚡ Preview Mode Notice: Live API Keys Required</span>
+                      </div>
+                      <p className="text-[11px] leading-relaxed text-amber-900/90">
+                        Your itemized quote has been calculated and saved locally. To receive live email invoices directly in your inbox, add your free <strong>EmailJS credentials</strong> in your project's <code className="bg-amber-100 px-1 py-0.5 rounded text-amber-950 font-bold">.env</code> file.
+                      </p>
+                    </div>
+                  )}
+
+                  {whatsappUrl && (
+                    <a
+                      href={whatsappUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full py-3 px-5 rounded-xl border border-[#25D366]/40 bg-[#25D366]/10 text-[#1F3329] font-bold text-xs flex items-center justify-center gap-2 hover:bg-[#25D366]/20 transition-colors"
+                    >
+                      <MessageCircle size={18} className="text-[#25D366]" fill="#25D366" />
+                      Optional: Message Studio Owner Directly on WhatsApp
+                    </a>
+                  )}
                 </div>
 
                 <div className="pt-4 flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
